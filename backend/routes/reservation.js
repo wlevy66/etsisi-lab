@@ -1,0 +1,12 @@
+const express = require('express')
+const router = express.Router()
+const ReservationController = require('../controllers/reservationController')
+
+//define routes
+router.get('/reservations', ReservationController.get)
+router.post('/reservations', ReservationController.create)
+router.put('/reservations/:id', ReservationController.update)
+router.delete('/reservations/:id', ReservationController.remove)
+
+
+module.exports = router
