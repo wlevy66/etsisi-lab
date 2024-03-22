@@ -1,6 +1,6 @@
 import {createContext, useContext, useState} from "react";
-import {createRoomRequest, deleteRoomRequest, getRoomsRequest} from "../api/room.js";
-import {createScheduleRequest, deleteScheduleRequest, getSchedulesRequest} from "../api/schedule.js";
+import {createRoomRequest, deleteRoomRequest, getRoomsRequest, updateRoomRequest} from "../api/room.js";
+import {createScheduleRequest, deleteScheduleRequest, getSchedulesRequest, updateScheduleRequest} from "../api/schedule.js";
 
 const DashboardContext = createContext()
 
@@ -27,6 +27,10 @@ export function DashboardProvider({children}){
         console.log(response)
     }
 
+    const updateRoom = async (id, newData) => {
+        const response = await updateRoomRequest(id, newData)
+        console.log(response)
+    }
     const deleteRoom = async (id) => {
         const response = await deleteRoomRequest(id)
         const newRooms = rooms.filter(room => room._id !== id)
@@ -43,6 +47,10 @@ export function DashboardProvider({children}){
         setSchedules(response)
         console.log(response)
     }
+    const updateSchedule = async (id, newData) => {
+        const response = await updateScheduleRequest(id, newData)
+        console.log(response)
+    }
     const deleteSchedule = async (id) => {
         const response = await deleteScheduleRequest(id)
         const newSchedules = schedules.filter(schedules => schedules._id !== id)
@@ -57,10 +65,12 @@ export function DashboardProvider({children}){
                 schedules,
                 getRooms,
                 createRoom,
+                updateRoom,
                 deleteRoom,
                 getSchedules,
                 createSchedule,
-                deleteSchedule,
+                updateSchedule,
+                deleteSchedule
             }}>
             {children}
         </DashboardContext.Provider>
