@@ -1,6 +1,7 @@
-import React from 'react'
+import {useDashboard} from "../../context/DashboardContext.jsx";
 
-const FormRoom = ({ addRoom }) => {
+const FormRoom = () => {
+    const {createRoom} = useDashboard()
 
     const handleAddRoom = async(e) => {
         e.preventDefault()
@@ -8,7 +9,7 @@ const FormRoom = ({ addRoom }) => {
             name: e.target.name.value,
             capacity: e.target.capacity.value
         }
-        await addRoom(newData)
+        createRoom(newData)
     }
     
   return (

@@ -1,4 +1,4 @@
-const apiGetSchedules = async() => {
+const getSchedulesRequest = async() => {
     let request = await fetch('http://localhost:3900/api/schedule/schedules/', {
         method: 'GET'
     })
@@ -9,7 +9,7 @@ const apiGetSchedules = async() => {
     
 }
 
-const apiAddSchedule = async (newData) => {
+const createScheduleRequest = async (newData) => {
     let request = await fetch (`http://localhost:3900/api/schedule/schedules/`, {
         method: 'POST',
         headers: {
@@ -22,7 +22,7 @@ const apiAddSchedule = async (newData) => {
     return data
 }
 
-const apiUpdateSchedule = async (id, newData) => {
+const updateScheduleRequest = async (id, newData) => {
     let request = await fetch (`http://localhost:3900/api/schedule/schedules/${id}`, {
         method: 'PUT',
         headers: {
@@ -35,7 +35,7 @@ const apiUpdateSchedule = async (id, newData) => {
     return data
 }
 
-const apiRemoveSchedule = async (id) => {
+const deleteScheduleRequest = async (id) => {
     if (window.confirm('Do you really want to delete the schedule?')) {
 
         let request = await fetch (`http://localhost:3900/api/schedule/schedules/${id}`, {
@@ -47,8 +47,8 @@ const apiRemoveSchedule = async (id) => {
 }
 
 export {
-    apiGetSchedules,
-    apiAddSchedule,
-    apiUpdateSchedule,
-    apiRemoveSchedule
+    getSchedulesRequest,
+    createScheduleRequest,
+    updateScheduleRequest,
+    deleteScheduleRequest
 }

@@ -1,4 +1,4 @@
-const apiGetRooms = async() => {
+const getRoomsRequest = async() => {
     let request = await fetch('http://localhost:3900/api/room/rooms/', {
         method: 'GET'
     })
@@ -9,7 +9,7 @@ const apiGetRooms = async() => {
     
 }
 
-const apiAddRoom = async (newData) => {
+const createRoomRequest = async (newData) => {
     let request = await fetch (`http://localhost:3900/api/room/rooms/`, {
         method: 'POST',
         headers: {
@@ -22,7 +22,7 @@ const apiAddRoom = async (newData) => {
     return data
 }
 
-const apiUpdateRoom = async (id, newData) => {
+const updateRoomRequest = async (id, newData) => {
     let request = await fetch (`http://localhost:3900/api/room/rooms/${id}`, {
         method: 'PUT',
         headers: {
@@ -35,7 +35,7 @@ const apiUpdateRoom = async (id, newData) => {
     return data
 }
 
-const apiRemoveRoom = async (id) => {
+const deleteRoomRequest = async (id) => {
     if (window.confirm('Do you really want to delete the room?')) {
 
         let request = await fetch (`http://localhost:3900/api/room/rooms/${id}`, {
@@ -47,8 +47,8 @@ const apiRemoveRoom = async (id) => {
 }
 
 export {
-    apiGetRooms,
-    apiAddRoom,
-    apiUpdateRoom,
-    apiRemoveRoom
+    getRoomsRequest,
+    createRoomRequest,
+    updateRoomRequest,
+    deleteRoomRequest
 }

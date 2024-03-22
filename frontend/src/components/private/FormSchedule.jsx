@@ -1,29 +1,21 @@
+import { useEffect } from 'react'
+import {useDashboard} from "../../context/DashboardContext.jsx";
 
-import React, { useState, useEffect } from 'react'
-import {apiGetRooms} from '@/services/apiRoom'
 
-const FormReservation = ({rooms, addSchedule}) => {
-    const [localRooms, setLocalRooms] = useState([])
+const FormSchedule = () => {
+
+    const {createSchedule, rooms, getRooms} = useDashboard()
 
     useEffect(() => {
-      const fetchRooms = async () => {
-        try {
-          let response = await apiGetRooms()
-          setLocalRooms(response)
-        } catch (error) {
-          console.log('Error: ', error)
-        }
-      }
-      
-      fetchRooms()
-    }, [rooms])
+        getRooms()
+    }, [])
 
     const handleAddSchedule = async(e) => {
         e.preventDefault()
         const newData = {
             room: e.target.room.value
         }
-        await addSchedule(newData)
+        await createSchedule(newData)
     }
     
   return (
@@ -34,7 +26,7 @@ const FormReservation = ({rooms, addSchedule}) => {
             <label className="input-group-text" htmlFor="room">Room</label>
             <select className="form-select" id="room" name='room'>
             {
-                localRooms.map ( (room) => {
+                rooms.map ( (room) => {
                     return (
                         <option key={room._id} value={room._id}>{room.name}</option>
                     )
@@ -65,4 +57,4 @@ const FormReservation = ({rooms, addSchedule}) => {
   );
 };
 
-export default FormReservation;
+export default FormSchedule;

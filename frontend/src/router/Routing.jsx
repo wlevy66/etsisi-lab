@@ -7,9 +7,13 @@ import PublicLayout from "../components/public/PublicLayout.jsx";
 import PrivateLayout from "../components/private/PrivateLayout.jsx";
 import Logout from "../components/user/Logout.jsx";
 import Register from "../components/user/Register.jsx";
+import {DashboardProvider} from "../context/DashboardContext.jsx";
+import FormRoom from "../components/private/FormRoom.jsx";
+import FormSchedule from "../components/private/FormSchedule.jsx";
 
-function Routing(props) {
+function Routing() {
     return (
+        <DashboardProvider>
         <BrowserRouter>
                 <Routes>
 
@@ -20,11 +24,16 @@ function Routing(props) {
                     </Route>
 
 
-                    <Route path='/lab' element={<PrivateLayout />} >
-                        <Route index element={<Lab />} />
-                        <Route path='lab' element={<Lab />} />
-                        <Route path='logout' element={<Logout />} />
-                    </Route>
+                        <Route path='/lab' element={<PrivateLayout />} >
+                            <Route index element={<Lab />} />
+                            <Route path='lab' element={<Lab />} />
+                            <Route path='logout' element={<Logout />} />
+                            <Route path='add-room' element={<FormRoom />} />
+                            <Route path='edit-room/:id' element={<FormRoom />} />
+                            <Route path='add-schedule' element={<FormSchedule />} />
+                            <Route path='edit-schedule/:id' element={<FormSchedule />} />
+                        </Route>
+
 
 
 
@@ -32,7 +41,7 @@ function Routing(props) {
 
                     <Route path='*' element={<Error />}/>
                 </Routes>
-        </BrowserRouter>
+        </BrowserRouter></DashboardProvider>
     );
 }
 

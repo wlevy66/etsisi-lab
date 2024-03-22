@@ -1,43 +1,14 @@
 
 import React, { useState, useEffect } from 'react'
+import {useDashboard} from "../../context/DashboardContext.jsx";
 
-import { apiGetSchedules, apiRemoveSchedule, apiUpdateSchedule } from '@/services/apiSchedule'
+const ScheduleList = () => {
 
-const SchedueList = ({schedules}) => {
-  const [localSchedules, setLocalSchedules] = useState([])
+    const {schedules, getSchedules} = useDashboard()
 
-  useEffect(() => {
-    const fetchSchedules = async () => {
-      try {
-        let response = await apiGetSchedules()
-        setLocalSchedules(response)
-      }catch (error) {
-        console.error('Error: ', error)
-      }
-    }
-    fetchSchedules()
-  }, [schedules])
-
-  const removeSchedule = async (id) => {
-    try {
-      await apiRemoveSchedule(id)
-      let newSchedules = await apiGetSchedules()
-      setLocalSchedules(newSchedules)
-    }catch (error) {
-        console.log('Error', error)
-    }
-  }
-
-  const updateSchedule = async (id, newData) => {
-    try {
-      await apiUpdateSchedule(id, newData)
-      let newSchedules = await apiGetSchedules()
-      setLocalSchedules(newSchedules)
-    } catch (error) {
-      console.log('Error: ', error)
-    }
-  }
-
+    useEffect(() => {
+        getSchedules()
+    }, [])
 
 
   function dateParser(datetime) {
@@ -46,7 +17,7 @@ const SchedueList = ({schedules}) => {
   }
 
   return (
-    localSchedules.map( (schedule) => {
+      schedules.map( (schedule) => {
         let start = dateParser(schedule.start)
         let end = dateParser(schedule.start)
         return(
@@ -59,7 +30,7 @@ const SchedueList = ({schedules}) => {
               <span className="fs-5">{end} </span>
             </p>
             <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
-            <button type="button" className="btn btn-danger btn-sm ms-2" onClick={()=>removeSchedule(schedule._id)}>delete</button>
+            <button type="button" className="btn btn-danger btn-sm ms-2">delete</button>
           </li>
         )
         })
@@ -67,4 +38,4 @@ const SchedueList = ({schedules}) => {
 
 }
 
-export default SchedueList;
+export default ScheduleList;
