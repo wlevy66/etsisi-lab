@@ -1,15 +1,19 @@
 
 import React, { useState, useEffect } from 'react'
 import {useDashboard} from "../../context/DashboardContext.jsx";
+import { Link } from 'react-router-dom';
 
 const ScheduleList = () => {
 
-    const {schedules, getSchedules} = useDashboard()
+    const {schedules, getSchedules, deleteSchedule} = useDashboard()
 
     useEffect(() => {
         getSchedules()
     }, [])
 
+    const handleRemove = (id) => {
+      deleteSchedule (id)
+    }
 
   function dateParser(datetime) {
     let date = datetime.split('T')
@@ -29,8 +33,10 @@ const ScheduleList = () => {
               <span className="fs-5">{start} - </span>
               <span className="fs-5">{end} </span>
             </p>
-            <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
-            <button type="button" className="btn btn-danger btn-sm ms-2">delete</button>
+            <Link to={`edit-schedule/${schedule._id}`}>
+              <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
+            </Link>
+            <button type="button" className="btn btn-danger btn-sm ms-2" onClick={()=>handleRemove(schedule._id)}>delete</button>
           </li>
         )
         })

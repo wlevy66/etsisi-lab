@@ -1,10 +1,14 @@
 import { useEffect } from 'react'
 import {useDashboard} from "../../context/DashboardContext.jsx";
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const FormSchedule = () => {
 
-    const {createSchedule, rooms, getRooms} = useDashboard()
+    const {createSchedule, rooms, getRooms, updateSchedule} = useDashboard()
+    const params = useParams()
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         getRooms()
@@ -15,7 +19,13 @@ const FormSchedule = () => {
         const newData = {
             room: e.target.room.value
         }
-        await createSchedule(newData)
+        if(params.id){
+          await updateSchedule(params.id, newData)
+        }
+        else{
+          await createSchedule(newData)
+        }
+        navigate('/lab')
     }
     
   return (

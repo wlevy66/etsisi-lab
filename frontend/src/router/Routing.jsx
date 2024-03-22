@@ -41,7 +41,8 @@ function Routing() {
 
                     <Route path='*' element={<Error />}/>
                 </Routes>
-        </BrowserRouter></DashboardProvider>
+        </BrowserRouter>
+        </DashboardProvider>
     );
 }
 
