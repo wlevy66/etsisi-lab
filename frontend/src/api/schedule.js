@@ -9,6 +9,14 @@ const getSchedulesRequest = async() => {
     
 }
 
+const getScheduleByRoomIdRequest = async (id) => {
+    let request = await fetch (`http://localhost:3900/api/schedule/schedules/${id}`, {
+        method: 'GET'
+    })
+    const data = await request.json()
+    return data.schedules
+}
+
 const createScheduleRequest = async (newData) => {
     let request = await fetch (`http://localhost:3900/api/schedule/schedules/`, {
         method: 'POST',
@@ -48,6 +56,7 @@ const deleteScheduleRequest = async (id) => {
 
 export {
     getSchedulesRequest,
+    getScheduleByRoomIdRequest,
     createScheduleRequest,
     updateScheduleRequest,
     deleteScheduleRequest

@@ -1,14 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import {useDashboard} from "../../context/DashboardContext.jsx";
-import { useEffect } from "react";
 
 const FormRoom = () => {
     const {createRoom, updateRoom} = useDashboard()
     const params = useParams()
     const navigate = useNavigate()
-    useEffect( ()=> {
-
-    }, [])
 
     const handleAddRoom = async(e) => {
         e.preventDefault()
@@ -36,13 +32,13 @@ const FormRoom = () => {
             <div className="form-group row mb-3">
                 <label htmlFor="name" className="col-md-4 col-form-label">Name</label>
                 <div className="col-md-8">
-                    <input type="text" className="form-control" id="name"/>
+                    <input type="text" className="form-control" name="name"/>
                 </div>
             </div>
             <div className="form-group row mb-3">
                 <label htmlFor="capacity" className="col-md-4 col-form-label">Capacity</label>
                 <div className="col-md-8">
-                    <input type="number" min="1" className="form-control" id="capacity"/>
+                    <input type="number" min="1" className="form-control" name="capacity"/>
                 </div>
             </div>
             <div className="text-center mb-2">

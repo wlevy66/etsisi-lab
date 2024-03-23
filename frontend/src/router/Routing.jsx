@@ -10,6 +10,7 @@ import Register from "../components/user/Register.jsx";
 import {DashboardProvider} from "../context/DashboardContext.jsx";
 import FormRoom from "../components/private/FormRoom.jsx";
 import FormSchedule from "../components/private/FormSchedule.jsx";
+import ScheduleList from '../components/private/ScheduleList.jsx';
 
 function Routing() {
     return (
@@ -32,6 +33,7 @@ function Routing() {
                             <Route path='edit-room/:id' element={<FormRoom />} />
                             <Route path='add-schedule' element={<FormSchedule />} />
                             <Route path='edit-schedule/:id' element={<FormSchedule />} />
+                            <Route path='schedules/:id' element={<ScheduleList />} />
                         </Route>
 
 

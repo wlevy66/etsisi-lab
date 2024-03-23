@@ -1,6 +1,6 @@
 import {createContext, useContext, useState} from "react";
 import {createRoomRequest, deleteRoomRequest, getRoomsRequest, updateRoomRequest} from "../api/room.js";
-import {createScheduleRequest, deleteScheduleRequest, getSchedulesRequest, updateScheduleRequest} from "../api/schedule.js";
+import {createScheduleRequest, deleteScheduleRequest, getSchedulesRequest, updateScheduleRequest, getScheduleByRoomIdRequest} from "../api/schedule.js";
 
 const DashboardContext = createContext()
 
@@ -18,24 +18,20 @@ export function DashboardProvider({children}){
 
     const createRoom = async (room) => {
         const response = await createRoomRequest(room)
-        console.log(response)
     }
 
     const getRooms = async () => {
         const response = await getRoomsRequest()
         setRooms(response)
-        console.log(response)
     }
 
     const updateRoom = async (id, newData) => {
         const response = await updateRoomRequest(id, newData)
-        console.log(response)
     }
     const deleteRoom = async (id) => {
         const response = await deleteRoomRequest(id)
-        const newRooms = rooms.filter(room => room._id !== id)
+        const newRooms = rooms.filter(room => room._id !== id)  
         setRooms(newRooms)
-        console.log(response)
     }
 
     const createSchedule = async (schedule) => {
@@ -47,15 +43,18 @@ export function DashboardProvider({children}){
         setSchedules(response)
         console.log(response)
     }
+    const getScheduleByRoomId = async(id) => {
+        const response = await getScheduleByRoomIdRequest(id)
+        setSchedules(response)
+        console.log(response)
+    }
     const updateSchedule = async (id, newData) => {
         const response = await updateScheduleRequest(id, newData)
-        console.log(response)
     }
     const deleteSchedule = async (id) => {
         const response = await deleteScheduleRequest(id)
         const newSchedules = schedules.filter(schedules => schedules._id !== id)
         setSchedules(newSchedules)
-        console.log(response)
     }
 
     return (
@@ -68,6 +67,7 @@ export function DashboardProvider({children}){
                 updateRoom,
                 deleteRoom,
                 getSchedules,
+                getScheduleByRoomId,
                 createSchedule,
                 updateSchedule,
                 deleteSchedule

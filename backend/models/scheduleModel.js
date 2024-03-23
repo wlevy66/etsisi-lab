@@ -9,7 +9,7 @@ const ScheduleModel = new Schema(
     },
     start: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     end: {
         type: Date,

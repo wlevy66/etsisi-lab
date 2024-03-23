@@ -8,10 +8,16 @@ function Nav(props) {
 
         <nav className="navbar border-bottom">
             <div className="container-fluid">
-                <NavLink to='/login' className='col-md-5'>
+                <NavLink to='/lab' className='col-md-5'>
                     <img src={logo} width="30%" height="30%" alt=""/>
                 </NavLink>
                 <form className="d-flex">
+                    <NavLink to='/lab/add-room'>
+                        <button className="btn btn-primary me-2">Add room</button>
+                    </NavLink>
+                    <NavLink to='/lab/add-schedule'>
+                        <button className="btn btn-primary me-2">Add schedule</button>
+                    </NavLink>
                     <NavLink to='/lab/logout'>
                         <button className="btn btn-primary me-2">Logout</button>
                     </NavLink>

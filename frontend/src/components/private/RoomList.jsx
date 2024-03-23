@@ -27,6 +27,9 @@ const RoomList = () => {
                 <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
               </Link>
               <button type="button" className="btn btn-danger btn-sm ms-2" onClick={() => handleRemove(room._id)}>delete</button>
+              <Link to={`schedules/${room._id}`}>
+                <button type="button" className="btn btn-info btn-sm ms-2">see schedules</button>
+              </Link>
             </li>
         ))
       }

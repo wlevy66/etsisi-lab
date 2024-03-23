@@ -17,13 +17,16 @@ const FormSchedule = () => {
     const handleAddSchedule = async(e) => {
         e.preventDefault()
         const newData = {
-            room: e.target.room.value
+            room: e.target.room.value,
+            start: e.target.start.value,
+            end: e.target.end.value
         }
         if(params.id){
-          await updateSchedule(params.id, newData)
+            await updateSchedule(params.id, newData)
         }
         else{
-          await createSchedule(newData)
+            console.log(e.target.start.value)
+            await createSchedule(newData)
         }
         navigate('/lab')
     }
@@ -48,13 +51,13 @@ const FormSchedule = () => {
         <div className="form-group row mb-3">
             <label htmlFor="start" className="col-md-4 col-form-label">Start</label>
             <div className="col-md-8">
-                <input type="datetime-local" className="form-control" id="start"/>
+                <input type="datetime-local" className="form-control" name="start"/>
             </div>
         </div>
         <div className="form-group row mb-3">
             <label htmlFor="end" className="col-md-4 col-form-label">End</label>
             <div className="col-md-8">
-                <input type="datetime-local" className="form-control" id="end"/>
+                <input type="datetime-local" className="form-control" name="end"/>
             </div>
         </div>
         <div className="text-center mb-2">
