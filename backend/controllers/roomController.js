@@ -1,5 +1,7 @@
 const Room = require('../models/roomModel')
 const Schedule = require ('../models/scheduleModel')
+const Reservation = require ('../models/reservationModel')
+
 const get = async (req, res) => {
     try{
         const {id} = req.body
@@ -62,6 +64,7 @@ const remove = async (req, res) => {
         const room = await Room.findByIdAndDelete(req.params.id);
         if (!room) return res.status(404).json({ message: "Room not found" });
         removeRoomInSchedule(req.params.id)
+        removeRoomInReservation(req.params.id)
         return res.json(room);
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -69,9 +72,17 @@ const remove = async (req, res) => {
 }
 const removeRoomInSchedule = async (id) => {
     try {
-        const schedule = await Schedule.deleteMany({ room : id});
+        const schedule = await Schedule.deleteMany({ room : id})
         return schedule
     }catch (error) {
+        return error.message
+    }
+}
+const removeRoomInReservation = async (id) => {
+    try {
+        const reservation = await Reservation.deleteMany({ room : id})
+        return reservation
+    } catch (error) {
         return error.message
     }
 }

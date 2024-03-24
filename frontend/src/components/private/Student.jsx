@@ -1,6 +1,11 @@
 import React from 'react';
+import { useStudent } from '../../context/StudentContext';
 
-function Student(props) {
+const Student = (props) => {
+
+    const {reservations} = useStudent()
+    
+
     return (
         <div className="row mt-3 mb-3" id="main">
 

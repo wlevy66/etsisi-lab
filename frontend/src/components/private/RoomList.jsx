@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 import {useDashboard} from "../../context/DashboardContext.jsx";
 import {Link} from 'react-router-dom'
+import RoomCard from './RoomCard.jsx';
 
 const RoomList = () => {
 
@@ -21,8 +22,7 @@ const RoomList = () => {
       {
         rooms.map((room) => (
             <li key={room._id} className="list-group-item my-1">
-              <strong>{room.name}</strong>
-              <p>Capacidad: {room.capacity}</p>
+              <RoomCard room={room} />
               <Link to={`edit-room/${room._id}`}>
                 <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
               </Link>

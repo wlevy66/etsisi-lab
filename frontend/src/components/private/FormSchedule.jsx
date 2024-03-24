@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import {useDashboard} from "../../context/DashboardContext.jsx";
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { formatDateStart, formatDateEnd } from '../../util/util.js';
 
 const FormSchedule = () => {
 
@@ -16,19 +16,26 @@ const FormSchedule = () => {
 
     const handleAddSchedule = async(e) => {
         e.preventDefault()
-        const newData = {
-            room: e.target.room.value,
-            start: e.target.start.value,
-            end: e.target.end.value
-        }
-        if(params.id){
-            await updateSchedule(params.id, newData)
+        const start = e.target.start.value
+        const end = e.target.end.value
+
+        if(start < end){
+            const newData = {
+                room: e.target.room.value,
+                start,
+                end
+            }
+            if(params.id){
+                await updateSchedule(params.id, newData)
+            }
+            else{
+                //await createSchedule(newData)
+            }
+            navigate('/lab')
         }
         else{
-            console.log(e.target.start.value)
-            await createSchedule(newData)
+            alert('Orden de fechas incorrectas')
         }
-        navigate('/lab')
     }
     
   return (
@@ -49,19 +56,19 @@ const FormSchedule = () => {
         </div>
 
         <div className="form-group row mb-3">
-            <label htmlFor="start" className="col-md-4 col-form-label">Start</label>
+            <label htmlFor="start" className="col-md-4 col-form-label" >Start</label>
             <div className="col-md-8">
-                <input type="datetime-local" className="form-control" name="start"/>
+                <input type="datetime-local" className="form-control" name="start" required defaultValue={formatDateStart(new Date())} />
             </div>
         </div>
         <div className="form-group row mb-3">
             <label htmlFor="end" className="col-md-4 col-form-label">End</label>
             <div className="col-md-8">
-                <input type="datetime-local" className="form-control" name="end"/>
+                <input type="datetime-local" className="form-control" name="end" required defaultValue={formatDateEnd(new Date())} />
             </div>
         </div>
         <div className="text-center mb-2">
-                <button id="submit" type="submit" className="btn btn-primary">Add</button>
+                <button id="submit" type="submit" className="btn btn-primary">Save</button>
         </div>
         </form>
     </>

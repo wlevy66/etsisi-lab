@@ -3,7 +3,20 @@ const Reservation = require('../models/reservationModel')
 const get = async (req, res) => {
     try{
         const {id} = req.body
-        const reservations = await Reservation.find().populate('user').populate('room')
+        const reservations = await Reservation.find()
+                            .populate({
+                                path:'user',
+                                select: '_id email'
+                            })
+                            .populate({
+                                path: 'schedule',
+                                select: '_id start end room',
+                                populate: {
+                                    path: 'room',
+                                    model: 'Room',
+                                    select: 'name capacity'
+                                }
+                            })
         res.json({
             reservations
         })

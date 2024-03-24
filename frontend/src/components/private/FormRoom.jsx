@@ -32,13 +32,13 @@ const FormRoom = () => {
             <div className="form-group row mb-3">
                 <label htmlFor="name" className="col-md-4 col-form-label">Name</label>
                 <div className="col-md-8">
-                    <input type="text" className="form-control" name="name"/>
+                    <input type="text" className="form-control" name="name" required/>
                 </div>
             </div>
             <div className="form-group row mb-3">
                 <label htmlFor="capacity" className="col-md-4 col-form-label">Capacity</label>
                 <div className="col-md-8">
-                    <input type="number" min="1" className="form-control" name="capacity"/>
+                    <input type="number" min="1" className="form-control" name="capacity" required/>
                 </div>
             </div>
             <div className="text-center mb-2">

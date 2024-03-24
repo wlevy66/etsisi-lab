@@ -11,10 +11,14 @@ import {DashboardProvider} from "../context/DashboardContext.jsx";
 import FormRoom from "../components/private/FormRoom.jsx";
 import FormSchedule from "../components/private/FormSchedule.jsx";
 import ScheduleList from '../components/private/ScheduleList.jsx';
+import { StudentProvider } from '../context/StudentContext.jsx';
+import ReservationList from '../components/private/ReservationList.jsx';
+import FormReservation from '../components/private/FormReservation.jsx';
 
 function Routing() {
     return (
         <DashboardProvider>
+            <StudentProvider>
         <BrowserRouter>
                 <Routes>
 
@@ -34,6 +38,9 @@ function Routing() {
                             <Route path='add-schedule' element={<FormSchedule />} />
                             <Route path='edit-schedule/:id' element={<FormSchedule />} />
                             <Route path='schedules/:id' element={<ScheduleList />} />
+                            <Route path='add-reservation' element={<FormReservation />} />
+                            <Route path='edit-reservation/:id' element={<FormReservation />} />
+                            <Route path='reservations/:id' element={<ReservationList />} />
                         </Route>
 
 
@@ -44,6 +51,7 @@ function Routing() {
                     <Route path='*' element={<Error />}/>
                 </Routes>
         </BrowserRouter>
+        </StudentProvider>
         </DashboardProvider>
     );
 }

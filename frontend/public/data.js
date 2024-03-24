@@ -20,3 +20,7 @@ export const USERS = [
         role: 'student'
     }
 ]
+
+export const URL_ROOM = 'http://localhost:3900/api/room/rooms/'
+export const URL_SCHEDULE = 'http://localhost:3900/api/schedule/schedules/'
+export const URL_RESERVATION = 'http://localhost:3900/api/reservation/reservations/'

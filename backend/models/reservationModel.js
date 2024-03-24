@@ -7,10 +7,6 @@ const ReservationSchema = new Schema(
         type: Schema.ObjectId,
         ref: 'User'
     },
-    room: {
-        type: Schema.ObjectId,
-        ref: 'Room'
-    },
     schedule: {
         type: Schema.ObjectId,
         ref: 'Schedule'

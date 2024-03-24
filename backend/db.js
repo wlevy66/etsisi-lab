@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const connection = async () => {
     try{
-        await mongoose.connect("mongodb://localhost/etsisi")
+        await mongoose.connect("mongodb://localhost/lab")
 
     } catch (error){
         console.log(error)
