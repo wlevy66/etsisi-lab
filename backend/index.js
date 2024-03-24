@@ -4,7 +4,7 @@ const express = require('express')
 const cors = require('cors')
 
 //welcome message
-console.log('API NODE social-network started')
+console.log('API NODE etsisi-lab')
 
 //connect to db
 connection().then( () => console.log('Connected to db'))
