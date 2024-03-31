@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import logo from "../../assets/logo.png";
 
-function Nav(props) {
+function Nav() {
     const user = JSON.parse(localStorage.getItem('user')).role
     
     return (
@@ -36,7 +36,7 @@ function Nav(props) {
         </nav>
 
     </>
-    );
+    )
 }
 
-export default Nav;
+export default Nav

@@ -1,7 +1,8 @@
-import { URL_SCHEDULE } from "../../public/data"
+
+import { URL } from "../../public/data"
 
 const getSchedulesRequest = async() => {
-    let request = await fetch(`${URL_SCHEDULE}`, {
+    let request = await fetch(`${URL.SCHEDULE}`, {
         method: 'GET'
     })
     
@@ -12,7 +13,7 @@ const getSchedulesRequest = async() => {
 }
 
 const getScheduleByRoomIdRequest = async (id) => {
-    let request = await fetch (`${URL_SCHEDULE}${id}`, {
+    let request = await fetch (`${URL.SCHEDULE}/${id}`, {
         method: 'GET'
     })
     const data = await request.json()
@@ -20,7 +21,7 @@ const getScheduleByRoomIdRequest = async (id) => {
 }
 
 const createScheduleRequest = async (newData) => {
-    let request = await fetch (`${URL_SCHEDULE}`, {
+    let request = await fetch (`${URL.SCHEDULE}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ const createScheduleRequest = async (newData) => {
 }
 
 const updateScheduleRequest = async (id, newData) => {
-    let request = await fetch (`${URL_SCHEDULE}${id}`, {
+    let request = await fetch (`${URL.SCHEDULE}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ const updateScheduleRequest = async (id, newData) => {
 const deleteScheduleRequest = async (id) => {
     if (window.confirm('Do you really want to delete the schedule?')) {
 
-        let request = await fetch (`${URL_SCHEDULE}${id}`, {
+        let request = await fetch (`${URL.SCHEDULE}/${id}`, {
             method: 'DELETE'
         })
         const data = await request.json()

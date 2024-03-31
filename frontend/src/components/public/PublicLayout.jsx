@@ -13,7 +13,7 @@ function PublicLayout(props) {
                 }
             </section>
         </>
-    );
+    )
 }
 
-export default PublicLayout;
+export default PublicLayout

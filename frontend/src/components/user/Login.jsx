@@ -1,25 +1,30 @@
 import React, {useEffect} from 'react';
-import {USERS} from '../../../public/data.js'
 import {useNavigate} from "react-router-dom";
-function Login(props) {
+import { loginRequest } from '../../api/user.js';
 
-    useEffect(() => {
-        //if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify(USERS))
-    }, [])
+function Login() {
+
     const navigate = useNavigate()
     const signIn = async (e) => {
         e.preventDefault()
-        const username = e.target.username.value
+        const email = e.target.username.value
         const password = e.target.password.value
+        const response = await loginRequest({email, password})
 
-
-        let user = USERS.filter(user => user.username === username && user.password === password)
-        if(user.length > 0){
+        if(response.status === 200){
+            let user = {
+                id: response.id,
+                email: response.email,
+                role: response.role
+            }
             console.log('found')
-            localStorage.setItem('user', JSON.stringify(user[0]))
+            localStorage.setItem('user', JSON.stringify(user))
             setTimeout(() => {
                 navigate('/lab')
             }, 1000)
+        }
+        else{
+            alert('Incorrect credentials')
         }
     }
 
@@ -41,7 +46,7 @@ function Login(props) {
             </form>
         </div>
 
-    );
+    )
 }
 
-export default Login;
+export default Login

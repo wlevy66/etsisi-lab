@@ -1,7 +1,7 @@
-import { URL_RESERVATION } from "../../public/data"
+import { URL } from "../../public/data"
 
 const getReservationsRequest = async() => {
-    let request = await fetch(`${URL_RESERVATION}`, {
+    let request = await fetch(`${URL.RESERVATION}`, {
         method: 'GET'
     })
     
@@ -12,7 +12,7 @@ const getReservationsRequest = async() => {
 }
 
 const getReservationByUserIdRequest = async (id) => {
-    let request = await fetch (`${URL_RESERVATION}${id}`, {
+    let request = await fetch (`${URL.RESERVATION}/${id}`, {
         method: 'GET'
     })
     const data = await request.json()
@@ -20,7 +20,7 @@ const getReservationByUserIdRequest = async (id) => {
 }
 
 const createReservationRequest = async (newData) => {
-    let request = await fetch (`${URL_RESERVATION}`, {
+    let request = await fetch (`${URL.RESERVATION}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const createReservationRequest = async (newData) => {
 }
 
 const updateReservationRequest = async (id, newData) => {
-    let request = await fetch (`${URL_RESERVATION}${id}`, {
+    let request = await fetch (`${URL.RESERVATION}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const updateReservationRequest = async (id, newData) => {
 const deleteReservationRequest = async (id) => {
     if (window.confirm('Do you really want to delete the reservation?')) {
 
-        let request = await fetch (`${URL_RESERVATION}${id}`, {
+        let request = await fetch (`${URL.RESERVATION}/${id}`, {
             method: 'DELETE'
         })
         const data = await request.json()

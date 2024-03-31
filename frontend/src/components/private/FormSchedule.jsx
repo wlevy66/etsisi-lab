@@ -29,7 +29,7 @@ const FormSchedule = () => {
                 await updateSchedule(params.id, newData)
             }
             else{
-                //await createSchedule(newData)
+                await createSchedule(newData)
             }
             navigate('/lab')
         }

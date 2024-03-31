@@ -6,7 +6,7 @@ import ScheduleCard from './ScheduleCard.jsx';
 
 const ScheduleList = () => {
 
-
+  const user = JSON.parse(localStorage.getItem('user')).role
   const {schedules, deleteSchedule, getScheduleByRoomId} = useDashboard()
   const params = useParams()
 
@@ -33,10 +33,15 @@ const ScheduleList = () => {
                 {schedules.map( (schedule) => (
                   <li key={schedule._id} className="list-group-item my-1">
                     <ScheduleCard  schedule={schedule} /> 
+                    {user === 'professor' ?
+                    <>
                     <Link to={`/lab/edit-schedule/${schedule._id}`}>
                       <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
                     </Link>
-                    <button type="button" className="btn btn-danger btn-sm ms-2" onClick={()=>handleRemove(schedule._id)}>delete</button> 
+                    <button type="button" className="btn btn-danger btn-sm ms-2" onClick={()=>handleRemove(schedule._id)}>delete</button>
+                    </> :
+                    <button type="button" className="btn btn-info btn-sm ms-2" onClick={()=>console.log('book')}>book</button>
+                    }
                   </li>
                   
                 ))}

@@ -21,6 +21,9 @@ export const USERS = [
     }
 ]
 
-export const URL_ROOM = 'http://localhost:3900/api/room/rooms/'
-export const URL_SCHEDULE = 'http://localhost:3900/api/schedule/schedules/'
-export const URL_RESERVATION = 'http://localhost:3900/api/reservation/reservations/'
+export const URL = {
+    ROOM: 'http://localhost:3900/api/room/rooms',
+    SCHEDULE: 'http://localhost:3900/api/schedule/schedule',
+    RESERVATION: 'http://localhost:3900/api/reservation/reservation',
+    USER: 'http://localhost:3900/api/user'
+}

@@ -6,7 +6,7 @@ import RoomCard from './RoomCard.jsx';
 const RoomList = () => {
 
   const {getRooms, rooms, deleteRoom} = useDashboard()
-
+  const user = JSON.parse(localStorage.getItem('user')).role
 
   useEffect(() => {
     getRooms()
@@ -23,10 +23,15 @@ const RoomList = () => {
         rooms.map((room) => (
             <li key={room._id} className="list-group-item my-1">
               <RoomCard room={room} />
-              <Link to={`edit-room/${room._id}`}>
-                <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
-              </Link>
-              <button type="button" className="btn btn-danger btn-sm ms-2" onClick={() => handleRemove(room._id)}>delete</button>
+              {user === 'professor' ?
+              <>
+                <Link to={`edit-room/${room._id}`}>
+                  <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
+                </Link>
+                <button type="button" className="btn btn-danger btn-sm ms-2" onClick={() => handleRemove(room._id)}>delete</button>
+                
+              </> : <></>
+              }
               <Link to={`schedules/${room._id}`}>
                 <button type="button" className="btn btn-info btn-sm ms-2">see schedules</button>
               </Link>

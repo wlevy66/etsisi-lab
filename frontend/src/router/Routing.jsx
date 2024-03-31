@@ -22,25 +22,25 @@ function Routing() {
         <BrowserRouter>
                 <Routes>
 
-                    <Route path='/' element={<PublicLayout />} >
+                    <Route element={<PublicLayout />} >
                         <Route index element={<Login />} />
-                        <Route path='login' element={<Login />} />
-                        <Route path='register' element={<Register />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
                     </Route>
 
 
-                        <Route path='/lab' element={<PrivateLayout />} >
+                        <Route element={<PrivateLayout />} >
                             <Route index element={<Lab />} />
-                            <Route path='lab' element={<Lab />} />
-                            <Route path='logout' element={<Logout />} />
-                            <Route path='add-room' element={<FormRoom />} />
-                            <Route path='edit-room/:id' element={<FormRoom />} />
-                            <Route path='add-schedule' element={<FormSchedule />} />
-                            <Route path='edit-schedule/:id' element={<FormSchedule />} />
-                            <Route path='schedules/:id' element={<ScheduleList />} />
-                            <Route path='add-reservation' element={<FormReservation />} />
-                            <Route path='edit-reservation/:id' element={<FormReservation />} />
-                            <Route path='reservations/:id' element={<ReservationList />} />
+                            <Route path='/lab' element={<Lab />} />
+                            <Route path='/logout' element={<Logout />} />
+                            <Route path='/add-room' element={<FormRoom />} />
+                            <Route path='/edit-room/:id' element={<FormRoom />} />
+                            <Route path='/add-schedule' element={<FormSchedule />} />
+                            <Route path='/edit-schedule/:id' element={<FormSchedule />} />
+                            <Route path='/schedules/:id' element={<ScheduleList />} />
+                            <Route path='/add-reservation' element={<FormReservation />} />
+                            <Route path='/edit-reservation/:id' element={<FormReservation />} />
+                            <Route path='/reservations/:id' element={<ReservationList />} />
                         </Route>
 
 

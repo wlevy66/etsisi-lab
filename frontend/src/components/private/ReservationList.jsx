@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useStudent } from "../../context/StudentContext"
+import ScheduleCard from './ScheduleCard'
 
 const ReservationList = () => {
 
@@ -8,7 +9,7 @@ const ReservationList = () => {
     const params = useParams()
   
     useEffect(() => {
-        //getScheduleByRoomId(params.id)
+      getReservations()
     }, [])
   
     const handleRemove = (id) => {
@@ -28,7 +29,7 @@ const ReservationList = () => {
                 <ul className="list-group list-group-flush">
                   {reservations.map( (reservation) => (
                     <li key={reservation._id} className="list-group-item my-1">
-                      <ScheduleCard  reservation={reservation} /> 
+                      <ScheduleCard  schedule={reservation.schedule} /> 
                       <Link to={`/lab/edit-schedule/${reservation._id}`}>
                         <button type="button" className="btn btn-secondary btn-sm ms-2">update</button>
                       </Link>

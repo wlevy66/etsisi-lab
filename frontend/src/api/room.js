@@ -1,7 +1,8 @@
-import { URL_ROOM } from "../../public/data"
+
+import { URL } from "../../public/data"
 
 const getRoomsRequest = async() => {
-    let request = await fetch(`${URL_ROOM}`, {
+    let request = await fetch(`${URL.ROOM}`, {
         method: 'GET'
     })
     
@@ -12,7 +13,7 @@ const getRoomsRequest = async() => {
 }
 
 const createRoomRequest = async (newData) => {
-    let request = await fetch (`${URL_ROOM}`, {
+    let request = await fetch (`${URL.ROOM}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -25,7 +26,7 @@ const createRoomRequest = async (newData) => {
 }
 
 const updateRoomRequest = async (id, newData) => {
-    let request = await fetch (`${URL_ROOM}${id}`, {
+    let request = await fetch (`${URL.ROOM}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +41,7 @@ const updateRoomRequest = async (id, newData) => {
 const deleteRoomRequest = async (id) => {
     if (window.confirm('Do you really want to delete the room?')) {
 
-        let request = await fetch (`${URL_ROOM}${id}`, {
+        let request = await fetch (`${URL.ROOM}/${id}`, {
             method: 'DELETE'
         })
         const data = await request.json()

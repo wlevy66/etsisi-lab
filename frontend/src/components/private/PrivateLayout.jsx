@@ -7,14 +7,15 @@ function PrivateLayout(props) {
     let user = localStorage.getItem('user')
     return (
         <>
-            <Header />
-            <section className='layout__content'>
-                {user ? <Outlet />
-                    : <Navigate to='/login' />
-                }
-            </section>
+            {user ?
+                <> 
+                <Header />
+                <Outlet />
+                </> 
+                : <Navigate to='/login' />
+            }
         </>
-    );
+    )
 }
 
-export default PrivateLayout;
+export default PrivateLayout
