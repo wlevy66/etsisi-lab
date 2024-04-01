@@ -28,7 +28,7 @@ const create = async (req, res) => {
 
         const savedRoom = await newRoom.save()
         
-        res.status(200).json({
+        res.status(201).json({
             savedRoom
         })
 

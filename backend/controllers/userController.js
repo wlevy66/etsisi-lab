@@ -12,7 +12,7 @@ const login = async (req, res) => {
             message: 'Invalid credentials. Please verify username and password and try again.'
         })
 
-        let matched = await bcrypt.compare(password, userFound.password)
+        const matched = await bcrypt.compare(password, userFound.password)
         if(!matched) return res.status(400).json({
             status: 400,
             message: 'Invalid credentials. Please verify username and password and try again.'
@@ -38,7 +38,11 @@ const register = async (req, res) => {
     try{
         const {email, password, role} = req.body
         let hash_password = await bcrypt.hash(password,10)
-    
+        
+        let existingUser = User.findOne({email: email})
+        if(existingUser) return res.status(400).json({
+            message:"user existing"
+        })
         const newUser = new User({
             email,
             password: hash_password,
@@ -46,8 +50,8 @@ const register = async (req, res) => {
         })
     
         const userSaved = await newUser.save()
-    
-        res.status(200).json({
+
+        res.status(201).json({
             id: userSaved._id,
             email: userSaved.email,
             role: userSaved.role

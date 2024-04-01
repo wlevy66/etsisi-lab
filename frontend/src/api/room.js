@@ -20,7 +20,7 @@ const createRoomRequest = async (newData) => {
         },
         body: JSON.stringify(newData)
     })
-
+    console.log(request.status)
     const data = await request.json()
     return data
 }
