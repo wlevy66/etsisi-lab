@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
+import { Form, Button } from 'react-bootstrap';
 
 function LoginPage() {
 
@@ -28,24 +29,24 @@ function LoginPage() {
     }
 
     return (
-        <div className=' col-md-4 mx-auto mt-4'>
-            <h4 className="text-center">Sign in into your account</h4>
-            <form onSubmit={signIn} className="border-bottom">
-                <div className="mb-3">
-                    <label htmlFor="username" className="form-label">Username</label>
-                    <input type="text" className="form-control sm-3" id="username" name="username" autoFocus/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control sm-3 passwd" id="password" name="password"/>
-                </div>
-                <div className="text-center mb-2">
-                    <button id="submit" type="submit" className="btn btn-primary">Sign in</button>
-                </div>
-            </form>
-        </div>
+        <div className="container">
+            <h1>Login</h1>
+            <Form>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" placeholder="Enter username" />
+                </Form.Group>
 
-    )
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
+        </div>
+    );
 }
 
 export default LoginPage

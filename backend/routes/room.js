@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const RoomController = require('../controllers/roomController')
-const schemaRoom = require('../validators/schemaValidator');
+const schemaRoom = require('../middlewares/schemaValidator');
 
 
 const validateMiddleware = (schema) => {

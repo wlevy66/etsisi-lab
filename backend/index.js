@@ -2,6 +2,7 @@
 const connection = require('./db')
 const express = require('express')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 //welcome message
 console.log('API NODE etsisi-lab')
@@ -19,6 +20,7 @@ app.use(cors())
 //convert data from body to js objects
 app.use(express.json())
 app.use(express.urlencoded({extended: true})) //any data is decoded in a js object
+app.use(cookieParser())
 
 //load routes
 const UserRoutes = require('./routes/user')
