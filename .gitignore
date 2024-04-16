@@ -3,3 +3,5 @@ start-projet.bat
 
 backend/db.js
 
+front/node_modules
+

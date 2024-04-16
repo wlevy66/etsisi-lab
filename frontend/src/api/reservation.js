@@ -1,7 +1,7 @@
 import { URL } from "../../public/data"
 
-const getReservationsRequest = async() => {
-    let request = await fetch(`${URL.RESERVATION}`, {
+const getReservationsRequest = async(id) => {
+    let request = await fetch(`${URL.RESERVATION}/${id}`, {
         method: 'GET'
     })
     
@@ -11,13 +11,6 @@ const getReservationsRequest = async() => {
     
 }
 
-const getReservationByUserIdRequest = async (id) => {
-    let request = await fetch (`${URL.RESERVATION}/${id}`, {
-        method: 'GET'
-    })
-    const data = await request.json()
-    return data.reservations
-}
 
 const createReservationRequest = async (newData) => {
     let request = await fetch (`${URL.RESERVATION}`, {
@@ -26,10 +19,11 @@ const createReservationRequest = async (newData) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(newData)
+        
     })
 
-    const data = await request.json()
-    return data
+    let response = await request.json()
+    return response
 }
 
 const updateReservationRequest = async (id, newData) => {
@@ -58,7 +52,6 @@ const deleteReservationRequest = async (id) => {
 
 export {
     getReservationsRequest,
-    getReservationByUserIdRequest,
     createReservationRequest,
     updateReservationRequest,
     deleteReservationRequest

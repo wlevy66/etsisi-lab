@@ -5,33 +5,50 @@ const Reservation = require ('../models/reservationModel')
 const get = async (req, res) => {
     try{
         const {id} = req.body
-        const rooms = await Room.find()
+        const rooms = await Room.find().select('_id name capacity')
         res.json({
             rooms
         })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
+        })
+    }
+}
+
+const getById = async (req, res) => {
+    try{
+        const room = await Room.findById(req.params.id).select('_id name capacity')
+        res.json({
+            room
+        })
+    }catch(error){
+        res.status(500).json({
+            error: error.message
         })
     }
 }
 
 const create = async (req, res) => {
     try{
-        console.log(req.body)
         const {name, capacity} = req.body
+      
+        const roomAlreadyExists = await Room.find({"name":name})
+        if(roomAlreadyExists.length > 0) return res.status(400).json({
+            status: 400,
+            error: 'Room already exists',
+        })
         
         const newRoom = new Room({
             name,
             capacity
         })
-
         const savedRoom = await newRoom.save()
-        
         res.status(201).json({
+            status: 201,
+            message: 'Room created successfully!',
             savedRoom
         })
-
     }catch(error){
         res.status(500).json({
             message: error.message
@@ -42,15 +59,36 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     try{
         const {name, capacity} = req.body
-        const roomUpdated = await Room.findOneAndUpdate(
-            { _id: req.params.id },
-            { name, capacity},
-            { new: true }
-        );
-        
-        res.status(200).json({
-            roomUpdated
+
+        if(!name || !capacity) return res.status(500).json({
+            status: 500,
+            message: 'Missing inputs'
         })
+
+        const room = await Room.findById(req.params.id);
+        if(name !== room.name) {
+            const roomAlreadyExists = await Room.find({"name":name})
+            if(roomAlreadyExists.length > 0) return res.status(500).json({
+                status: 500,
+                message: 'Room already exists',
+            })
+        }
+
+        if (name !== room.name || capacity !== room.capacity) {
+            const roomUpdated = await Room.findOneAndUpdate(
+                { _id: req.params.id },
+                { name, capacity},
+                { new: true }
+            );
+            
+            res.status(201).json({
+                status: 201,
+                message: 'Room updated successfully!',
+                roomUpdated
+            })
+        }
+
+
 
     }catch(error){
         res.status(500).json({
@@ -89,6 +127,7 @@ const removeRoomInReservation = async (id) => {
 
 module.exports = {
     get,
+    getById,
     create,
     update,
     remove

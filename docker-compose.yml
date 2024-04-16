@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - C:\etsisi:/data/db
+      - D:\etsisi:/data/db
       - ./init.js:/docker-entrypoint-initdb.d/init.js
       - ./data.js:/docker-entrypoint-initdb.d/data.js
     logging:

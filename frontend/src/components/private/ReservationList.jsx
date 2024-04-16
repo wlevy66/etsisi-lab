@@ -9,7 +9,8 @@ const ReservationList = () => {
     const params = useParams()
   
     useEffect(() => {
-      getReservations()
+      getReservations(params.id)
+      console.log(params.id)
     }, [])
   
     const handleRemove = (id) => {

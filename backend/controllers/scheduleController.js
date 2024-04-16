@@ -71,11 +71,14 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
     try {
-        const schedule = await Schedule.findByIdAndDelete(req.params.id);
-        if (!schedule) return res.status(404).json({ message: "Schedule not found" });
-        return res.json(schedule);
+        const schedule = await Schedule.findByIdAndDelete(req.params.id)
+        if (!schedule) return res.status(404).json({ message: "Schedule not found" })
+        return res.status(200).json({
+                status:200,
+                schedule
+            })
     }catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message })
     }
 }
 

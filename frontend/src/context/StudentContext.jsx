@@ -15,21 +15,23 @@ export function StudentProvider({children}){
     const [reservations, setReservations] = useState([])
 
     const createReservation = async (reservation) => {
-        const response = await createReservationRequest(reservation)
+        return await createReservationRequest(reservation)
     }
 
-    const getReservations = async () => {
-        const response = await getReservationsRequest()
+    const getReservations = async (id) => {
+        const response = await getReservationsRequest(id)
         setReservations(response)
+        return response
     }
 
     const updateReservation = async (id, newData) => {
-        const response = await updateReservationRequest(id, newData)
+        return await updateReservationRequest(id, newData)
     }
     const deleteReservation = async (id) => {
         const response = await deleteReservationRequest(id)
         const newReservations = reservations.filter(reservation => reservation._id !== id)  
         setReservations(newReservations)
+        return response
     }
 
     return (
