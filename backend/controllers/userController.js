@@ -51,8 +51,8 @@ const register = async (req, res) => {
             role = 'professor'
         }
 
-        let existingUser = User.findOne({email: email})
-        if(existingUser.length > 0) return res.status(400).json({
+        let existingUser = await User.findOne({email: email})
+        if(!existingUser) return res.status(400).json({
             status:400,
             message:"user existing"
         })

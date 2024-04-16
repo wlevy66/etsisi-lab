@@ -2,11 +2,11 @@ const Room = require('../models/roomModel')
 const Schedule = require ('../models/scheduleModel')
 const Reservation = require ('../models/reservationModel')
 
-const get = async (req, res) => {
+const getRooms = async (req, res) => {
     try{
-        const {id} = req.body
         const rooms = await Room.find().select('_id name capacity')
-        res.json({
+        res.status(200).json({
+            status: 200,
             rooms
         })
     }catch(error){
@@ -16,10 +16,16 @@ const get = async (req, res) => {
     }
 }
 
-const getById = async (req, res) => {
+const getRoom = async (req, res) => {
     try{
         const room = await Room.findById(req.params.id).select('_id name capacity')
-        res.json({
+        if(!room) return res.status(404).json({
+            status: 404,
+            message: 'Room not found'
+        })
+
+        res.status(200).json({
+            status: 200,
             room
         })
     }catch(error){
@@ -29,12 +35,12 @@ const getById = async (req, res) => {
     }
 }
 
-const create = async (req, res) => {
+const createRoom = async (req, res) => {
     try{
         const {name, capacity} = req.body
       
-        const roomAlreadyExists = await Room.find({"name":name})
-        if(roomAlreadyExists.length > 0) return res.status(400).json({
+        const roomAlreadyExists = await Room.findOne({"name":name})
+        if(!roomAlreadyExists) return res.status(400).json({
             status: 400,
             error: 'Room already exists',
         })
@@ -51,84 +57,71 @@ const create = async (req, res) => {
         })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const update = async (req, res) => {
+const updateRoom = async (req, res) => {
     try{
-        const {name, capacity} = req.body
-
-        if(!name || !capacity) return res.status(500).json({
-            status: 500,
-            message: 'Missing inputs'
-        })
-
-        const room = await Room.findById(req.params.id);
-        if(name !== room.name) {
-            const roomAlreadyExists = await Room.find({"name":name})
-            if(roomAlreadyExists.length > 0) return res.status(500).json({
-                status: 500,
-                message: 'Room already exists',
-            })
-        }
-
-        if (name !== room.name || capacity !== room.capacity) {
-            const roomUpdated = await Room.findOneAndUpdate(
-                { _id: req.params.id },
-                { name, capacity},
-                { new: true }
-            );
-            
+        await Room.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        .then(roomUpdated => {
             res.status(201).json({
                 status: 201,
                 message: 'Room updated successfully!',
                 roomUpdated
             })
-        }
-
-
-
+        })
+        .catch(() => {
+            return res.status(404).json({
+                status: 404,
+                error: 'Room already exists'
+            })
+        })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const remove = async (req, res) => {
+const deleteRoom = async (req, res) => {
     try {
         const room = await Room.findByIdAndDelete(req.params.id);
-        if (!room) return res.status(404).json({ message: "Room not found" });
-        removeRoomInSchedule(req.params.id)
-        removeRoomInReservation(req.params.id)
-        return res.json(room);
+        if (!room) return res.status(404).json({
+            error: "Room not found"
+        })
+
+        await removeRoomInSchedule(req.params.id)
+        await removeRoomInReservation(req.params.id)
+        res.status(204).json({
+            status:204
+        })
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({
+            error: error.message
+        })
     }
 }
 const removeRoomInSchedule = async (id) => {
     try {
-        const schedule = await Schedule.deleteMany({ room : id})
-        return schedule
+        await Schedule.deleteMany({ room : id})
     }catch (error) {
         return error.message
     }
 }
 const removeRoomInReservation = async (id) => {
     try {
-        const reservation = await Reservation.deleteMany({ room : id})
-        return reservation
+        await Reservation.deleteMany({ room : id})
     } catch (error) {
         return error.message
     }
 }
 
 module.exports = {
-    get,
-    getById,
-    create,
-    update,
-    remove
+    getRooms,
+    getRoom,
+    createRoom,
+    updateRoom,
+    deleteRoom
 }

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const ReservationController = require('../controllers/reservationController')
+const validateToken = require('../middlewares/validateToken')
 
 //define routes
 router.get('/reservations/:id', ReservationController.get)

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const ScheduleController = require('../controllers/scheduleController')
+const validateToken = require('../middlewares/validateToken')
 
 //define routes
 router.get('/schedules', ScheduleController.get)

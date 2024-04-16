@@ -26,7 +26,7 @@ const FormRoom = () => {
                 console.log(response)
                 if(response.status !== 201){
                     setInvalid(true)
-                    setResponseMessage(response.message)
+                    setResponseMessage(response.error)
                 }
                 else{
                     setInvalid(false)
