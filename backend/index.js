@@ -15,7 +15,9 @@ const app = express()
 const port = 3900
 
 //configure cors
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173'
+}))
 
 //convert data from body to js objects
 app.use(express.json())

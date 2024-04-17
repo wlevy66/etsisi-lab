@@ -9,8 +9,8 @@ import MyReservations from './MyReservations'
 import Reservations from './Reservations'
 import FormReservation from './FormReservation'
 import Nav from './Nav'
-import LoginPage from './LoginPage'
-import RegisterPage from './RegisterPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import ProtectedRoute from './ProtectedRoute'
 
 function Routing() {

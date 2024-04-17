@@ -52,7 +52,7 @@ const register = async (req, res) => {
         }
 
         let existingUser = await User.findOne({email: email})
-        if(!existingUser) return res.status(400).json({
+        if(existingUser) return res.status(400).json({
             status:400,
             message:"user existing"
         })
@@ -66,7 +66,7 @@ const register = async (req, res) => {
         const userSaved = await newUser.save()
         const token = jwt.sign({id: userSaved._id}, 'secret123', {expiresIn: '1h'})  
 
-        res.cookie('token', token, {httpOnly: true})
+        res.cookie('token', token)
         res.status(201).json({
             status: 201,
             id: userSaved._id,
