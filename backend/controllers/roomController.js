@@ -40,7 +40,7 @@ const createRoom = async (req, res) => {
         const {name, capacity} = req.body
       
         const roomAlreadyExists = await Room.findOne({"name":name})
-        if(!roomAlreadyExists) return res.status(400).json({
+        if(roomAlreadyExists) return res.status(400).json({
             status: 400,
             error: 'Room already exists',
         })

@@ -11,17 +11,17 @@ const login = async (req, res) => {
 
         if(!userFound) return res.status(400).json({
             status: 400,
-            message: 'Invalid credentials. Please verify username and password and try again.'
+            error: 'Invalid credentials. Please verify username and password and try again.'
         })
 
         const matched = await bcrypt.compare(password, userFound.password)
         if(!matched) return res.status(400).json({
             status: 400,
-            message: 'Invalid credentials. Please verify username and password and try again.'
+            error: 'Invalid credentials. Please verify username and password and try again.'
         })
         
         const token = jwt.sign({id: userFound._id}, 'secret123', {expiresIn: '1h'}) 
-        res.cookie('token', token, {httpOnly: true})
+        res.cookie('token', token)
 
         return res.status(200).json({
             status:200,
@@ -32,7 +32,7 @@ const login = async (req, res) => {
     }catch (error){
         return res.status(500).json({
             status:500,
-            message: error.message
+            error: error.message
         })
     }
 }
@@ -54,7 +54,7 @@ const register = async (req, res) => {
         let existingUser = await User.findOne({email: email})
         if(existingUser) return res.status(400).json({
             status:400,
-            message:"user existing"
+            error:"user existing"
         })
 
         const newUser = new User({
@@ -77,22 +77,43 @@ const register = async (req, res) => {
 
     }catch (error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
     
 }
 
 const logout = async (req, res) => {
-    res.cookie('token', '', {httpOnly: true, expires: new Date(0)})
+    res.cookie('token', '', {expires: new Date(0)})
     res.status(200).json({
         status: 200,
         message: 'User logged out successfully'
     })
 }
 
+const verify = (req, res) => {
+    const {token} = req.cookies
+    if(!token) return res.status(401).json({
+        status: 401,
+        error: 'Unauthorized'
+    })
+
+    jwt.verify(token, 'secret123', async (error, user) => {
+        if(error) return res.status(401).json({
+            status: 401,
+            error: 'Unauthorized'
+        })
+        const userFound = await User.findById(user.id)
+        res.status(200).json({
+            status: 200,
+            id: user.id,
+            role: userFound.role
+        })
+    })
+}
 module.exports = {
     login,
     register,
-    logout
+    logout,
+    verify
 }

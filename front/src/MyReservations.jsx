@@ -3,10 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getReservationsRequest, deleteReservationRequest } from './api/reservation'
 
 import { DataGrid } from '@mui/x-data-grid'
-import { Button } from '@mui/material'
 import { changeFormat } from './util'
-import DeleteIcon from '@mui/icons-material/Delete'
-import UpdateIcon from '@mui/icons-material/Update'
 
 const MyReservations = () => {
 
@@ -32,9 +29,9 @@ const MyReservations = () => {
           renderCell: (row) => (
             <>
               <Link to={`/edit-reservation/${params.roomId}/${row.id}`} >
-                <Button variant="contained" color="primary">Editar<UpdateIcon/></Button>
+                <button >Editar</button>
               </Link>
-              <Button variant="contained" color="primary" onClick={() => handleDeleteSchedule(row.id)}>Eliminar<DeleteIcon/></Button>
+              <button onClick={() => handleDeleteSchedule(row.id)}>Eliminar</button>
             </>
           )
         }
@@ -50,7 +47,7 @@ const MyReservations = () => {
     
       return (
           <div style={{width: '90%'}}>
-              <h2>My reservations</h2>
+              <h2 className='mt-3'>My reservations</h2>
               <DataGrid
                 rows={reservations}
                 columns={columns}

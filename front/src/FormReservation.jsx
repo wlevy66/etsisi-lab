@@ -2,12 +2,8 @@ import React, { useEffect, useState  } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import {getScheduleByRoomIdRequest, deleteScheduleRequest} from './api/schedule'
 import { DataGrid } from '@mui/x-data-grid'
-import { Button } from '@mui/material'
 import { changeFormat, schedulesAvailable } from './util'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import AddIcon from '@mui/icons-material/Add'
-import DeleteIcon from '@mui/icons-material/Delete'
-import UpdateIcon from '@mui/icons-material/Update'
+
 import { createReservationRequest } from './api/reservation'
 
 const FormReservation = () => {
@@ -29,7 +25,7 @@ const FormReservation = () => {
           sortable: false,
           renderCell: (row) => (
             <>
-              <Button variant="contained" color="primary" onClick={() => handleAddReservation(row)}>Reservar<DeleteIcon/></Button>
+              <button onClick={() => handleAddReservation(row)}>Reservar</button>
             </>
           )
         }
@@ -47,7 +43,7 @@ const FormReservation = () => {
       return (
           <div style={{width: '90%'}}>
     
-              <button onClick={()=>navigate(-1)}><ArrowBackIcon /></button>
+              <button onClick={()=>navigate(-1)}></button>
               <h2>Schedules available</h2>
               <DataGrid
                 rows={schedules}
