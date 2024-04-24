@@ -92,10 +92,11 @@ const deleteRoom = async (req, res) => {
             error: "Room not found"
         })
 
-        await removeRoomInSchedule(req.params.id)
-        await removeRoomInReservation(req.params.id)
+        await deleteRoomInSchedule(req.params.id)
+        await deleteRoomInReservation(req.params.id)
         res.status(204).json({
-            status:204
+            status:204,
+            message: 'Room deleted successfully!'
         })
     } catch (error) {
         return res.status(500).json({
@@ -103,14 +104,14 @@ const deleteRoom = async (req, res) => {
         })
     }
 }
-const removeRoomInSchedule = async (id) => {
+const deleteRoomInSchedule = async (id) => {
     try {
         await Schedule.deleteMany({ room : id})
     }catch (error) {
         return error.message
     }
 }
-const removeRoomInReservation = async (id) => {
+const deleteRoomInReservation = async (id) => {
     try {
         await Reservation.deleteMany({ room : id})
     } catch (error) {

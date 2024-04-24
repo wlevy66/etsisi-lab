@@ -1,21 +1,16 @@
-import React, { useEffect, useState  } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import {getScheduleByRoomIdRequest, deleteScheduleRequest} from './api/schedule'
-import { DataGrid } from '@mui/x-data-grid'
-
-import { changeFormat } from './util'
+import { useEffect} from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { useSchedule } from './context/ScheduleContext'
 import ScheduleCard from './components/ScheduleCard'
 
 
 const Schedules = () => {
 
-  const [schedules, setSchedules] = useState([])
   const params = useParams()
-  const navigate = useNavigate()
+  const {getSchedulesByRoom, schedules} = useSchedule()
 
   useEffect(() => {
-    console.log(params)
-    getScheduleByRoomIdRequest(params.roomId).then(response => setSchedules(response.schedules))
+    getSchedulesByRoom(params.roomId)
   }, [])
 
   return (
@@ -26,7 +21,7 @@ const Schedules = () => {
         <ScheduleCard schedule={schedule} key={schedule._id} />
       ))}
       </div>
-      <Link to={'/add-room'}><button className='mt-3'>Add schedule</button></Link>
+      <Link to={`/add-schedule/${params.roomId}`}><button className='mt-3 bg-sky-700 border-black p-2 rounded-md'>Add schedule</button></Link>
     </>
 
   )

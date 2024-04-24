@@ -1,72 +1,35 @@
-import { useEffect, useState } from "react"
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getReservationsRequest, deleteReservationRequest } from './api/reservation'
-
-import { DataGrid } from '@mui/x-data-grid'
-import { changeFormat } from './util'
+import React, { useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { useReservation } from './context/ReservationContext'
+import  ReservationCard  from './components/ReservationCard'
+import { useAuth } from './context/AuthContext'
 
 const MyReservations = () => {
+  const params = useParams()
+  const {getReservations, reservations} = useReservation()
+  const { user } = useAuth()
+  console.log(user)
 
-    const [reservations, setReservations] = useState([])
-    const params = useParams()
+  useEffect(() => {
+    console.log(user)
+    const fetchReservations = async () => {
+      await getReservations("6600972b078fcfc9d77de488")
+    }
+    fetchReservations()
+  }, [])
 
-    useEffect(()=>{
-        getReservationsRequest('66009730078fcfc9d77de48a').then(response=>{
-          console.log(response.reservations)
-          setReservations(response.reservations)})
-        
-    }, [])
-    const columns  = [
-        { field: 'name', headerName: 'Name', width: 180,  valueGetter: (value, row) => {return `${row.schedule.room.name}`} },
-        { field: 'day', headerName: 'Day', width: 180, valueGetter: (value, row) => {return changeFormat(row.schedule.start)[0]}, sortable: false},
-        { field: 'start', headerName: 'Start', width: 180, valueGetter: (value, row) => {return changeFormat(row.schedule.start)[1]}, sortable: false},
-        { field: 'end', headerName: 'End', width: 180, valueGetter: (value, row) => {return changeFormat(row.schedule.end)[1]}, sortable: false},
-        { 
-          field: 'actions',
-          headerName: 'Actions',
-          width: 300,
-          sortable: false,
-          renderCell: (row) => (
-            <>
-              <Link to={`/edit-reservation/${params.roomId}/${row.id}`} >
-                <button >Editar</button>
-              </Link>
-              <button onClick={() => handleDeleteSchedule(row.id)}>Eliminar</button>
-            </>
-          )
-        }
-      ]
-      const handleDeleteSchedule = (id) => {
-        deleteReservationRequest(id).then((response) => {
-          if(response && response.status === 200){
-            const newReservations = reservations.filter(reservation => reservation._id !== id)
-            setReservations(newReservations)
-          }
-        })
-      }
-    
-      return (
-          <div style={{width: '90%'}}>
-              <h2 className='mt-3'>My reservations</h2>
-              <DataGrid
-                rows={reservations}
-                columns={columns}
-                getRowId={(reservation) => reservation._id}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                autoHeight
-                rowSelection={false}
-                
-              />
-            <Link to={`/add-reservation/`}><button>Add reservation</button></Link>
-          </div>
-      )
+  return (
+    <>
+      <h1 className='my-3 text-3xl font-bold'>List of reservations</h1>
+      <div className='grid grid-cols-4 gap-2'>
+      {reservations && reservations.map(reservation => (
+        <ReservationCard reservation={reservation} key={reservation._id} />
+      ))}
+      </div>
+      <Link to={`/add-reservation`}><button className='mt-3 bg-sky-700 border-black p-2 rounded-md'>Add reservation</button></Link>
+    </>
+
+  )
 }
-
-
 
 export default MyReservations

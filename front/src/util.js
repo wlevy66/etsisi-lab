@@ -1,5 +1,4 @@
 import { getReservationsRequest } from './api/reservation'
-import {getScheduleByRoomIdRequest } from './api/schedule'
 
 
 export const dateToUTC = (date, hour) =>{
@@ -25,7 +24,7 @@ export const changeFormat = (isoDate) => {
 
     return [date, hour]
   }
-
+/*
 export const schedulesAvailable = async(userId, roomId) => {
 
     let userReservations = await getReservationsRequest(userId)
@@ -37,3 +36,4 @@ export const schedulesAvailable = async(userId, roomId) => {
 
     return schedulesAvailable
 }
+*/

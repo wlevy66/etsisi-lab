@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { getSchedulesRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest } from '../api/schedule'
+import { getSchedulesRequest, getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest } from '../api/schedule'
 
 
 export const ScheduleContext = createContext()
@@ -18,7 +18,16 @@ export const ScheduleProvider = ({ children }) => {
     const getSchedules = async () => {
         try{
             const response = await getSchedulesRequest()
-            console.log(response.data.schedules)
+            setSchedules(response.data.schedules)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    const getSchedulesByRoom = async (roomId) => {
+        try{
+            const response = await getSchedulesByRoomRequest(roomId)
             setSchedules(response.data.schedules)
         }
         catch(error){
@@ -29,7 +38,6 @@ export const ScheduleProvider = ({ children }) => {
     const addSchedule = async (schedule) => {
         try{
             const response = await createScheduleRequest(schedule)
-            console.log(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -39,7 +47,6 @@ export const ScheduleProvider = ({ children }) => {
     const updateSchedule = async (id, newData) => {
         try{
             const response = await updateScheduleRequest(id, newData)
-            console.log(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -56,9 +63,9 @@ export const ScheduleProvider = ({ children }) => {
         }
     }
 
-    const getSchedule = async (id) => {
+    const getSchedule = async (roomId, scheduleId) => {
         try{
-            const response = await getScheduleRequest(id)
+            const response = await getScheduleRequest(roomId, scheduleId)
             return response.data.schedule
         }
         catch(error){
@@ -71,6 +78,7 @@ export const ScheduleProvider = ({ children }) => {
             schedules,
             error,
             getSchedules,
+            getSchedulesByRoom,
             addSchedule,
             updateSchedule,
             deleteSchedule,

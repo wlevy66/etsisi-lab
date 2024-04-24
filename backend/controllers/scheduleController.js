@@ -1,84 +1,113 @@
 const Schedule = require('../models/scheduleModel')
+const Reservation = require('../models/reservationModel')
 
-const get = async (req, res) => {
+
+
+const getSchedules = async (req, res) => {
+    
     try{
         const schedules = await Schedule.find().populate('room')
-        res.json({
+        res.status(200).json({
+            status: 200,
             schedules
         })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
-
-const getByRoomId = async (req, res) => {
+const getSchedulesByRoom = async (req, res) => {
     try{
-        const id = req.params.id
-        const schedules = await Schedule.find({ room : id}).populate('room')
-        res.json({
-            schedules,
-            message: 'getById'
+        const schedules = await Schedule.find({ room : req.params.roomId}).populate('room').sort({start: 1})
+        res.status(200).json({
+            status: 200,
+            schedules
         })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const create = async (req, res) => {
+const getSchedule = async (req, res) => {
+    try{
+        const schedule = await Schedule.findById(req.params.scheduleId).populate('room')
+        res.status(200).json({
+            status: 200,
+            schedule,
+        })
+    }catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
+const createSchedule = async (req, res) => {
 
     try{
-        const {room, start, end} = req.body
-        const newSchedule = new Schedule({
-            room,
-            start,
-            end
-        })
+
+        const newSchedule = new Schedule(req.body)
         const savedSchedule = await newSchedule.save()
         
-        res.status(200).json({
+        res.status(201).json({
+            status: 201,
+            message: 'Schedule created successfully!',
             savedSchedule
         })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const update = async (req, res) => {
+const updateSchedule = async (req, res) => {
     try{
-        const {room, start, end} = req.body
-        const scheduleUpdated = await Schedule.findOneAndUpdate(
-            { _id: req.params.id },
-            { room, start, end },
-            { new: true }
-        );
-        
+        const schedule = await Schedule.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        if(!schedule) return res.status(404).json({
+            status: 404,
+            error: 'Schedule not found'
+        })
         res.status(200).json({
-            scheduleUpdated
+            status: 200,
+            message: 'Schedule updated successfully!',
+            schedule
         })
 
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const remove = async (req, res) => {
-    try {
+const deleteSchedule = async (req, res) => {
+    try{
         const schedule = await Schedule.findByIdAndDelete(req.params.id)
-        if (!schedule) return res.status(404).json({ message: "Schedule not found" })
-        return res.status(200).json({
-                status:200,
-                schedule
-            })
-    }catch (error) {
-        return res.status(500).json({ message: error.message })
+        if(!schedule) return res.status(404).json({
+            status: 404,
+            error: 'Schedule not found'
+        })
+        await deleteScheduleInReservation(req.params.id)
+        res.status(204).json({
+            status: 204,
+            message: 'Schedule deleted successfully!'
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+const deleteScheduleInReservation = async (id) => {
+    try {
+        await Reservation.deleteMany({ schedule : id})
+    } catch (error) {
+        return error.message
     }
 }
 
@@ -87,9 +116,10 @@ const remove = async (req, res) => {
 
 
 module.exports = {
-    get,
-    getByRoomId,
-    create,
-    update,
-    remove
+    getSchedules,
+    getSchedulesByRoom,
+    getSchedule,
+    createSchedule,
+    updateSchedule,
+    deleteSchedule
 }

@@ -14,11 +14,11 @@ const DashBoard = () => {
         <>
           <h1 className='my-3 text-3xl font-bold'>List of rooms</h1>
           <div className='grid grid-cols-4 gap-2'>
-            {rooms.map(room => (
+            {rooms && rooms.map(room => (
               <RoomCard room={room} key={room._id} />
             ))}
           </div>
-          <Link to={'/add-room'}><button className='mt-3'>Add Room</button></Link>
+          <Link to={'/add-room'}><button className='mt-3 bg-sky-700 border-black p-2 rounded-md'>Add Room</button></Link>
         </>
       )
 }

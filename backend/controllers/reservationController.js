@@ -1,7 +1,7 @@
 const Reservation = require('../models/reservationModel')
 const Schedule = require('../models/scheduleModel')
 
-const get = async (req, res) => {
+const getReservations = async (req, res) => {
     try{
         const reservations = await Reservation.find({"user": req.params.id})
                             .populate({
@@ -25,22 +25,51 @@ const get = async (req, res) => {
 
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const create = async (req, res) => {
+const getReservation = async (req, res) => {
+    try{
+        const reservation = await Reservation.findById(req.params.reservationId)
+                            .populate({
+                                path:'user',
+                                select: '_id email'
+                            })
+                            .populate({
+                                path: 'schedule',
+                                select: '_id start end room',
+                                populate: {
+                                    path: 'room',
+                                    model: 'Room',
+                                    select: 'name capacity'
+                                }
+                            })
+
+        return res.status(200).json({
+            status: 200,
+            reservation
+        })
+
+    }catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
+const createReservation = async (req, res) => {
 
     try{
         
         const {user, schedule} = req.body
-
+        
         const userHasReservation = await Reservation.find({schedule, user})
         console.log(userHasReservation)
         if (userHasReservation && userHasReservation.length > 0) return res.status(400).json({
             status: 400,
-            message: "You have already a reservation for this schedule."
+            error: "You have already a reservation for this schedule."
         })
         
         const roomCapacity = await Schedule.findById({"_id": schedule})
@@ -53,7 +82,7 @@ const create = async (req, res) => {
         if(availableCapacity === 0){
             return res.status(400).json({
                 status: 400,
-                message: "Not capacity available"
+                error: "Not capacity available"
             })
         }
         
@@ -65,52 +94,61 @@ const create = async (req, res) => {
 
         res.status(201).json({
             status: 201,
-            message: "Reservation created",
+            message: "Reservation created successfully!",
             savedReservation
         })
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const update = async (req, res) => {
+const updateReservation = async (req, res) => {
     try{
-        const {user, room, schedule} = req.body
+        
         const reservationUpdated = await Reservation.findOneAndUpdate(
             { _id: req.params.id },
-            { user, room, schedule },
+            { $set: { schedule: req.body.schedule } },
             { new: true }
-        );
+        )
         
         res.status(201).json({
+            status: 201,
+            message: "Reservation updated successfully!",
             reservationUpdated
         })
 
     }catch(error){
         res.status(500).json({
-            message: error.message
+            error: error.message
         })
     }
 }
 
-const remove = async (req, res) => {
+const deleteReservation = async (req, res) => {
     try {
         const reservation = await Reservation.findByIdAndDelete(req.params.id);
-        if (!reservation) return res.status(404).json({ message: "Reservation not found" });
+        if (!reservation) return res.status(404).json({
+            message: "Reservation not found"
+        })
+
         return res.status(200).json({
             status:200,
-            reservation}
-        )
+            message: "Reservation deleted successfully!",
+            reservation
+        })
     }catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({
+            error: error.message
+        })
     }
 }
 
 module.exports = {
-    get,
-    create,
-    update,
-    remove
+    getReservations,
+    getReservation,
+    createReservation,
+    updateReservation,
+    deleteReservation
 }

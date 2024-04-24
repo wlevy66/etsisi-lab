@@ -1,66 +1,54 @@
-import React, { useEffect, useState  } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import {getScheduleByRoomIdRequest, deleteScheduleRequest} from './api/schedule'
-import { DataGrid } from '@mui/x-data-grid'
-import { changeFormat, schedulesAvailable } from './util'
-
-import { createReservationRequest } from './api/reservation'
-
+import {useForm} from 'react-hook-form'
+import { useReservation } from './context/ReservationContext'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 const FormReservation = () => {
-    const [schedules, setSchedules] = useState([])
-    const params = useParams()
-    const navigate = useNavigate()
 
-    useEffect(() => {
-        schedulesAvailable('66009730078fcfc9d77de48a', params.roomId).then(response => setSchedules(response))
-    }, [])
-    const columns = [
-        { field: 'day', headerName: 'Day', width: 250, type: 'String', renderCell: (row) => changeFormat(`${row.row.start}`)[0], sortable: false},
-        { field: 'start', headerName: 'Start', width: 250, renderCell: (row) => changeFormat(row.value)[1], sortable: false},
-        { field: 'end', headerName: 'End', width: 250, renderCell: (row) => changeFormat(row.value)[1], sortable: false},
-        { 
-          field: 'actions',
-          headerName: 'Actions',
-          width: 250,
-          sortable: false,
-          renderCell: (row) => (
-            <>
-              <button onClick={() => handleAddReservation(row)}>Reservar</button>
-            </>
-          )
-        }
-      ]
-      const handleAddReservation = async(row) => {
-        let data = {
-          user: '66009730078fcfc9d77de48a',
-          schedule: row.id
-        }
-        console.log(row.id)
-        await createReservationRequest(data)
-        navigate('/my-reservations')
+  const { register, handleSubmit, errors } = useForm()
+  const { addReservation, error, updateReservation } = useReservation()
+  const navigate = useNavigate()
+  const params = useParams()
+
+  useEffect(() => {
+    const getReservationData = async() => {
+      if(params.reservationId){
+        const reservation = await getReservation(params.reservationId)
+        console.log(reservation)
+        setValue('name', reservation.name)
+        setValue('capacity', reservation.capacity)
       }
-    
-      return (
-          <div style={{width: '90%'}}>
-    
-              <button onClick={()=>navigate(-1)}></button>
-              <h2>Schedules available</h2>
-              <DataGrid
-                rows={schedules}
-                columns={columns}
-                getRowId={(schedule) => schedule._id}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 5 },
-                  },
-                }}
-                pageSizeOptions={[5, 10]}
-                autoHeight
-                rowSelection={false}
-              />
-          </div>
-      )
-    
+    }
+    getReservationData()
+  }, [])
+
+  const onSubmit = handleSubmit( async(data) => {
+    if(params.reservationId){
+      await updateReservation(params.reservationId, data)
+    }
+    else{
+      await addReservation(data)
+    }
+    navigate('/dashboard')
+  })
+  return(
+    <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
+      <h1>Add reservation</h1>
+      <form onSubmit={onSubmit}>
+        <div>{error && <span>{error}</span>}</div>
+
+        <input type='text' placeholder="User" 
+          {...register('user')} autoFocus />
+        <input type='text' placeholder="Schedule" 
+          {...register('schedule')} />
+
+        <button type='submit'>Add</button>
+        <button onClick={(e) => {
+          e.preventDefault()
+          navigate(`/dashboard`)
+        }}>Cancel</button>
+      </form>
+    </div>
+  )
 }
 
 export default FormReservation

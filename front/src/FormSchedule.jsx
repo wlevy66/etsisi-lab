@@ -1,73 +1,83 @@
+import {useForm} from 'react-hook-form'
+import { useSchedule } from './context/ScheduleContext'
 import { useNavigate, useParams } from 'react-router-dom'
-import {dateToUTC} from './util'
-import {createScheduleRequest, updateScheduleRequest} from './api/schedule'
+import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const FormSchedule = () => {
-    const params = useParams()
-    const navigate = useNavigate()
-    
-    const handleAddSchedule = async(e) => {
-        e.preventDefault()
-        const date = e.target.date.value
-        const start = e.target.start.value
-        const end = e.target.end.value
 
-        if(start < end){
-            console.log(params)
-            const newData = {
-                room: params.roomId,
-                start: dateToUTC(date, start),
-                end: dateToUTC(date, end)
-            }
+    const { register, handleSubmit, setValue } = useForm()
+    const { addSchedule, error, getSchedule, updateSchedule } = useSchedule()
+    const navigate = useNavigate()
+    const params = useParams()
+
+    useEffect(() => {
+        const getScheduleData = async() => {
             if(params.scheduleId){
-                updateScheduleRequest(params.scheduleId, newData)
+                const schedule = await getSchedule(params.roomId, params.scheduleId)
+                setValue('start', dayjs.utc(schedule.start).format('YYYY-MM-DDTHH:mm'))
+                setValue('end', dayjs.utc(schedule.end).format('YYYY-MM-DDTHH:mm'))
+            }
+        }
+        getScheduleData()
+    }, [params.scheduleId])
+
+    const onSubmit = handleSubmit( async(data) => {
+            if(params.scheduleId){
+                await updateSchedule(params.scheduleId, {
+                    ...data,
+                    start: dayjs.utc(data.start).format(),
+                    end: dayjs.utc(data.end).format()
+                })
             }
             else{
-                createScheduleRequest(newData)
-                console.log(newData)
-            }
-            navigate(-1)
-        }
-        else{
-            alert('Orden de fechas incorrectas')
-        }
-    }
-    
-  return (
-    <>
-        {
-        (params.scheduleId) ? <h3 className="text-center text-decoration-underline">Edit schedule</h3>
-                    : <h3 className="text-center text-decoration-underline">Add schedule</h3>
-        } 
-        <form onSubmit={handleAddSchedule}>
-        <div className="form-group row mb-3">
-            <label htmlFor="date" className="col-md-4 col-form-label" >Date</label>
-            <div className="col-md-8">
-                <input type="date" className="form-control" name="date" required />
-            </div>
-        </div>
-        <div className="form-group row mb-3">
-            <label htmlFor="start" className="col-md-4 col-form-label" >Start</label>
-            <div className="col-md-8">
-                <input type="time" className="form-control" name="start" required />
-            </div>
-        </div>
-        <div className="form-group row mb-3">
-            <label htmlFor="end" className="col-md-4 col-form-label">End</label>
-            <div className="col-md-8">
-                <input type="time" className="form-control" name="end" required />
-            </div>
-        </div>
-        <div className="text-center mb-2">
-            <button onClick={()=>navigate(-1)} className="btn btn-primary">Cancel</button>
-            <button id="submit" type="submit" className="btn btn-primary">Save</button>
-        </div>
-        </form>
-    </>
+                await addSchedule({
+                    ...data,
+                    room: params.roomId,
+                    start: dayjs.utc(data.start).format(),
+                    end: dayjs.utc(data.end).format()
+                })
+            }   
+        
+        navigate(-1)
+    })
+    return(
+        <div className="w-full max-w-xs mx-auto mt-5">
+            <h1 className='font-bold text-3xl mb-1'>Crear horario</h1>
+            <form onSubmit={onSubmit}>
+                <div>{error && <span>{error}</span>}</div>
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
+                Inicio
+                </label>
+                <input type='datetime-local'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="start" placeholder="Inicio" 
+                {...register('start')} autoFocus />
 
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
+                Fin
+                </label>
+                <input type='datetime-local'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="start" placeholder="Inicio" 
+                {...register('end')} />
+                <div className="flex items-center justify-between my-2">
+                    <button onClick={(e) => {
+                        e.preventDefault()
+                        navigate(`/schedules/${params.roomId}`) 
+                    }}
+                    className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded'>
+                        Cancelar
+                    </button>
 
-  );
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                        Crear
+                    </button>
+                
+                </div>
+            </form>
+        </div>
+    )
 }
-
 
 export default FormSchedule

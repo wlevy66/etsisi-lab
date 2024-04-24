@@ -4,11 +4,12 @@ const ScheduleController = require('../controllers/scheduleController')
 const validateToken = require('../middlewares/validateToken')
 
 //define routes
-router.get('/schedules', ScheduleController.get)
-router.get('/schedules/:id', ScheduleController.getByRoomId)
-router.post('/schedules', ScheduleController.create)
-router.put('/schedules/:id', ScheduleController.update)
-router.delete('/schedules/:id', ScheduleController.remove)
+router.get('/schedules', ScheduleController.getSchedules)
+router.get('/schedules/:roomId', ScheduleController.getSchedulesByRoom)
+router.get('/schedules/:roomId/:scheduleId', ScheduleController.getSchedule)
+router.post('/schedules', ScheduleController.createSchedule)
+router.put('/schedules/:id', ScheduleController.updateSchedule)
+router.delete('/schedules/:id', ScheduleController.deleteSchedule)
 
 
 module.exports = router

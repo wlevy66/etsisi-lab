@@ -24,26 +24,60 @@ const FormRoom = () => {
 
     const onSubmit = handleSubmit( async(data) => {
         if(params.roomId){
-            await updateRoom(params.roomId, data)
+            try{
+                const response = await updateRoom(params.roomId, data)
+                console.log(response)
+                if(response) navigate('/dashboard') 
+            }
+            catch(error){
+                console.log(error)
+            }
         }
         else{
-            await addRoom(data)
+            try{
+                const response = await addRoom(data)
+                console.log(response)
+                if(response) navigate('/dashboard')
+            }
+            catch(error){
+                console.log(error)
+            }
         }
-        navigate('/dashboard')
+       
     })
     return(
-        <div className='bg-zinc-800 max-w-md w-full p-10 rounded-md'>
-            <h1>Add room</h1>
+        <div className="w-full max-w-xs mx-auto mt-5">
+            <h1 className='font-bold text-3xl mb-1'>Crear aula</h1>
             <form onSubmit={onSubmit}>
-                <div>{error && <span>{error}</span>}</div>
-
-                <input type='text' placeholder="Room name" 
+                <div>{error && <span className='text-red-600'>{error}</span>}</div>
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                Nombre del aula
+                </label>
+                <input type='text'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="name" placeholder="Nombre del aula"
                 {...register('name')} autoFocus />
-                <input type='number' placeholder="Capacity" 
+                <label className="block my-2 text-gray-700 text-sm font-bold mb-2" htmlFor="capacity">
+                Capacidad
+                </label>
+                <input type='number'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="capacity" placeholder="Capacidad"
                 {...register('capacity')} />
 
-                <button type='submit'>Add</button>
-                <button onClick={() => { navigate(-1) }}>Cancel</button>
+            <div className="flex items-center justify-between my-2">
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    navigate(`/dashboard`)
+                }}
+                className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded'>
+                    Cancel
+                </button>
+
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                    Crear
+                </button>
+                
+            </div>
+
             </form>
         </div>
     )
