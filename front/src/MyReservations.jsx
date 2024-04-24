@@ -13,7 +13,7 @@ const MyReservations = () => {
   useEffect(() => {
     console.log(user)
     const fetchReservations = async () => {
-      await getReservations("6600972b078fcfc9d77de488")
+      await getReservations(user.id)
     }
     fetchReservations()
   }, [])
