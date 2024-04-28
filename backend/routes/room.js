@@ -5,8 +5,6 @@ const validateMiddleware = require('../middlewares/validatorSchema')
 const roomSchema = require('../schemas/roomSchema');
 const validateToken = require('../middlewares/validateToken')
 
-
-
 //define routes
 router.get('/rooms', RoomController.getRooms)
 router.get('/rooms/:id', RoomController.getRoom)

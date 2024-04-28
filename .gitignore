@@ -1,8 +1,9 @@
 
 start-projet.bat
 
-backend/db.js
-
 frontend/node_modules
+
 backend/node_modules
+backend/db.js
+backend/.env
 
