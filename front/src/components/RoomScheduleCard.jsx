@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useSchedule } from '../context/ScheduleContext'
-import { useReservation } from '../context/ReservationContext'
+import { useSchedule } from '@/context/ScheduleContext'
+import { useReservation } from '@/context/ReservationContext'
 import { useParams } from 'react-router-dom'
 import ReservationCard from './ReservationCard'
 import ScheduleCard from './ScheduleCard'
@@ -11,11 +11,10 @@ const RoomScheduleCard = () => {
     const [currentReservation, setCurrentReservation] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
     const params = useParams()
-    console.log(Object.keys(params).length)
     
     useEffect(() => {
         if(params.reservationId){
-            let timeoutId;
+            let timeoutId
 
             const fetchData = async () => {
                 await Promise.all([
@@ -85,4 +84,4 @@ const RoomScheduleCard = () => {
     )
 }
 
-export default RoomScheduleCard;
+export default RoomScheduleCard

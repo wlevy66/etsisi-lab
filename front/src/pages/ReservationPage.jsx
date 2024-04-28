@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { useReservation } from './context/ReservationContext'
-import  ReservationCard  from './components/ReservationCard'
-import { useAuth } from './context/AuthContext'
+import { useReservation } from '@/context/ReservationContext'
+import  ReservationCard  from '@/components/ReservationCard'
+import { useAuth } from '@/context/AuthContext'
 
-const MyReservations = () => {
-  const params = useParams()
+const ReservationPage = () => {
   const {getReservations, reservations} = useReservation()
   const { user } = useAuth()
   console.log(user)
@@ -32,4 +31,4 @@ const MyReservations = () => {
   )
 }
 
-export default MyReservations
+export default ReservationPage

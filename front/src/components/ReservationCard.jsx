@@ -1,5 +1,4 @@
-import { useReservation } from "../context/ReservationContext"
-import { useAuth } from "../context/AuthContext"
+import { useReservation } from "@/context/ReservationContext"
 import { useNavigate, useParams } from "react-router-dom"
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'

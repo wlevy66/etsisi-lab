@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getRoomsRequest, deleteRoomRequest, createRoomRequest, updateRoomRequest, getRoomRequest } from "../api/room"
+import { getRoomsRequest, deleteRoomRequest, createRoomRequest, updateRoomRequest, getRoomRequest } from "@/api/room"
 
 const RoomContext = createContext()
 
@@ -17,8 +17,17 @@ export const RoomProvider = ({ children }) => {
     const getRooms = async () => {
         try{
             const response = await getRoomsRequest()
-            console.log(response.data.rooms)
             setRooms(response.data.rooms)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+    
+    const getRoom = async (id) => {
+        try{
+            const response = await getRoomRequest(id)
+            return response.data.room
         }
         catch(error){
             console.log(error)
@@ -27,8 +36,7 @@ export const RoomProvider = ({ children }) => {
 
     const addRoom = async (room) => {
         try{
-            const response = await createRoomRequest(room)
-            console.log(response.data.message)
+            await createRoomRequest(room)
         }
         catch(error){
             setError(error.response.data.error)
@@ -37,8 +45,7 @@ export const RoomProvider = ({ children }) => {
 
     const updateRoom = async (id, newData) => {
         try{
-            const response = await updateRoomRequest(id, newData)
-            console.log(response.data.message)
+            await updateRoomRequest(id, newData)
         }
         catch(error){
             setError(error.response.data.error)
@@ -49,16 +56,6 @@ export const RoomProvider = ({ children }) => {
         try{
             await deleteRoomRequest(id)
             setRooms(rooms.filter(room => room._id !== id))
-        }
-        catch(error){
-            console.log(error)
-        }
-    }
-
-    const getRoom = async (id) => {
-        try{
-            const response = await getRoomRequest(id)
-            return response.data.room
         }
         catch(error){
             console.log(error)

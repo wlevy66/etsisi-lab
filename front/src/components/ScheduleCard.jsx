@@ -1,9 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useSchedule } from '../context/ScheduleContext'
-import { useAuth } from "../context/AuthContext"
+import { useSchedule } from '@/context/ScheduleContext'
+import { useAuth } from "@/context/AuthContext"
+import { useReservation } from '@/context/ReservationContext'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { useReservation } from '../context/ReservationContext'
 dayjs.extend(utc)
 
 const ScheduleCard = ({ schedule, type }) => {
@@ -19,8 +19,6 @@ const ScheduleCard = ({ schedule, type }) => {
     }
 
     const handleUpdateReservation = async(id, schedule) => {
-        console.log(id)
-        console.log(schedule)
         await updateReservation(id, {schedule}).then(() => navigate('/my-reservations') )
     }
 

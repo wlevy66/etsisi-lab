@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { getSchedulesRequest, getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest } from '../api/schedule'
+import { getSchedulesRequest, getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest } from '@/api/schedule'
 
 
 export const ScheduleContext = createContext()
@@ -35,9 +35,19 @@ export const ScheduleProvider = ({ children }) => {
         }
     }
 
+    const getSchedule = async (roomId, scheduleId) => {
+        try{
+            const response = await getScheduleRequest(roomId, scheduleId)
+            return response.data.schedule
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
     const addSchedule = async (schedule) => {
         try{
-            const response = await createScheduleRequest(schedule)
+            await createScheduleRequest(schedule)
         }
         catch(error){
             setError(error.response.data.error)
@@ -46,7 +56,7 @@ export const ScheduleProvider = ({ children }) => {
 
     const updateSchedule = async (id, newData) => {
         try{
-            const response = await updateScheduleRequest(id, newData)
+            await updateScheduleRequest(id, newData)
         }
         catch(error){
             setError(error.response.data.error)
@@ -57,16 +67,6 @@ export const ScheduleProvider = ({ children }) => {
         try{
             await deleteScheduleRequest(id)
             setSchedules(schedules.filter(schedule => schedule._id !== id))
-        }
-        catch(error){
-            console.log(error)
-        }
-    }
-
-    const getSchedule = async (roomId, scheduleId) => {
-        try{
-            const response = await getScheduleRequest(roomId, scheduleId)
-            return response.data.schedule
         }
         catch(error){
             console.log(error)

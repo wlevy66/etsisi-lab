@@ -1,10 +1,10 @@
 import { useEffect} from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { useSchedule } from './context/ScheduleContext'
-import ScheduleCard from './components/ScheduleCard'
+import { useSchedule } from '@/context/ScheduleContext'
+import ScheduleCard from '@/components/ScheduleCard'
 
 
-const Schedules = () => {
+const SchedulePage = () => {
 
   const params = useParams()
   const {getSchedulesByRoom, schedules} = useSchedule()
@@ -27,4 +27,4 @@ const Schedules = () => {
   )
 }
 
-export default Schedules
+export default SchedulePage

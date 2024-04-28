@@ -1,30 +1,33 @@
 import React from 'react'
 import {BrowserRouter, Route, Routes} from "react-router-dom"
-import Schedules from './Schedules'
-import Dashboard from './Dashboard'
-import FormRoom from './FormRoom'
-import FormSchedule from './FormSchedule'
-import Error from './Error'
-import MyReservations from './MyReservations'
-import Reservations from './Reservations'
-import FormReservation from './FormReservation'
-import Nav from './Nav'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
+
+import Nav from '@/components/common/Nav'
+
+import SchedulePage from '@/pages/SchedulePage'
+import DashboardPage from '@/pages/DashboardPage'
+import FormRoom from '@/pages/forms/FormRoom'
+import FormSchedule from '@/pages/forms/FormSchedule'
+import Error from '@/pages/Error'
+import ReservationPage from '@/pages/ReservationPage'
+import LoginPage from '@/pages/auth/LoginPage'
+import RegisterPage from '@/pages/auth/RegisterPage'
+import RoomScheduleCard from '@/components/RoomScheduleCard'
+
+import { AuthProvider } from '@/context/AuthContext'
+import { RoomProvider } from '@/context/RoomContext'
+import { ScheduleProvider } from '@/context/ScheduleContext'
+import { ReservationProvider } from '@/context/ReservationContext'
+
 import ProtectedRoute from './ProtectedRoute'
-import { AuthProvider } from './context/AuthContext'
-import { RoomProvider } from './context/RoomContext'
-import { ScheduleProvider } from './context/ScheduleContext'
-import { ReservationProvider } from './context/ReservationContext'
-import ProfessorRoutes from './ProfessorRoutes'
-import RoomScheduleCard from './components/RoomScheduleCard'
+import ProfessorRoute from './ProfessorRoute'
+
 
 function Routing() {
     return (
         <AuthProvider>
-            <RoomProvider>
-                <ScheduleProvider>
-                    <ReservationProvider>
+        <RoomProvider>
+        <ScheduleProvider>
+        <ReservationProvider>
             <BrowserRouter>
                     <Nav />
                     <main className='container mx-auto px-10'>
@@ -34,26 +37,25 @@ function Routing() {
                             <Route path='/register' element={<RegisterPage />} />
                             
                             <Route element={<ProtectedRoute />}>
-                                <Route element={<ProfessorRoutes />}>
-                                    <Route path='/dashboard' element={<Dashboard />} />
+                                <Route element={<ProfessorRoute />}>
+                                    <Route path='/dashboard' element={<DashboardPage />} />
                                     <Route path='/add-room' element={<FormRoom />} />
                                     <Route path='/edit-room/:roomId' element={<FormRoom />} />
-                                    <Route path='/schedules/:roomId' element={<Schedules />} />
+                                    <Route path='/schedules/:roomId' element={<SchedulePage />} />
                                     <Route path='/add-schedule/:roomId' element={<FormSchedule />} />
                                     <Route path='/edit-schedule/:roomId/:scheduleId' element={<FormSchedule />} />
                                 </Route>
-                                <Route path='/my-reservations' element={<MyReservations />} />
+                                <Route path='/my-reservations' element={<ReservationPage />} />
                                 <Route path='/add-reservation' element={<RoomScheduleCard />} />
-                                <Route path='/add-reservation/:roomId' element={<FormReservation />} />
                                 <Route path='/edit-reservation/:reservationId' element={<RoomScheduleCard />} />
                             </Route>
                             <Route path='*' element={<Error />}/>
                     </Routes>
                     </main>
             </BrowserRouter>
-            </ReservationProvider>
-            </ScheduleProvider>
-            </RoomProvider>
+        </ReservationProvider>
+        </ScheduleProvider>
+        </RoomProvider>
         </AuthProvider>
     )
 }

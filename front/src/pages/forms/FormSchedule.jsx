@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form'
-import { useSchedule } from './context/ScheduleContext'
+import { useSchedule } from '@/context/ScheduleContext'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { getReservationRequest, addReservationRequest, deleteReservationRequest, getReservationsRequest, updateReservationRequest } from '../api/reservation'
+import { getReservationRequest, addReservationRequest, deleteReservationRequest, getReservationsRequest, updateReservationRequest } from '@/api/reservation'
 
 
 const ReservationContext = createContext()
@@ -18,8 +18,6 @@ export const ReservationProvider = ({ children }) => {
     const getReservations = async (id) => {
         try{
             const response = await getReservationsRequest(id)
-            console.log(response)
-            console.log(response.data.reservations)
             setReservations(response.data.reservations)
         }
         catch(error){
@@ -30,7 +28,6 @@ export const ReservationProvider = ({ children }) => {
     const getReservation = async (id, reservationId) => {
         try{
             const response = await getReservationRequest(id, reservationId)
-            console.log(response)
             return response.data.reservation
         }
         catch(error){
@@ -40,8 +37,7 @@ export const ReservationProvider = ({ children }) => {
 
     const addReservation = async (user,schedule) => {
         try{
-            const response = await addReservationRequest(user,schedule)
-            console.log(response.data.message)
+            await addReservationRequest(user,schedule)
         }
         catch(error){
             setError(error.response.data.error)
@@ -50,8 +46,7 @@ export const ReservationProvider = ({ children }) => {
 
     const updateReservation = async (id, newData) => {
         try{
-            const response = await updateReservationRequest(id, newData)
-            console.log(response.data.message)
+            await updateReservationRequest(id, newData)
         }
         catch(error){
             setError(error.response.data.error)
@@ -75,7 +70,8 @@ export const ReservationProvider = ({ children }) => {
             addReservation,
             updateReservation,
             deleteReservation,
-            reservations
+            reservations,
+            error
         }}>
             {children}
         </ReservationContext.Provider>

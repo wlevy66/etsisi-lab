@@ -1,4 +1,4 @@
-import { registerRequest, loginRequest, verifyToken, logoutRequest } from "../api/user"
+import { registerRequest, loginRequest, verifyToken, logoutRequest } from "@/api/user"
 import { createContext, useState, useContext, useEffect, } from "react"
 import Cookies from 'js-cookie'
 
@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true)
         }
         catch(error){
-            console.log(error)
             setError(error.response.data.error)
         }
     }
@@ -62,7 +61,7 @@ export const AuthProvider = ({ children }) => {
                     setIsAuthenticated(true)
                     setIsLoading(false)
                 })
-                .catch(error => {
+                .catch(() => {
                     setIsAuthenticated(false)
                     setUser(null)
                     setIsLoading(false)

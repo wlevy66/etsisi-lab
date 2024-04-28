@@ -1,5 +1,5 @@
 import {useForm} from 'react-hook-form'
-import { useRoom } from './context/RoomContext'
+import { useRoom } from '@/context/RoomContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
@@ -25,9 +25,7 @@ const FormRoom = () => {
     const onSubmit = handleSubmit( async(data) => {
         if(params.roomId){
             try{
-                const response = await updateRoom(params.roomId, data)
-                console.log(response)
-                if(response) navigate('/dashboard') 
+                await updateRoom(params.roomId, data)
             }
             catch(error){
                 console.log(error)
@@ -35,19 +33,22 @@ const FormRoom = () => {
         }
         else{
             try{
-                const response = await addRoom(data)
-                console.log(response)
-                if(response) navigate('/dashboard')
+                await addRoom(data)
             }
             catch(error){
                 console.log(error)
             }
         }
+        navigate('/dashboard') 
        
     })
     return(
         <div className="w-full max-w-xs mx-auto mt-5">
-            <h1 className='font-bold text-3xl mb-1'>Crear aula</h1>
+            <h1 className='font-bold text-3xl mb-1'>
+                {
+                    params.roomId ? 'Actualizar aula' : 'Crear aula'
+                }
+            </h1>
             <form onSubmit={onSubmit}>
                 <div>{error && <span className='text-red-600'>{error}</span>}</div>
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -73,7 +74,9 @@ const FormRoom = () => {
                 </button>
 
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
-                    Crear
+                    {
+                        params.roomId ? 'Actualizar' : 'Crear'
+                    }
                 </button>
                 
             </div>
