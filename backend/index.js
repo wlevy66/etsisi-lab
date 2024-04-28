@@ -37,6 +37,6 @@ app.use('/api/schedule', ScheduleRoutes)
 app.use('/api/reservation', ReservationRoutes)
 
 //server ready to listen http request
-app.listen(3900, () => {
+app.listen(port, () => {
     console.log(`Node server running in port: ${port}`)
 })
