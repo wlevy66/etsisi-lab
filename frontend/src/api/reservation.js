@@ -1,58 +1,15 @@
-import { URL } from "../../public/data"
+import axios from './axios'
 
-const getReservationsRequest = async(id) => {
-    let request = await fetch(`${URL.RESERVATION}/${id}`, {
-        method: 'GET'
-    })
-    
-    const data = await request.json()
-
-    return data.reservations
-    
-}
-
-
-const createReservationRequest = async (newData) => {
-    let request = await fetch (`${URL.RESERVATION}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newData)
-        
-    })
-
-    let response = await request.json()
-    return response
-}
-
-const updateReservationRequest = async (id, newData) => {
-    let request = await fetch (`${URL.RESERVATION}/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newData)
-    })
-
-    const data = await request.json()
-    return data
-}
-
-const deleteReservationRequest = async (id) => {
-    if (window.confirm('Do you really want to delete the reservation?')) {
-
-        let request = await fetch (`${URL.RESERVATION}/${id}`, {
-            method: 'DELETE'
-        })
-        const data = await request.json()
-        return data
-    }
-}
+const getReservationsRequest = (id) => axios.get(`/reservation/reservations/${id}`)
+const addReservationRequest = (user, schedule) => axios.post('/reservation/reservations', {user, schedule})
+const updateReservationRequest = (id, newData) => axios.put(`/reservation/reservations/${id}`, newData)
+const deleteReservationRequest = (id) => axios.delete(`/reservation/reservations/${id}`)
+const getReservationRequest = (id, reservationId) => axios.get(`/reservation/reservations/${id}/${reservationId}`)
 
 export {
     getReservationsRequest,
-    createReservationRequest,
+    addReservationRequest,
     updateReservationRequest,
-    deleteReservationRequest
+    deleteReservationRequest,
+    getReservationRequest
 }
