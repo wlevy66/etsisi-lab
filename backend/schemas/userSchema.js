@@ -10,7 +10,7 @@ const schemaUser = Joi.object({
             'any.required': `Name is a required field`
         
         }),
-    capacity: Joi.number().integer().min(1).required()
+    password: Joi.number().integer().min(1).required()
         .messages({
             'number.base': `Capacity should be a type of number`,
             'number.empty': `Capacity cannot be an empty field`,
