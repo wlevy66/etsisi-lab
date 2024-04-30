@@ -7,10 +7,8 @@ import { useAuth } from '@/context/AuthContext'
 const ReservationPage = () => {
   const {getReservations, reservations} = useReservation()
   const { user } = useAuth()
-  console.log(user)
 
   useEffect(() => {
-    console.log(user)
     const fetchReservations = async () => {
       await getReservations(user.id)
     }

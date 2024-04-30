@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { getReservationRequest, addReservationRequest, deleteReservationRequest, getReservationsRequest, updateReservationRequest } from '@/api/reservation'
+import { set } from 'react-hook-form'
 
 
 const ReservationContext = createContext()
@@ -14,14 +15,15 @@ export const ReservationProvider = ({ children }) => {
 
     const [reservations, setReservations] = useState([])
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
     const getReservations = async (id) => {
         try{
             const response = await getReservationsRequest(id)
             setReservations(response.data.reservations)
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -30,26 +32,28 @@ export const ReservationProvider = ({ children }) => {
             const response = await getReservationRequest(id, reservationId)
             return response.data.reservation
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
     const addReservation = async (user,schedule) => {
         try{
             await addReservationRequest(user,schedule)
+            setSuccess(true)
         }
-        catch(error){
-            setError(error.response.data.error)
+        catch(e){
+            setError(e.response.data.error)
         }
     }
 
     const updateReservation = async (id, newData) => {
         try{
             await updateReservationRequest(id, newData)
+            setSuccess(true)
         }
-        catch(error){
-            setError(error.response.data.error)
+        catch(e){
+            setError(e.response.data.error)
         }
     }
 
@@ -58,8 +62,8 @@ export const ReservationProvider = ({ children }) => {
             await deleteReservationRequest(id)
             setReservations(reservations.filter(reservation => reservation._id !== id))
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 

@@ -14,7 +14,7 @@ const RoomScheduleCard = () => {
     
     useEffect(() => {
         if(params.reservationId){
-            let timeoutId
+            //let timeoutId
 
             const fetchData = async () => {
                 await Promise.all([
@@ -26,12 +26,13 @@ const RoomScheduleCard = () => {
     
                 setIsLoaded(false)
             }
-    
+            /*
             timeoutId = setTimeout(fetchData, 500)
     
             return () => {
                 clearTimeout(timeoutId)
             }
+            */
         }
         else{
             const fetchSchedules = async () => {

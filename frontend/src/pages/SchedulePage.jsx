@@ -7,10 +7,12 @@ import ScheduleCard from '@/components/ScheduleCard'
 const SchedulePage = () => {
 
   const params = useParams()
-  const {getSchedulesByRoom, schedules} = useSchedule()
+  const {getSchedulesByRoom, schedules, setError, setSuccess} = useSchedule()
 
   useEffect(() => {
     getSchedulesByRoom(params.roomId)
+    setError(null)
+    setSuccess(false)
   }, [])
 
   return (

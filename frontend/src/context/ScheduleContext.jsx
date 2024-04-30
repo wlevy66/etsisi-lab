@@ -21,8 +21,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getSchedulesRequest()
             setSchedules(response.data.schedules)
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -31,8 +31,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getSchedulesByRoomRequest(roomId)
             setSchedules(response.data.schedules)
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -41,8 +41,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getScheduleRequest(roomId, scheduleId)
             return response.data.schedule
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -62,8 +62,8 @@ export const ScheduleProvider = ({ children }) => {
             await updateScheduleRequest(id, newData)
             setSuccess(true)
         }
-        catch(error){
-            setError(error.response.data.error)
+        catch(e){
+            setError(e.response.data.error)
         }
     }
 
@@ -72,8 +72,8 @@ export const ScheduleProvider = ({ children }) => {
             await deleteScheduleRequest(id)
             setSchedules(schedules.filter(schedule => schedule._id !== id))
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -81,13 +81,15 @@ export const ScheduleProvider = ({ children }) => {
         <ScheduleContext.Provider value={{
             schedules,
             error,
+            success,
             getSchedules,
             getSchedulesByRoom,
             addSchedule,
             updateSchedule,
             deleteSchedule,
             getSchedule,
-            success
+            setError,
+            setSuccess
         }}>
             {children}
         </ScheduleContext.Provider>
