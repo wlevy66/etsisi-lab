@@ -1,14 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const ScheduleController = require('../controllers/scheduleController')
-const validateToken = require('../middlewares/validateToken')
+const validateMiddleware = require('../middlewares/validatorSchema')
+const scheduleSchema = require('../schemas/scheduleSchema')
 
 //define routes
 router.get('/schedules', ScheduleController.getSchedules)
 router.get('/schedules/:roomId', ScheduleController.getSchedulesByRoom)
 router.get('/schedules/:roomId/:scheduleId', ScheduleController.getSchedule)
-router.post('/schedules', ScheduleController.createSchedule)
-router.put('/schedules/:id', ScheduleController.updateSchedule)
+router.post('/schedules', validateMiddleware(scheduleSchema), ScheduleController.createSchedule)
+router.put('/schedules/:id', validateMiddleware(scheduleSchema),ScheduleController.updateSchedule)
 router.delete('/schedules/:id', ScheduleController.deleteSchedule)
 
 

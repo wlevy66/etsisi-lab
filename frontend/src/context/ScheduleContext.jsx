@@ -14,6 +14,7 @@ export const ScheduleProvider = ({ children }) => {
 
     const [schedules, setSchedules] = useState([])
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
     const getSchedules = async () => {
         try{
@@ -48,15 +49,18 @@ export const ScheduleProvider = ({ children }) => {
     const addSchedule = async (schedule) => {
         try{
             await createScheduleRequest(schedule)
+            setSuccess(true)
         }
-        catch(error){
-            setError(error.response.data.error)
+        catch(e){
+            console.log(e)
+            setError(e.response.data.error)
         }
     }
 
     const updateSchedule = async (id, newData) => {
         try{
             await updateScheduleRequest(id, newData)
+            setSuccess(true)
         }
         catch(error){
             setError(error.response.data.error)
@@ -82,7 +86,8 @@ export const ScheduleProvider = ({ children }) => {
             addSchedule,
             updateSchedule,
             deleteSchedule,
-            getSchedule
+            getSchedule,
+            success
         }}>
             {children}
         </ScheduleContext.Provider>

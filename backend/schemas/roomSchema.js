@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const schemaRoom = Joi.object({
+const roomSchema = Joi.object({
     name: Joi.string().trim().alphanum().min(3).max(30).required()
         .messages({
             'string.base': `Name should be a type of text`,
@@ -19,7 +19,7 @@ const schemaRoom = Joi.object({
         })
 })
 
-module.exports = schemaRoom
+module.exports = roomSchema
 
 
 

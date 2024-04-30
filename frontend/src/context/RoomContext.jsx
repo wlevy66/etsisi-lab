@@ -13,14 +13,15 @@ export const RoomProvider = ({ children }) => {
 
     const [rooms, setRooms] = useState([])
     const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
     const getRooms = async () => {
         try{
             const response = await getRoomsRequest()
             setRooms(response.data.rooms)
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
     
@@ -29,26 +30,29 @@ export const RoomProvider = ({ children }) => {
             const response = await getRoomRequest(id)
             return response.data.room
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
     const addRoom = async (room) => {
         try{
             await createRoomRequest(room)
+            setSuccess(true)
         }
-        catch(error){
-            setError(error.response.data.error)
+        catch(e){
+            setError(e.response.data.error)
+            console.log(e)
         }
     }
 
     const updateRoom = async (id, newData) => {
         try{
             await updateRoomRequest(id, newData)
+            setSuccess(true)
         }
-        catch(error){
-            setError(error.response.data.error)
+        catch(e){
+            setError(e.response.data.error)
         }
     }
 
@@ -57,8 +61,8 @@ export const RoomProvider = ({ children }) => {
             await deleteRoomRequest(id)
             setRooms(rooms.filter(room => room._id !== id))
         }
-        catch(error){
-            console.log(error)
+        catch(e){
+            console.log(e)
         }
     }
 
@@ -70,7 +74,10 @@ export const RoomProvider = ({ children }) => {
             updateRoom,
             deleteRoom,
             getRoom,
-            error
+            error,
+            setError,
+            success,
+            setSuccess
         }}>
             {children}
         </RoomContext.Provider>

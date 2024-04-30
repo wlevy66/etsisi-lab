@@ -15,22 +15,24 @@ const RoomCard = ({ room }) => {
 
     return (
 
-        <div className="card mt-3">
-            <div className="card-body">
-                <h2 className='text-xl font-bold align-middle'>{room.name}</h2>
+        <div className="border rounded-lg p-4 my-4 shadow-lg">
+                <h2 className='text-xl font-bold'>{room.name}</h2>
                 <p className="font-bold">Capacidad: {room.capacity}</p>
-                {
-                    user.role === 'professor' && (
-                        <div className="flex gap-x2 float-end my-2">
-                            <Link to={`/edit-room/${room._id}`} >
-                                <button className="btn btn-primary mx-1 float-end">Editar</button>
-                            </Link>
-                            <button className="btn btn-danger mx-1 float-end" onClick={() => handleDeleteRoom(room._id)}>Eliminar</button>
-                        </div>
-                    )
-                }
-                <button className="btn btn-success mx-1 float-start my-2" onClick={() => navigate(`/schedules/${room._id}`)}>Ver horarios</button>
-            </div>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center md:flex-row md:justify-between md:items-center mt-3">
+                    <button className="btn btn-success my-2 w-full sm:w-auto" onClick={() => navigate(`/schedules/${room._id}`)}>Ver horarios</button>
+                    {
+                        user.role === 'professor' && (
+                            <>
+                            <div className="flex flex-col sm:flex-row md:gap-3 sm:gap-2 mt-2 sm:mt-0">
+                                <Link to={`/edit-room/${room._id}`} >
+                                    <button className="btn btn-primary my-2 w-full sm:w-auto">Editar</button>
+                                </Link>
+                                <button className="btn btn-danger my-2 w-full sm:w-auto" onClick={() => handleDeleteRoom(room._id)}>Eliminar</button>
+                            </div>
+                            </>
+                        )
+                    }   
+                </div>
         </div>
     )
 }

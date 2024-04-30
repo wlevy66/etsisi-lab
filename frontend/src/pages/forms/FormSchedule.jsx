@@ -9,7 +9,7 @@ dayjs.extend(utc)
 const FormSchedule = () => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { addSchedule, error, getSchedule, updateSchedule } = useSchedule()
+    const { addSchedule, error, getSchedule, updateSchedule, success } = useSchedule()
     const navigate = useNavigate()
     const params = useParams()
 
@@ -24,6 +24,12 @@ const FormSchedule = () => {
         getScheduleData()
     }, [params.scheduleId])
 
+    useEffect(() => {
+        if(success){
+            navigate(`/schedules/${params.roomId}`)
+        }
+    }, [success])
+
     const onSubmit = handleSubmit( async(data) => {
             if(params.scheduleId){
                 await updateSchedule(params.scheduleId, {
@@ -34,14 +40,11 @@ const FormSchedule = () => {
             }
             else{
                 await addSchedule({
-                    ...data,
                     room: params.roomId,
                     start: dayjs.utc(data.start).format(),
                     end: dayjs.utc(data.end).format()
                 })
             }   
-        
-        navigate(-1)
     })
     return(
         <div className="w-full max-w-xs mx-auto mt-5">

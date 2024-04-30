@@ -1,4 +1,4 @@
-import {useForm} from 'react-hook-form'
+import {set, useForm} from 'react-hook-form'
 import { useRoom } from '@/context/RoomContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 const FormRoom = () => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { addRoom, error, getRoom, updateRoom } = useRoom()
+    const { addRoom, error, getRoom, updateRoom, success } = useRoom()
     const navigate = useNavigate()
     const params = useParams()
 
@@ -22,26 +22,23 @@ const FormRoom = () => {
         getRoomData()
     }, [])
 
+    useEffect(() => {
+        if(success){
+            navigate('/dashboard')
+        }
+    }, [success])
+
     const onSubmit = handleSubmit( async(data) => {
         if(params.roomId){
-            try{
-                await updateRoom(params.roomId, data)
-            }
-            catch(error){
-                console.log(error)
-            }
+            await updateRoom(params.roomId, data)
         }
         else{
-            try{
-                await addRoom(data)
-            }
-            catch(error){
-                console.log(error)
-            }
+            await addRoom(data)
         }
-        navigate('/dashboard') 
-       
     })
+
+
+
     return(
         <div className="w-full max-w-xs mx-auto mt-5">
             <h1 className='font-bold text-3xl mb-1'>
