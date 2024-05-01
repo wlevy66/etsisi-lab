@@ -43,6 +43,7 @@ export const ReservationProvider = ({ children }) => {
             setSuccess(true)
         }
         catch(e){
+            console.log(e)
             setError(e.response.data.error)
         }
     }

@@ -14,6 +14,10 @@ const ScheduleModel = new Schema(
     end: {
         type: Date,
         default: Date.now
+    },
+    reservedBy: {
+        type: Number,
+        default: 0
     }
     },
     {

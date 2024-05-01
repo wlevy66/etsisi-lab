@@ -38,15 +38,16 @@ const getRoom = async (req, res) => {
 const createRoom = async (req, res) => {
     try{
         const {name, capacity} = req.body
-      
-        const roomAlreadyExists = await Room.findOne({"name":name})
+        console.log(name.trim())
+        const nameTrimmed = name.trim()
+        const roomAlreadyExists = await Room.findOne({"name":nameTrimmed})
         if(roomAlreadyExists) return res.status(400).json({
             status: 400,
             error: 'Room already exists',
         })
         
         const newRoom = new Room({
-            name,
+            name: nameTrimmed,
             capacity
         })
         const savedRoom = await newRoom.save()

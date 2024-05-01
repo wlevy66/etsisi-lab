@@ -8,7 +8,6 @@ const roomSchema = Joi.object({
             'string.min': `Name should have a minimum length of {#limit}`,
             'string.max': `Name should have a maximum length of {#limit}`,
             'any.required': `Name is a required field`
-        
         }),
     capacity: Joi.number().integer().min(1).required()
         .messages({

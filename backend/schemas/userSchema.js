@@ -1,21 +1,18 @@
 const Joi = require('joi')
 
+
 const schemaUser = Joi.object({
-    email: Joi.string().trim().alphanum().min(5).max(30).required()
+    email: Joi.string().email().pattern(new RegExp('.*@(alumnos\.upm\.es|upm\.es|email\.es)$')).required()
         .messages({
-            'string.base': `Name should be a type of text`,
-            'string.empty': `Name cannot be an empty field`,
-            'string.min': `Name should have a minimum length of {#limit}`,
-            'string.max': `Name should have a maximum length of {#limit}`,
-            'any.required': `Name is a required field`
-        
+            'string.email': `Email must be a valid email`,
+            'string.empty': `Email cannot be an empty field`,
+            'any.required': `Email is a required field`,
+            'string.pattern.base': `Email must be a valid email from UPM domain`
         }),
-    password: Joi.number().integer().min(1).required()
+    password: Joi.string().required()
         .messages({
-            'number.base': `Capacity should be a type of number`,
-            'number.empty': `Capacity cannot be an empty field`,
-            'number.min': `Capacity should have a minimum value of {#limit}`,
-            'any.required': `Capacity is a required field`
+            'string.empty': `Password cannot be an empty field`,
+            'any.required': `Password is a required field`
         })
 })
 

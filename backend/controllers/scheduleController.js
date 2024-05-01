@@ -1,8 +1,6 @@
 const Schedule = require('../models/scheduleModel')
 const Reservation = require('../models/reservationModel')
 
-
-
 const getSchedules = async (req, res) => {
     
     try{
@@ -17,6 +15,7 @@ const getSchedules = async (req, res) => {
         })
     }
 }
+
 const getSchedulesByRoom = async (req, res) => {
     try{
         const schedules = await Schedule.find({ room : req.params.roomId}).populate('room').sort({start: 1})

@@ -60,32 +60,20 @@ const getReservation = async (req, res) => {
 }
 
 const createReservation = async (req, res) => {
-
     try{
-        
         const {user, schedule} = req.body
-        
         const userHasReservation = await Reservation.find({schedule, user})
-        console.log(userHasReservation)
-        if (userHasReservation && userHasReservation.length > 0) return res.status(400).json({
+        if (userHasReservation) return res.status(400).json({
             status: 400,
             error: "You have already a reservation for this schedule."
         })
-        
-        const roomCapacity = await Schedule.findById({"_id": schedule})
-                        .populate({
-                            path: 'room',
-                            select: 'capacity',
-                        }).select('room')
-        const currentReservations = await Reservation.find({schedule}).countDocuments()
-        const availableCapacity = roomCapacity.room.capacity - currentReservations
-        if(availableCapacity === 0){
+        const availableCapacity = await updateCapacity(schedule, 'add')
+        if(!availableCapacity){
             return res.status(400).json({
                 status: 400,
                 error: "Not capacity available"
             })
         }
-        
         const newReservation = new Reservation({
             user,
             schedule
@@ -106,7 +94,6 @@ const createReservation = async (req, res) => {
 
 const updateReservation = async (req, res) => {
     try{
-        
         const reservationUpdated = await Reservation.findOneAndUpdate(
             { _id: req.params.id },
             { $set: { schedule: req.body.schedule } },
@@ -133,6 +120,7 @@ const deleteReservation = async (req, res) => {
             message: "Reservation not found"
         })
 
+        await updateCapacity(reservation.schedule, 'delete')
         return res.status(200).json({
             status:200,
             message: "Reservation deleted successfully!",
@@ -142,6 +130,27 @@ const deleteReservation = async (req, res) => {
         return res.status(500).json({
             error: error.message
         })
+    }
+}
+
+const updateCapacity = async (id, type) => {
+    try{
+        let schedule = await Schedule.findById(id)
+        const schedulePopulate = await schedule.populate('room')
+        let reservedBy = 0
+
+        if(schedule.reservedBy <= schedulePopulate.room.capacity){
+            if(type === 'add')  reservedBy = schedule.reservedBy + 1
+            else  reservedBy = schedule.reservedBy - 1
+            await Schedule.findByIdAndUpdate(id, {reservedBy}, {new: true})
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    catch(e){
+        return e.message
     }
 }
 

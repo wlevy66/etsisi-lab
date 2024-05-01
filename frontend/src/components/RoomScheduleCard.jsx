@@ -33,6 +33,8 @@ const RoomScheduleCard = () => {
                 clearTimeout(timeoutId)
             }
             */
+
+            fetchData()
         }
         else{
             const fetchSchedules = async () => {

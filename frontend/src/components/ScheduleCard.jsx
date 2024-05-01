@@ -30,7 +30,7 @@ const ScheduleCard = ({ schedule, type }) => {
     return (
         <div className="card mt-3">
             <div className="card-body">
-                <h2 className='text-xl font-bold'>{schedule.room.name}</h2>
+                <h2 className='text-xl font-bold'>{schedule.room.name} <span>{schedule.reservedBy}/{schedule.room.capacity}</span></h2>
                 
                 <p className="card-text">Start: { dayjs(schedule.start).utc().format('DD-MM-YYYY - HH:mm') }</p>
                 <p className="card-text">End: { dayjs(schedule.end).utc().format('DD-MM-YYYY - HH:mm') }</p>
