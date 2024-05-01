@@ -48,7 +48,11 @@ const FormSchedule = () => {
     })
     return(
         <div className="w-full max-w-xs mx-auto mt-5">
-            <h1 className='font-bold text-3xl mb-1'>Crear horario</h1>
+            <h1 className='font-bold text-3xl mb-1'>
+                {
+                    params.scheduleId ? 'Actualizar horario' : 'Crear horario'
+                }
+            </h1>
             <form onSubmit={onSubmit}>
                 <div>{error && <span className='text-red-600'>{error}</span>}</div>
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
@@ -74,7 +78,9 @@ const FormSchedule = () => {
                     </button>
 
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
-                        Crear
+                        {
+                            params.scheduleId ? 'Actualizar' : 'Crear'
+                        }
                     </button>
                 
                 </div>

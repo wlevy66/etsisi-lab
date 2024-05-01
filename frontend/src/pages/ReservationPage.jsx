@@ -28,7 +28,7 @@ const ReservationPage = () => {
         <ReservationCard reservation={reservation} key={reservation._id} />
       ))}
       </div>
-      <Link to={`/add-reservation`}><button className='mt-3 bg-sky-700 border-black p-2 rounded-md'>Add reservation</button></Link>
+      <Link to={`/add-reservation`}><button className='mt-3 bg-sky-700 border-black p-2 rounded-md'>Nueva reserva</button></Link>
     </>
 
   )

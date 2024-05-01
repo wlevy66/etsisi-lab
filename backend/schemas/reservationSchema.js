@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const reservationSchema = Joi.object({
+const reservationSchemaCreate = Joi.object({
     user: Joi.string().required()
         .messages({
             'any.required': `User is a required field`
@@ -12,7 +12,17 @@ const reservationSchema = Joi.object({
         })
 })
 
-module.exports = reservationSchema
+const reservationSchemaUpdate = Joi.object({
+    schedule: Joi.string().required()
+        .messages({
+            'any.required': `Schedule is a required field`
+        })
+})
+
+module.exports = {
+    reservationSchemaCreate,
+    reservationSchemaUpdate
+}
 
 
 

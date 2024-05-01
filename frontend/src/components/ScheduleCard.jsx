@@ -19,7 +19,8 @@ const ScheduleCard = ({ schedule, type }) => {
     }
 
     const handleUpdateReservation = async(id, schedule) => {
-        await updateReservation(id, {schedule}).then(() => navigate('/my-reservations') )
+        console.log(id, schedule)
+        await updateReservation(id, schedule).then(() => navigate('/my-reservations') )
     }
 
     const handleAddReservation = async(user, schedule) => {
@@ -44,8 +45,8 @@ const ScheduleCard = ({ schedule, type }) => {
                     {
                         !params.reservationId ?
                         <>
-                        <button className="btn btn-primary mx-1 float-end" onClick={() => navigate(`/edit-schedule/${schedule.room._id}/${schedule._id}`)}>Edit</button>
-                        <button className="btn btn-danger mx-1 float-end" onClick={() => handleDelete(schedule._id)}>Delete</button>
+                        <button className="btn btn-primary mx-1 float-end" onClick={() => navigate(`/edit-schedule/${schedule.room._id}/${schedule._id}`)}>Editar</button>
+                        <button className="btn btn-danger mx-1 float-end" onClick={() => handleDelete(schedule._id)}>Eliminar</button>
                         </>
                         : <button className="btn btn-success mx-1 float-end" onClick={() => handleUpdateReservation(params.reservationId, schedule)}>Actualizar reserva</button>
                     }

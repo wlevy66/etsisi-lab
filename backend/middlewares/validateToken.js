@@ -14,8 +14,6 @@ const validateToken = (req, res, next) => {
             message: 'Unauthorized due to invalid token'
         })
         req.user = user
-        
-        console.log(user)
     })
 
     next()

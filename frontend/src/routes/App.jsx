@@ -2,6 +2,7 @@ import React from 'react'
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 
 import Nav from '@/components/common/Nav'
+import Footer from '@/components/common/Footer'
 
 import SchedulePage from '@/pages/SchedulePage'
 import DashboardPage from '@/pages/DashboardPage'
@@ -43,6 +44,7 @@ const App = () => {
                     <Route path='*' element={<Error />} />
                 </Routes>
             </main>
+            <Footer />
         </BrowserRouter>
     )
 }

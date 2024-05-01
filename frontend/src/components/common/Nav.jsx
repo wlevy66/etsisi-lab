@@ -18,9 +18,9 @@ const Nav = () => {
           <div className="text-sm lg:flex-grow">
           {
               isAuthenticated ? (
-                  <button onClick={signOut} className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">Logout</button>
+                  <button onClick={signOut} className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">Salir</button>
               ) : (
-                  <NavLink to="/login" className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">Login</NavLink>
+                  <NavLink to="/login" className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">Iniciar sesión</NavLink>
               )
           }
           </div>

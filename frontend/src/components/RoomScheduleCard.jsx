@@ -60,7 +60,7 @@ const RoomScheduleCard = () => {
                     <div className='grid grid-cols-4 gap-2'>
                         {schedules &&
                             schedules.map(schedule => {
-                                return (<ScheduleCard schedule={schedule} type={'add'} key={schedule._id} />)
+                                return (<ScheduleCard schedule={schedule} key={schedule._id} />)
                         })}
                     </div>
                     </>

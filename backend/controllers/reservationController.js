@@ -63,7 +63,7 @@ const createReservation = async (req, res) => {
     try{
         const {user, schedule} = req.body
         const userHasReservation = await Reservation.find({schedule, user})
-        console.log("has:" + userHasReservation)
+
         if (userHasReservation.length > 0) return res.status(400).json({
             status: 400,
             error: "You have already a reservation for this schedule."
@@ -95,11 +95,15 @@ const createReservation = async (req, res) => {
 
 const updateReservation = async (req, res) => {
     try{
+        
+        const currentReservation = await Reservation.findById(req.params.id)
+        await updateCapacity(currentReservation.schedule, 'delete')
         const reservationUpdated = await Reservation.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { schedule: req.body.schedule } },
+            { "schedule": req.body._id },
             { new: true }
         )
+        await updateCapacity(reservationUpdated.schedule, 'add')
         
         res.status(201).json({
             status: 201,

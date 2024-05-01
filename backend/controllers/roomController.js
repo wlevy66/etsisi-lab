@@ -38,7 +38,6 @@ const getRoom = async (req, res) => {
 const createRoom = async (req, res) => {
     try{
         const {name, capacity} = req.body
-        console.log(name.trim())
         const nameTrimmed = name.trim()
         const roomAlreadyExists = await Room.findOne({"name":nameTrimmed})
         if(roomAlreadyExists) return res.status(400).json({

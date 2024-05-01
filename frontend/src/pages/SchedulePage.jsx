@@ -13,7 +13,6 @@ const SchedulePage = () => {
     getSchedulesByRoom(params.roomId)
     setError(null)
     setSuccess(false)
-    console.log(schedules)
   }, [])
 
   return (
