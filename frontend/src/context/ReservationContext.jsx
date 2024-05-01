@@ -1,7 +1,5 @@
 import { createContext, useContext, useState } from 'react'
 import { getReservationRequest, addReservationRequest, deleteReservationRequest, getReservationsRequest, updateReservationRequest } from '@/api/reservation'
-import { set } from 'react-hook-form'
-
 
 const ReservationContext = createContext()
 
@@ -76,7 +74,9 @@ export const ReservationProvider = ({ children }) => {
             updateReservation,
             deleteReservation,
             reservations,
-            error
+            error,
+            success,
+            
         }}>
             {children}
         </ReservationContext.Provider>

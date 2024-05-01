@@ -17,7 +17,12 @@ const ReservationPage = () => {
 
   return (
     <>
-      <h1 className='my-3 text-3xl font-bold'>List of reservations</h1>
+      <h1 className='my-3 text-3xl font-bold'>Lista de reservas</h1>
+      {
+        reservations && reservations.length === 0 && (
+          <h2 className='text-2xl'>No tienes reservas.</h2>
+        )
+      }
       <div className='grid grid-cols-4 gap-2'>
       {reservations && reservations.map(reservation => (
         <ReservationCard reservation={reservation} key={reservation._id} />

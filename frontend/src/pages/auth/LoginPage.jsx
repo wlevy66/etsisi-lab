@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     return (
         <div className="w-full max-w-xs mx-auto mt-5">
-            <h1 className='font-bold text-3xl mb-1'>Servicio de autenticación</h1>
+            <h1 className='font-bold text-3xl mb-1 text-center'>Servicio de autenticación</h1>
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">

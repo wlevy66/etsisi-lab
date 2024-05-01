@@ -16,6 +16,11 @@ const DashboardPage = () => {
   return (
     <div className="p-4">
       <h1 className='my-3 text-3xl font-bold'>Listado de aulas</h1>
+      {
+        rooms && rooms.length === 0 && (
+          <h2 className='text-2xl'>No hay aulas creadas.</h2>
+        )
+      }
       <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
         {rooms && rooms.map(room => (
           <RoomCard room={room} key={room._id} />

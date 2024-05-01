@@ -63,7 +63,8 @@ const createReservation = async (req, res) => {
     try{
         const {user, schedule} = req.body
         const userHasReservation = await Reservation.find({schedule, user})
-        if (userHasReservation) return res.status(400).json({
+        console.log("has:" + userHasReservation)
+        if (userHasReservation.length > 0) return res.status(400).json({
             status: 400,
             error: "You have already a reservation for this schedule."
         })

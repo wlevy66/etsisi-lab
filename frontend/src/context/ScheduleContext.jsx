@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { getSchedulesRequest, getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest } from '@/api/schedule'
+import { getSchedulesRequest, getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest, getAvailableSchedulesRequest } from '@/api/schedule'
 
 
 export const ScheduleContext = createContext()
@@ -20,6 +20,16 @@ export const ScheduleProvider = ({ children }) => {
         try{
             const response = await getSchedulesRequest()
             setSchedules(response.data.schedules)
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+    const getAvailableSchedules = async (id) => {
+        try{
+            const response = await getAvailableSchedulesRequest(id)
+            setSchedules(response.data.availableSchedules)
         }
         catch(e){
             console.log(e)
@@ -89,7 +99,8 @@ export const ScheduleProvider = ({ children }) => {
             deleteSchedule,
             getSchedule,
             setError,
-            setSuccess
+            setSuccess,
+            getAvailableSchedules
         }}>
             {children}
         </ScheduleContext.Provider>

@@ -44,6 +44,27 @@ const getSchedule = async (req, res) => {
     }
 }
 
+const getAvailableSchedules = async (req, res) => {
+    try{
+        const reservations = await Reservation.find({ "user":req.params.userId })
+        const schedules = await Schedule.find().populate('room')
+        const availableSchedules = schedules.filter(schedule => {
+            return !reservations.some(reservation => {
+                return reservation.schedule.toString() === schedule._id.toString()
+            })
+        })
+        res.status(200).json({
+            status: 200,
+            availableSchedules
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 const createSchedule = async (req, res) => {
 
     try{
@@ -118,6 +139,7 @@ module.exports = {
     getSchedules,
     getSchedulesByRoom,
     getSchedule,
+    getAvailableSchedules,
     createSchedule,
     updateSchedule,
     deleteSchedule
