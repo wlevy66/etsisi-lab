@@ -95,12 +95,12 @@ const createReservation = async (req, res) => {
 
 const updateReservation = async (req, res) => {
     try{
-        
+        const {schedule} = req.body
         const currentReservation = await Reservation.findById(req.params.id)
         await updateCapacity(currentReservation.schedule, 'delete')
         const reservationUpdated = await Reservation.findOneAndUpdate(
             { _id: req.params.id },
-            { "schedule": req.body._id },
+            { schedule },
             { new: true }
         )
         await updateCapacity(reservationUpdated.schedule, 'add')

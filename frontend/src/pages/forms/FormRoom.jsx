@@ -14,7 +14,6 @@ const FormRoom = () => {
         const getRoomData = async() => {
             if(params.roomId){
                 const room = await getRoom(params.roomId)
-                console.log(room)
                 setValue('name', room.name)
                 setValue('capacity', room.capacity)
             }
@@ -67,7 +66,7 @@ const FormRoom = () => {
                     navigate(`/dashboard`)
                 }}
                 className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded'>
-                    Cancel
+                    Cancelar
                 </button>
 
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">

@@ -48,7 +48,7 @@ export const ReservationProvider = ({ children }) => {
 
     const updateReservation = async (id, newData) => {
         try{
-            await updateReservationRequest(id, newData)
+            await updateReservationRequest(id, {schedule: newData})
             setSuccess(true)
         }
         catch(e){

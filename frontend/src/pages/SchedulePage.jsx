@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSchedule } from '@/context/ScheduleContext'
 import ScheduleCard from '@/components/ScheduleCard'
 
@@ -7,6 +7,7 @@ import ScheduleCard from '@/components/ScheduleCard'
 const SchedulePage = () => {
 
   const params = useParams()
+  const navigate = useNavigate()
   const { getSchedulesByRoom, schedules, setError, setSuccess } = useSchedule()
 
   useEffect(() => {
@@ -28,7 +29,14 @@ const SchedulePage = () => {
           <ScheduleCard schedule={schedule} key={schedule._id} />
         ))}
       </div>
-      <div className="mt-4">
+      <div className="my-3">
+        <button onClick={(e) => {
+          e.preventDefault()
+          navigate(`/dashboard`)
+        }}
+          className='bg-slate-500 hover:bg-slate-700  py-2 px-4 mx-3 rounded '>
+          Cancelar
+        </button>
         <Link to={`/add-schedule/${params.roomId}`}><button className='bg-sky-700 text-white border-black p-2 rounded-md font-semibold w-full sm:w-auto'>Crear horario</button></Link>
       </div>
     </div>

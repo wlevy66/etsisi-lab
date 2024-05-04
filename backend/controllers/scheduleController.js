@@ -1,21 +1,6 @@
 const Schedule = require('../models/scheduleModel')
 const Reservation = require('../models/reservationModel')
 
-const getSchedules = async (req, res) => {
-    
-    try{
-        const schedules = await Schedule.find().populate('room')
-        res.status(200).json({
-            status: 200,
-            schedules
-        })
-    }catch(error){
-        res.status(500).json({
-            error: error.message
-        })
-    }
-}
-
 const getSchedulesByRoom = async (req, res) => {
     try{
         const schedules = await Schedule.find({ room : req.params.roomId}).populate('room').sort({start: 1})
@@ -136,7 +121,6 @@ const deleteScheduleInReservation = async (id) => {
 
 
 module.exports = {
-    getSchedules,
     getSchedulesByRoom,
     getSchedule,
     getAvailableSchedules,

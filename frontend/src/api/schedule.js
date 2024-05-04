@@ -1,6 +1,5 @@
 import axios from './axios'
 
-const getSchedulesRequest = () => axios.get('/schedule/schedules')
 const getAvailableSchedulesRequest = (userId) => axios.get(`/schedule/schedules/available/${userId}`)
 const getSchedulesByRoomRequest = (roomId) => axios.get(`/schedule/schedules/${roomId}`)
 const createScheduleRequest = (schedule) => axios.post('/schedule/schedules', schedule)
@@ -10,7 +9,6 @@ const getScheduleRequest = (roomId, scheduleId) => axios.get(`/schedule/schedule
 
 
 export {
-    getSchedulesRequest,
     getSchedulesByRoomRequest,
     createScheduleRequest,
     updateScheduleRequest,

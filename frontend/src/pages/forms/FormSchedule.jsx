@@ -33,7 +33,6 @@ const FormSchedule = () => {
     const onSubmit = handleSubmit( async(data) => {
             if(params.scheduleId){
                 await updateSchedule(params.scheduleId, {
-                    ...data,
                     start: dayjs.utc(data.start).format(),
                     end: dayjs.utc(data.end).format()
                 })
