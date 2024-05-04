@@ -6,7 +6,7 @@ const createScheduleRequest = (schedule) => axios.post('/schedule/schedules', sc
 const updateScheduleRequest = (id, newData) => axios.put(`/schedule/schedules/${id}`, newData)
 const deleteScheduleRequest = (id) => axios.delete(`/schedule/schedules/${id}`)
 const getScheduleRequest = (roomId, scheduleId) => axios.get(`/schedule/schedules/${roomId}/${scheduleId}`)
-
+const getUsersByScheduleRequest = (scheduleId) => axios.get(`/schedule/schedules/users/${scheduleId}`)
 
 export {
     getSchedulesByRoomRequest,
@@ -14,5 +14,6 @@ export {
     updateScheduleRequest,
     deleteScheduleRequest,
     getScheduleRequest,
-    getAvailableSchedulesRequest
+    getAvailableSchedulesRequest,
+    getUsersByScheduleRequest
 }

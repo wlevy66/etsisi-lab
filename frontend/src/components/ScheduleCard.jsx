@@ -8,7 +8,7 @@ dayjs.extend(utc)
 
 const ScheduleCard = ({ schedule, type }) => {
     const navigate = useNavigate()
-    const {deleteSchedule} = useSchedule()
+    const {deleteSchedule, getUsersBySchedule} = useSchedule()
     const {updateReservation, addReservation} = useReservation()
 
     const {user} = useAuth()
@@ -26,8 +26,10 @@ const ScheduleCard = ({ schedule, type }) => {
         await addReservation(user, schedule).then(() => navigate('/my-reservations')).catch(error => console.log(error))
     }
 
-    const showUsers = (id) => {
-        console.log(id)
+    const showUsers = async(scheduleId) => {
+        const response = await getUsersBySchedule(scheduleId)
+        console.log(response)
+        console.log(scheduleId)
     }
 
     
