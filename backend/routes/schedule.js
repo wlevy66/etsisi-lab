@@ -5,6 +5,7 @@ const validateMiddleware = require('../middlewares/validatorSchema')
 const {schemaScheduleCreate, schemaScheduleUpdate} = require('../schemas/scheduleSchema')
 
 //define routes
+router.get('/schedules/users/:scheduleId', ScheduleController.getUsersBySchedule)
 router.get('/schedules/available/:userId', ScheduleController.getAvailableSchedules)
 router.get('/schedules/:roomId', ScheduleController.getSchedulesByRoom)
 router.get('/schedules/:roomId/:scheduleId', ScheduleController.getSchedule)

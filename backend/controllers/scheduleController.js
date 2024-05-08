@@ -116,7 +116,19 @@ const deleteScheduleInReservation = async (id) => {
     }
 }
 
-
+const getUsersBySchedule = async (req, res) => {
+    try{
+        const users = await Reservation.find({ schedule : req.params.scheduleId}).populate('user')
+        res.status(200).json({
+            status: 200,
+            users
+        })
+    }catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
 
 
 
@@ -126,5 +138,6 @@ module.exports = {
     getAvailableSchedules,
     createSchedule,
     updateSchedule,
-    deleteSchedule
+    deleteSchedule,
+    getUsersBySchedule
 }

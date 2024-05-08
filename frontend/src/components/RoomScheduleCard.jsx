@@ -56,7 +56,7 @@ const RoomScheduleCard = () => {
                             <h1 className='my-3 text-3xl font-bold'>Horarios disponibles</h1>
                             {
                                 schedules && schedules.length === 0 &&
-                                <h2 className='text-2xl'>No available schedules.</h2>
+                                <h2 className='text-2xl'>Actualmente no hay horarios disponibles.</h2>
                             }
                             <div className='grid grid-cols-4 gap-2'>
                                 {schedules &&
@@ -69,6 +69,10 @@ const RoomScheduleCard = () => {
                         <>
                             <h1 className='my-3 text-3xl font-bold text-center'>Selecciona tu reserva</h1>
                             <h3 className='my-3 text-xl font-bold'>Horarios disponibles</h3>
+                            {
+                                schedules && schedules.length === 0 &&
+                                <h2 className='text-2xl'>Actualmente no hay horarios disponibles.</h2>
+                            }
                             <div className='grid grid-cols-4 gap-2'>
                                 {schedules &&
                                     schedules.map(schedule => {

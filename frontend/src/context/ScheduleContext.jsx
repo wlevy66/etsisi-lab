@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest, getAvailableSchedulesRequest } from '@/api/schedule'
+import { getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest, getAvailableSchedulesRequest, getUsersByScheduleRequest } from '@/api/schedule'
 
 
 export const ScheduleContext = createContext()
@@ -77,6 +77,16 @@ export const ScheduleProvider = ({ children }) => {
         }
     }
 
+    const getUsersBySchedule = async (scheduleId) => {
+        try{
+            const response = await getUsersByScheduleRequest(scheduleId)
+            return response.data.users
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
     return (
         <ScheduleContext.Provider value={{
             schedules,
@@ -89,7 +99,8 @@ export const ScheduleProvider = ({ children }) => {
             getSchedule,
             setError,
             setSuccess,
-            getAvailableSchedules
+            getAvailableSchedules,
+            getUsersBySchedule
         }}>
             {children}
         </ScheduleContext.Provider>
