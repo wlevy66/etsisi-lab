@@ -10,7 +10,6 @@ body {
   background: white;
   color: black;
   min-height: 100vh;
-  min-width: 500px;
 }
 
 .content-container {

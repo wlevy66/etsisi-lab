@@ -1,7 +1,15 @@
 const ROLE = {
     PROFESSOR: 'professor',
-    STUDENT: 'student'
+    STUDENT: 'student',
+    ADMIN: 'admin'
 }
+
+const STATUS = {
+    PENDING: 'pending',
+    ACTIVE: 'active',
+    INACTIVE: 'inactive'
+}
+
 const {Schema, model} = require('mongoose')
 
 const UserSchema = new Schema(
@@ -17,8 +25,13 @@ const UserSchema = new Schema(
         },
         role: {
             type: String,
-            enum: [ROLE.PROFESSOR, ROLE.STUDENT],
+            enum: [ROLE.PROFESSOR, ROLE.STUDENT, ROLE.ADMIN],
             required: true
+        },
+        status: {
+            type: String,
+            enum: [STATUS.PENDING, STATUS.ACTIVE, STATUS.INACTIVE],
+            default: STATUS.PENDING
         }
     },
     {

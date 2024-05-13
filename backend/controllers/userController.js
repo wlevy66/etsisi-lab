@@ -19,6 +19,12 @@ const login = async (req, res) => {
             status: 400,
             error: 'Invalid credentials. Please verify username and password and try again.'
         })
+
+        if(userFound.status === 'pending') return res.status(400).json({
+            status: 400,
+            error: 'User not verified. Please contact the administrator to verify your account.',
+            userFound
+        })
         
         const token = jwt.sign({id: userFound._id}, 'secret123', {expiresIn: '1h'}) 
         res.cookie('token', token)
@@ -60,7 +66,8 @@ const register = async (req, res) => {
         const newUser = new User({
             email,
             password: hash_password,
-            role
+            role,
+            status: 'pending'
         })
     
         const userSaved = await newUser.save()
@@ -72,6 +79,7 @@ const register = async (req, res) => {
             id: userSaved._id,
             email: userSaved.email,
             role: userSaved.role,
+            status: userSaved.status,
             message: 'User created successfully'
         })
 
