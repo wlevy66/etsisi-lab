@@ -1,7 +1,9 @@
+import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSchedule } from '@/context/ScheduleContext'
 import { useAuth } from "@/context/AuthContext"
 import { useReservation } from '@/context/ReservationContext'
+import ModalUsers from '@/components/ModalUsers'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
@@ -10,7 +12,9 @@ const ScheduleCard = ({ schedule, type }) => {
     const navigate = useNavigate()
     const {deleteSchedule, getUsersBySchedule} = useSchedule()
     const {updateReservation, addReservation} = useReservation()
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reservations, setReservations] = useState([]);
+  
     const {user} = useAuth()
     const params = useParams()
     
@@ -29,7 +33,8 @@ const ScheduleCard = ({ schedule, type }) => {
     const showUsers = async(scheduleId) => {
         const response = await getUsersBySchedule(scheduleId)
         console.log(response)
-        console.log(scheduleId)
+        setReservations(response)
+        setIsModalOpen(true)  
     }
 
     
@@ -57,7 +62,7 @@ const ScheduleCard = ({ schedule, type }) => {
                     }
                     </>
                 }
-
+                <ModalUsers reservations={reservations} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
             </div>
         </div>
     )
