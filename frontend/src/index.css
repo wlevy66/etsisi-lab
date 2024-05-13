@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+div#root {
+  min-height: 100vh;
+}
+
 body {
   background: white;
   color: black;
+  min-height: 100vh;
+  min-width: 500px;
 }
 
 .content-container {
@@ -12,4 +18,10 @@ body {
 }
 nav {
   background-color: #1867b7 !important;
+}
+footer {
+  clear: both;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }

@@ -16,23 +16,26 @@ const RoomCard = ({ room }) => {
     return (
 
         <div className="border rounded-lg p-4 my-4 shadow-lg">
+            <div className="flex justify-between">
+                <div>
                 <h2 className='text-xl font-bold'>{room.name}</h2>
                 <p className="font-bold">Capacidad: {room.capacity}</p>
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center md:flex-row md:justify-between md:items-center mt-3">
-                    <button className="btn btn-success my-2 w-full sm:w-auto" onClick={() => navigate(`/schedules/${room._id}`)}>Ver horarios</button>
+                </div>
+                <button className="btn btn-success my-2   justify-between" onClick={() => navigate(`/schedules/${room._id}`)}>Ver horarios</button>
+            </div>
+                
+                    
                     {
                         user.role === 'professor' && (
-                            <>
-                            <div className="flex flex-col sm:flex-row md:gap-3 sm:gap-2 mt-2 sm:mt-0">
+                            <div className="mt-3">
                                 <Link to={`/edit-room/${room._id}`} >
-                                    <button className="btn btn-primary my-2 w-full sm:w-auto">Editar</button>
+                                    <button className="btn btn-primary mx-1 float-end">Editar</button>
                                 </Link>
-                                <button className="btn btn-danger my-2 w-full sm:w-auto" onClick={() => handleDeleteRoom(room._id)}>Eliminar</button>
+                                <button className="btn btn-danger mx-1 float-end" onClick={() => handleDeleteRoom(room._id)}>Eliminar</button>
                             </div>
-                            </>
                         )
                     }   
-                </div>
+                
         </div>
     )
 }

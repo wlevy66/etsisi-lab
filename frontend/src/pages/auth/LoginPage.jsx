@@ -7,7 +7,7 @@ const LoginPage = () => {
 
     const { register, handleSubmit } = useForm()
 
-    const {signIn, error, isAuthenticated} = useAuth()
+    const {signIn, error, isAuthenticated, setError} = useAuth()
     const navigate = useNavigate()
 
     const onSubmit = handleSubmit( async(values)=>{
@@ -15,6 +15,7 @@ const LoginPage = () => {
     })
 
     useEffect(() => {
+        setError(null)
         if(isAuthenticated) navigate('/dashboard')
     }, [isAuthenticated])
 

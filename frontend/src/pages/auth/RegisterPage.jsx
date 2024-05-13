@@ -1,14 +1,22 @@
 import { useForm } from 'react-hook-form'
 import { useAuth } from '@/context/AuthContext'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const RegisterPage = () => {
 
     const { register, handleSubmit } = useForm()
 
-    const { signUp, error } = useAuth()
+    const { signUp, error, setError, success, setSuccess } = useAuth()
+
+    useEffect(() => {
+        setSuccess(false)
+        setError(null)
+    }, [])
 
     const onSubmit = handleSubmit(async (values) => {
+        setSuccess(false)
+        setError(null)
         signUp(values)
     })
 
@@ -34,6 +42,7 @@ const RegisterPage = () => {
 
                 </div>
                 <div className='mb-4'>{error && <span className='text-red-500 text-xs italic'>{error}</span>}</div>
+                <div className='mb-4'>{success && <span className='text-green-500 text-xs italic'>Usuario creado correctamente, puedes iniciar sesión.</span>}</div>
                 <div className="flex items-center justify-between">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
                         Registrarme
