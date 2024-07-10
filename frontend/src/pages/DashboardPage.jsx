@@ -1,36 +1,48 @@
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useRoom } from '@/context/RoomContext'
-import RoomCard from '@/components/RoomCard'
+import { useAuth } from "@/context/AuthContext"
+import { useEffect, useState } from "react"
+import ModalProfile from "@/components/ModalProfile"
+import { set } from "react-hook-form"
 
 const DashboardPage = () => {
 
-  const { rooms, getRooms, setError, setSuccess } = useRoom()
+    const {getUsers, users, updateUser, getUser} = useAuth()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [id, setId] = useState({})
+    const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    getRooms()
-    setError(null)
-    setSuccess(false)
-  }, [])
+    useEffect(() => {
+        getUsers()
+    }, [])
 
-  return (
-    <div className="p-4">
-      <h1 className='my-3 text-3xl font-bold'>Listado de aulas</h1>
-      {
-        rooms && rooms.length === 0 && (
-          <h2 className='text-2xl'>No hay aulas creadas.</h2>
-        )
-      }
-      <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-        {rooms && rooms.map(room => (
-          <RoomCard room={room} key={room._id} />
-        ))}
-      </div>
-      <div className="mt-4">
-        <Link to={'/add-room'}><button className='bg-sky-700 text-white border-black p-2 rounded-md font-semibold w-full sm:w-auto'>Crear aula</button></Link>
-      </div>
-    </div>
-  )
+    const handleUpdateUser = async(user) => {
+        console.log(user)
+        setOpen(true)
+        setId(user)
+        setIsModalOpen(true) 
+    }
+    return (
+        <>
+        <h1 className='text-2xl'>Usuarios</h1>
+        <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-2'>
+            {
+                users && users.map(user => (
+                    <div key={user._id} className=''>
+                        <p>{user.email}</p>
+                        <p>{user.role}</p>
+                        <p>{user.status}</p>
+                        <button className="btn btn-primary mx-1"
+                        onClick={()=>handleUpdateUser(user)}>Editar</button>
+                        
+                    </div>
+                ))
+            }
+        </div>
+        {
+            open &&
+            <ModalProfile user={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        }
+        </>
+    )
 }
 
 export default DashboardPage

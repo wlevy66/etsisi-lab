@@ -4,8 +4,9 @@ import {BrowserRouter, Route, Routes} from "react-router-dom"
 import Nav from '@/components/common/Nav'
 import Footer from '@/components/common/Footer'
 
-import SchedulePage from '@/pages/SchedulePage'
 import DashboardPage from '@/pages/DashboardPage'
+import SchedulePage from '@/pages/SchedulePage'
+import RoomPage from '@/pages/RoomPage'
 import FormRoom from '@/pages/forms/FormRoom'
 import FormSchedule from '@/pages/forms/FormSchedule'
 import Error from '@/pages/Error'
@@ -16,6 +17,7 @@ import RoomScheduleCard from '@/components/RoomScheduleCard'
 
 import ProtectedRoute from './ProtectedRoute'
 import ProfessorRoute from './ProfessorRoute'
+import AdminRoute from './AdminRoute'
 
 const App = () => {
     return (
@@ -29,15 +31,18 @@ const App = () => {
                     <Route path='/register' element={<RegisterPage />} />
 
                     <Route element={<ProtectedRoute />}>
-                        <Route element={<ProfessorRoute />}>
+                        <Route element={<AdminRoute />}>
                             <Route path='/dashboard' element={<DashboardPage />} />
+                        </Route>    
+                        <Route element={<ProfessorRoute />}>
+                            <Route path='/rooms' element={<RoomPage />} />
                             <Route path='/add-room' element={<FormRoom />} />
                             <Route path='/edit-room/:roomId' element={<FormRoom />} />
                             <Route path='/schedules/:roomId' element={<SchedulePage />} />
                             <Route path='/add-schedule/:roomId' element={<FormSchedule />} />
                             <Route path='/edit-schedule/:roomId/:scheduleId' element={<FormSchedule />} />
                         </Route>
-                        <Route path='/my-reservations' element={<ReservationPage />} />
+                        <Route path='/reservations' element={<ReservationPage />} />
                         <Route path='/add-reservation' element={<RoomScheduleCard />} />
                         <Route path='/edit-reservation/:reservationId' element={<RoomScheduleCard />} />
                     </Route>

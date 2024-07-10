@@ -119,9 +119,56 @@ const verify = (req, res) => {
         })
     })
 }
+
+const getUsers = async (req, res) => {
+    try{
+        const users = await User.find().select('email status role').sort({role: 1})
+        res.status(200).json({
+            status: 200,
+            users
+        })
+    }catch (error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
+const getUser = async (req, res) => {
+    try{
+        const user = await User.findById(req.params.id)
+        res.status(200).json({
+            status: 200,
+            user
+        })
+    }catch (error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
+const updateUser = async (req, res) => {
+    try{
+        const updatedUser = User.findByIdAndUpdate(req.params, req.body, {new: true})
+        res.status(200).json({
+            status: 200,
+            updatedUser
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     login,
     register,
     logout,
-    verify
+    verify,
+    getUsers,
+    getUser,
+    updateUser
 }

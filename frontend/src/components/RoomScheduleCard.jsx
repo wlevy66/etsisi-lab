@@ -83,7 +83,7 @@ const RoomScheduleCard = () => {
                 }
                 <button onClick={(e) => {
                     e.preventDefault()
-                    navigate(`/my-reservations`)
+                    navigate(`/reservations`)
                 }}
                     className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded my-3'>
                     Cancelar

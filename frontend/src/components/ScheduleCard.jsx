@@ -23,11 +23,11 @@ const ScheduleCard = ({ schedule, type }) => {
     }
 
     const handleUpdateReservation = async(id, schedule) => {
-        await updateReservation(id, schedule).then(() => navigate('/my-reservations') )
+        await updateReservation(id, schedule).then(() => navigate('/reservations') )
     }
 
     const handleAddReservation = async(user, schedule) => {
-        await addReservation(user, schedule).then(() => navigate('/my-reservations')).catch(error => console.log(error))
+        await addReservation(user, schedule).then(() => navigate('/reservations')).catch(error => console.log(error))
     }
 
     const showUsers = async(scheduleId) => {

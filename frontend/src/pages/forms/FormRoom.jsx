@@ -23,7 +23,7 @@ const FormRoom = () => {
 
     useEffect(() => {
         if(success){
-            navigate('/dashboard')
+            navigate('/rooms')
         }
     }, [success])
 
@@ -63,7 +63,7 @@ const FormRoom = () => {
             <div className="flex items-center justify-between my-2">
                 <button onClick={(e) => {
                     e.preventDefault()
-                    navigate(`/dashboard`)
+                    navigate(`/rooms`)
                 }}
                 className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded'>
                     Cancelar

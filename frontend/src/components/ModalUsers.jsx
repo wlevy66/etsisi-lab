@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css'
+
 const ModalUsers = ({ reservations, open, onClose }) => {
     return (
       <Modal open={open} onClose={onClose} center>
