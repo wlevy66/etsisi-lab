@@ -1,6 +1,6 @@
-const Room = require('../models/roomModel')
-const Schedule = require ('../models/scheduleModel')
-const Reservation = require ('../models/reservationModel')
+const Room = require('./roomModel')
+const Schedule = require ('../schedule/scheduleModel')
+const Reservation = require ('../reservation/reservationModel')
 
 const getRooms = async (req, res) => {
     try{

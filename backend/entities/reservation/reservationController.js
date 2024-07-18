@@ -1,5 +1,5 @@
-const Reservation = require('../models/reservationModel')
-const Schedule = require('../models/scheduleModel')
+const Reservation = require('./reservationModel')
+const Schedule = require('../schedule/scheduleModel')
 
 const getReservations = async (req, res) => {
     try{

@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const UserController = require('../controllers/userController')
-const validateMiddleware = require('../middlewares/validatorSchema')
-const userSchema = require('../schemas/userSchema')
+const UserController = require('./userController')
+const validateMiddleware = require('../../middlewares/validatorSchema')
+const userSchema = require('./userSchema')
 
 //define routes
 router.post('/login', validateMiddleware(userSchema), UserController.login)

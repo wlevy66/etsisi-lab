@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const ReservationController = require('../controllers/reservationController')
-const validateMiddleware = require('../middlewares/validatorSchema')
-const {reservationSchemaCreate, reservationSchemaUpdate} = require('../schemas/reservationSchema')
+const ReservationController = require('./reservationController')
+const validateMiddleware = require('../../middlewares/validatorSchema')
+const {reservationSchemaCreate, reservationSchemaUpdate} = require('./reservationSchema')
 
 //define routes
 router.get('/reservations/:id', ReservationController.getReservations)

@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const RoomController = require('../controllers/roomController')
-const validateMiddleware = require('../middlewares/validatorSchema')
-const roomSchema = require('../schemas/roomSchema');
+const RoomController = require('./roomController')
+const validateMiddleware = require('../../middlewares/validatorSchema')
+const roomSchema = require('./roomSchema');
 
 //define routes
 router.get('/rooms', RoomController.getRooms)

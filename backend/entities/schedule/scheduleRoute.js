@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const ScheduleController = require('../controllers/scheduleController')
-const validateMiddleware = require('../middlewares/validatorSchema')
-const {schemaScheduleCreate, schemaScheduleUpdate} = require('../schemas/scheduleSchema')
+const ScheduleController = require('./scheduleController')
+const validateMiddleware = require('../../middlewares/validatorSchema')
+const {schemaScheduleCreate, schemaScheduleUpdate} = require('./scheduleSchema')
 
 //define routes
 router.get('/schedules/users/:scheduleId', ScheduleController.getUsersBySchedule)
