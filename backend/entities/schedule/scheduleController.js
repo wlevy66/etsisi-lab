@@ -1,9 +1,8 @@
-const Schedule = require('./scheduleModel')
-const Reservation = require('../reservation/reservationModel')
+const scheduleService = require('./scheduleService')
 
 const getSchedulesByRoom = async (req, res) => {
     try{
-        const schedules = await Schedule.find({ room : req.params.roomId}).populate('room').sort({start: 1})
+        const schedules = await scheduleService.getSchedulesByRoom(req.params.roomId)
         res.status(200).json({
             status: 200,
             schedules
@@ -17,7 +16,7 @@ const getSchedulesByRoom = async (req, res) => {
 
 const getSchedule = async (req, res) => {
     try{
-        const schedule = await Schedule.findById(req.params.scheduleId).populate('room')
+        const schedule = await scheduleService.getSchedule(req.params.scheduleId)
         res.status(200).json({
             status: 200,
             schedule,
@@ -28,16 +27,10 @@ const getSchedule = async (req, res) => {
         })
     }
 }
-
+/* TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO */
 const getAvailableSchedules = async (req, res) => {
     try{
-        const reservations = await Reservation.find({ "user":req.params.userId })
-        const schedules = await Schedule.find().populate('room')
-        const availableSchedules = schedules.filter(schedule => {
-            return !reservations.some(reservation => {
-                return reservation.schedule.toString() === schedule._id.toString()
-            })
-        })
+        const availableSchedules = await schedulesService.getAvailableSchedules(req.params.userId)
         res.status(200).json({
             status: 200,
             availableSchedules
@@ -53,9 +46,7 @@ const getAvailableSchedules = async (req, res) => {
 const createSchedule = async (req, res) => {
 
     try{
-
-        const newSchedule = new Schedule(req.body)
-        const savedSchedule = await newSchedule.save()
+        const savedSchedule = await scheduleService.createSchedule(req.body)
         
         res.status(201).json({
             status: 201,
@@ -71,11 +62,7 @@ const createSchedule = async (req, res) => {
 
 const updateSchedule = async (req, res) => {
     try{
-        const schedule = await Schedule.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        if(!schedule) return res.status(404).json({
-            status: 404,
-            error: 'Schedule not found'
-        })
+        const schedule = await scheduleService.updateSchedule(req.params.id, req.body)
         res.status(200).json({
             status: 200,
             message: 'Schedule updated successfully!',
@@ -91,12 +78,7 @@ const updateSchedule = async (req, res) => {
 
 const deleteSchedule = async (req, res) => {
     try{
-        const schedule = await Schedule.findByIdAndDelete(req.params.id)
-        if(!schedule) return res.status(404).json({
-            status: 404,
-            error: 'Schedule not found'
-        })
-        await deleteScheduleInReservation(req.params.id)
+        const schedule = await scheduleService.deleteSchedule(req.params.id)
         res.status(204).json({
             status: 204,
             message: 'Schedule deleted successfully!'
@@ -108,17 +90,11 @@ const deleteSchedule = async (req, res) => {
         })
     }
 }
-const deleteScheduleInReservation = async (id) => {
-    try {
-        await Reservation.deleteMany({ schedule : id})
-    } catch (error) {
-        return error.message
-    }
-}
+
 
 const getUsersBySchedule = async (req, res) => {
     try{
-        const users = await Reservation.find({ schedule : req.params.scheduleId}).populate('user')
+        const users = await scheduleService.getUsersBySchedule(req.params.scheduleId)
         res.status(200).json({
             status: 200,
             users
