@@ -1,9 +1,9 @@
-const Reservation = require('./reservationModel')
-const Schedule = require('../schedule/scheduleModel')
+const Reservation = require('../models/reservationModel')
+const Schedule = require('../models/scheduleModel')
 
 const getReservations = async (req, res) => {
     try{
-        const reservations = await Reservation.find({"user": req.params.id})
+        const reservations = await Reservation.find({"user": req.params.userId})
                             .populate({
                                 path:'user',
                                 select: '_id email'

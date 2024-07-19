@@ -1,15 +1,15 @@
-const Room = require('./roomModel')
+const roomService = require('./roomService')
 const Schedule = require ('../schedule/scheduleModel')
 const Reservation = require ('../reservation/reservationModel')
 
 const getRooms = async (req, res) => {
     try{
-        const rooms = await Room.find().select('_id name capacity')
+        const rooms = await roomService.getRooms()
         res.status(200).json({
             status: 200,
             rooms
         })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -18,7 +18,7 @@ const getRooms = async (req, res) => {
 
 const getRoom = async (req, res) => {
     try{
-        const room = await Room.findById(req.params.id).select('_id name capacity')
+        const room = await roomService.getRoom(req.params.id)
         if(!room) return res.status(404).json({
             status: 404,
             message: 'Room not found'
@@ -28,7 +28,7 @@ const getRoom = async (req, res) => {
             status: 200,
             room
         })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -36,26 +36,21 @@ const getRoom = async (req, res) => {
 }
 
 const createRoom = async (req, res) => {
-    try{
-        const {name, capacity} = req.body
-        const nameTrimmed = name.trim()
-        const roomAlreadyExists = await Room.findOne({"name":nameTrimmed})
-        if(roomAlreadyExists) return res.status(400).json({
-            status: 400,
-            error: 'Room already exists',
-        })
-        
-        const newRoom = new Room({
-            name: nameTrimmed,
-            capacity
-        })
-        const savedRoom = await newRoom.save()
+    try {
+        const { name, capacity } = req.body;
+        const savedRoom = await roomService.createRoom(name, capacity);
         res.status(201).json({
             status: 201,
             message: 'Room created successfully!',
             savedRoom
         })
-    }catch(error){
+    } catch (error) {
+        if (error.message === 'Room already exists') {
+            return res.status(400).json({
+                status: 400,
+                error: error.message
+            })
+        }
         res.status(500).json({
             error: error.message
         })
@@ -64,7 +59,7 @@ const createRoom = async (req, res) => {
 
 const updateRoom = async (req, res) => {
     try{
-        await Room.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        await roomService.updateRoom(req.params.id, req.body)
         .then(roomUpdated => {
             res.status(201).json({
                 status: 201,
@@ -87,13 +82,7 @@ const updateRoom = async (req, res) => {
 
 const deleteRoom = async (req, res) => {
     try {
-        const room = await Room.findByIdAndDelete(req.params.id);
-        if (!room) return res.status(404).json({
-            error: "Room not found"
-        })
-
-        await deleteRoomInSchedule(req.params.id)
-        await deleteRoomInReservation(req.params.id)
+        await roomService.deleteRoom(req.params.id)
         res.status(204).json({
             status:204,
             message: 'Room deleted successfully!'
@@ -102,20 +91,6 @@ const deleteRoom = async (req, res) => {
         return res.status(500).json({
             error: error.message
         })
-    }
-}
-const deleteRoomInSchedule = async (id) => {
-    try {
-        await Schedule.deleteMany({ room : id})
-    }catch (error) {
-        return error.message
-    }
-}
-const deleteRoomInReservation = async (id) => {
-    try {
-        await Reservation.deleteMany({ room : id})
-    } catch (error) {
-        return error.message
     }
 }
 
