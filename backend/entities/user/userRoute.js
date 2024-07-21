@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const UserController = require('./userController')
-const validateMiddleware = require('../../middlewares/validatorSchema')
+const validateMiddleware = require('../../validators/validatorSchema')
 const userSchema = require('./userSchema')
 
 //define routes
