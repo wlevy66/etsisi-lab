@@ -1,11 +1,17 @@
 import {  NavLink } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
+import { useEffect } from "react"
 
 
 const Nav = () => {
 
-    const {isAuthenticated, signOut} = useAuth()
+    const {isAuthenticated, signOut, user} = useAuth()
 
+    useEffect(() => {
+      if (isAuthenticated) {
+        console.log(user)
+      }
+    }, [isAuthenticated])
 
     return (
       <nav className="flex items-center justify-between flex-wrap p-6">
@@ -18,7 +24,12 @@ const Nav = () => {
           <div className="text-sm lg:flex-grow">
           {
               isAuthenticated ? (
-                  <button onClick={signOut} className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">Salir</button>
+                  <>
+                  <button onClick={signOut}
+                  className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">
+                    Salir
+                    </button>
+                  </>
               ) : (
                   <NavLink to="/login" className="inline-block text-sm px-4 py-2 border rounded text-black border-black hover:border-transparent hover:bg-white mt-4 lg:mt-0 float-end">Iniciar sesión</NavLink>
               )
