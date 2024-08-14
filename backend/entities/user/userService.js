@@ -2,6 +2,7 @@ const User = require('./userModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+console.log(process.env.JWT_SECRET)
 
 const login = async (email, password) => {
     try{
@@ -59,7 +60,7 @@ const verify = (token) => {
     try{
         return jwt.verify(token, process.env.JWT_SECRET)
     } catch(error){
-        throw new Error(error.message)
+        return null
     }
 }
 

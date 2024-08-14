@@ -12,16 +12,29 @@ const FormSchedule = () => {
     const { addSchedule, error, getSchedule, updateSchedule, success } = useSchedule()
     const navigate = useNavigate()
     const params = useParams()
+    const minDateValue = () => {
+        const today = new Date()
+        const minDate = new Date(today)
+        minDate.setDate(minDate.getDate() + 1)
+        const day = String(minDate.getDate()).padStart(2, '0')
+        const month = String(minDate.getMonth() + 1).padStart(2, '0')
+        const year = minDate.getFullYear();
+        return `${year}-${month}-${day}`
+    }
+
+    useEffect(() => {
+        console.log(minDateValue())
+        document.getElementById('day').setAttribute('min', minDateValue())
+    }, [])
 
     useEffect(() => {
         const getScheduleData = async() => {
-            if(params.scheduleId){
-                const schedule = await getSchedule(params.roomId, params.scheduleId)
-                setValue('start', dayjs.utc(schedule.start).format('YYYY-MM-DDTHH:mm'))
-                setValue('end', dayjs.utc(schedule.end).format('YYYY-MM-DDTHH:mm'))
-            }
+            const schedule = await getSchedule(params.roomId, params.scheduleId)
+            setValue('day', dayjs.utc(schedule.day).format('YYYY-MM-DD'))
+            setValue('start', dayjs.utc(schedule.start).format('HH:mm'))
+            setValue('end', dayjs.utc(schedule.end).format('HH:mm'))
         }
-        getScheduleData()
+        if(params.scheduleId) getScheduleData()
     }, [params.scheduleId])
 
     useEffect(() => {
@@ -33,40 +46,49 @@ const FormSchedule = () => {
     const onSubmit = handleSubmit( async(data) => {
             if(params.scheduleId){
                 await updateSchedule(params.scheduleId, {
-                    start: dayjs.utc(data.start).format(),
-                    end: dayjs.utc(data.end).format()
+                    day: dayjs.utc(data.day).format(),
+                    start: dayjs.utc(`${data.day} ${data.start}`, 'YYYY-MM-DD HH:mm').format(),
+                    end: dayjs.utc(`${data.day} ${data.end}`, 'YYYY-MM-DD HH:mm').format()
                 })
             }
             else{
                 await addSchedule({
                     room: params.roomId,
-                    start: dayjs.utc(data.start).format(),
-                    end: dayjs.utc(data.end).format()
+                    day: dayjs.utc(data.day).format(),
+                    start: dayjs.utc(`${data.day} ${data.start}`, 'YYYY-MM-DD HH:mm').format(),
+                    end: dayjs.utc(`${data.day} ${data.end}`, 'YYYY-MM-DD HH:mm').format()
                 })
             }   
     })
     return(
         <div className="w-full max-w-xs mx-auto mt-5">
             <h1 className='font-bold text-3xl mb-1'>
-                {
-                    params.scheduleId ? 'Actualizar horario' : 'Crear horario'
-                }
+                { params.scheduleId ? 'Actualizar horario' : 'Crear horario' }
             </h1>
             <form onSubmit={onSubmit}>
                 <div>{error && <span className='text-red-600'>{error}</span>}</div>
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
-                Inicio
-                </label>
-                <input type='datetime-local'
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="start" placeholder="Inicio" 
-                {...register('start')} autoFocus />
 
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
-                Fin
+                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2" htmlFor="day">
+                Fecha
                 </label>
-                <input type='datetime-local'
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="start" placeholder="Inicio" 
+                <input type='date'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="day"
+                {...register('day')} autoFocus />
+
+                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2" htmlFor="start">
+                Hora de inicio
+                </label>
+                <input type='time'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="start"
+                {...register('start')} />
+
+                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2" htmlFor="end">
+                Hora de fin
+                </label>
+                <input type='time'
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="end" 
                 {...register('end')} />
+
                 <div className="flex items-center justify-between my-2">
                     <button onClick={(e) => {
                         e.preventDefault()

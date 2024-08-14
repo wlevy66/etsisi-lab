@@ -3,7 +3,7 @@ const Footer = () => {
 
     return (
         <footer className="bg-black ">
-            <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8 ">
+            <div className="w-full mx-auto p-4 md:py-8 ">
                 <div className="sm:flex sm:items-center sm:justify-between text-white">
                     <span className="self-center text-2xl whitespace-nowrap ">Universidad Politécnica de Madrid © {year}</span>
                     <ul className="flex flex-wrap items-center mb-6 text-sm font-medium sm:mb-0 dark:text-gray-400">

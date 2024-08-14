@@ -1,4 +1,5 @@
 
+const { required } = require('joi')
 const {Schema, model} = require('mongoose')
 
 const ScheduleModel = new Schema(
@@ -7,13 +8,17 @@ const ScheduleModel = new Schema(
         type: Schema.ObjectId,
         ref: 'Room'
     },
+    day: { 
+        type: Date,
+        required: true 
+    },
     start: {
         type: Date,
-        default: Date.now()
+        required: true 
     },
     end: {
         type: Date,
-        default: Date.now
+        required: true
     },
     reservedBy: {
         type: Number,

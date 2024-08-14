@@ -18,13 +18,14 @@ import RoomScheduleCard from '@/components/RoomScheduleCard'
 import ProtectedRoute from './ProtectedRoute'
 import ProfessorRoute from './ProfessorRoute'
 import AdminRoute from './AdminRoute'
+import Header from '@/components/common/Header'
 
 const App = () => {
     return (
         
         <BrowserRouter>
-            <Nav />
-            <main className='container mx-auto px-10'>
+            <Header />
+            <main className='mx-auto px-10'>
                 <Routes>
                     <Route path='/login' element={<LoginPage />} />
                     <Route index element={<LoginPage />} />

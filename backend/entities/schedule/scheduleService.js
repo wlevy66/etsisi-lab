@@ -39,7 +39,10 @@ const getAvailableSchedules = async (userId) => {
 
 const createSchedule = async (schedule) => {
     try{
+        const isValid = await validateSchedule(schedule)
+        if (!isValid) throw new Error('Schedule already exists')
         const newSchedule = new Schedule(schedule)
+        console.log(newSchedule)
         const savedSchedule = await newSchedule.save()
         return savedSchedule
     } catch(error){
@@ -47,8 +50,41 @@ const createSchedule = async (schedule) => {
     }
 }
 
+const validateSchedule = async (schedule) => {
+    const { room, start:newStart, end:newEnd } = schedule
+    console.log(newStart)
+    console.log(newEnd)
+
+    const existingSchedule = await Schedule.findOne({
+        room,
+        $or: [
+            {
+                start: { $lt: newEnd },
+                end: { $gt: newStart }
+            },
+            {
+                start: {
+                    $gte: newStart, 
+                    $lt: newEnd 
+                }
+            },
+            {
+                end: { 
+                    $gt: newStart,
+                    $lte: newEnd
+                }
+            }
+        ]
+    })
+    return !existingSchedule
+}
+
+
 const updateSchedule = async (id, schedule) => {
     try{
+        const isValid = await validateSchedule(schedule)
+        if (!isValid) throw new Error('Schedule already exists')
+            
         const scheduleUpdated = await Schedule.findByIdAndUpdate(id, schedule, {new: true})
         if (!scheduleUpdated) throw new Error('Schedule not found')
         return scheduleUpdated

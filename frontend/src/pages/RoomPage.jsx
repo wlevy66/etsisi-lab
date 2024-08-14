@@ -21,13 +21,13 @@ const RoomPage = () => {
           <h2 className='text-2xl'>No hay aulas creadas.</h2>
         )
       }
-      <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+      <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
         {rooms && rooms.map(room => (
           <RoomCard room={room} key={room._id} />
         ))}
       </div>
       <div className="mt-4">
-        <Link to={'/add-room'}><button className='bg-sky-700 text-white border-black p-2 rounded-md font-semibold w-full sm:w-auto'>Crear aula</button></Link>
+        <Link to={'/add-room'}><button className='create w-full sm:w-auto'>Crear aula</button></Link>
       </div>
     </div>
   )

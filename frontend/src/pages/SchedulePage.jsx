@@ -11,14 +11,20 @@ const SchedulePage = () => {
   const { getSchedulesByRoom, schedules, setError, setSuccess } = useSchedule()
 
   useEffect(() => {
-    getSchedulesByRoom(params.roomId)
+    const getSchedules = async() => {
+      await getSchedulesByRoom(params.roomId)
+    }
+    getSchedules()
     setError(null)
     setSuccess(false)
+    console.log(schedules)
   }, [])
 
   return (
     <div className="p-4">
-      <h1 className='my-3 text-3xl font-bold'>Listado de horarios</h1>
+      <h1 className='my-3 text-3xl font-bold'>
+        Listado de horarios { !schedules  && <span className='italic'>del aula {schedules[0].room.name}</span> }
+      </h1>
       {
         schedules && schedules.length === 0 && (
           <h2 className='text-2xl'>No hay horarios disponibles.</h2>

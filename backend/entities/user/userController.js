@@ -56,15 +56,27 @@ const logout = async (req, res) => {
     })
 }
 
-const verify = (req, res) => {
-    const {token} = req.cookies
+const verify = async (req, res) => {
+    const { token } = req.cookies
     if(!token) return res.status(401).json({
         status: 401,
         error: 'Unauthorized'
     })
 
     const decoded = userService.verify(token)
-    const userFound = User.findById(decoded.id)
+    if(!decoded) return res.status(401).json({
+        status: 401,
+        error: 'Unauthorized'
+    })
+    
+    const userFound = await User.findById(decoded.id)
+    if (!userFound) {
+        return res.status(404).json({
+            status: 404,
+            error: 'User not found'
+        })
+    }
+    
     res.status(200).json({
         status: 200,
         id: decoded.id,

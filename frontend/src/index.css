@@ -15,9 +15,44 @@ body {
 .content-container {
   height: calc(100vh - theme("spacing.20"));
 }
-nav {
-  background-color: #1867b7 !important;
+
+header {
+  color: #2581c4 !important;
 }
+
+nav {
+  background-color: #2581c4;
+  color: white;
+  
+}
+
+/* Button styles */
+button {
+  color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;	
+  padding-right: 1rem;
+  border-radius: 0.25rem
+}
+
+button.login, button.register {
+  background-color: #3b82f6;
+  font-weight: 600;
+}
+button.login:hover, button.register:hover {
+  background-color: #1d4ed8;
+}
+
+button.create {
+  background-color: #0369a1;
+}
+button.create:hover {
+  background-color: #025a8c;
+}
+
+
+
 footer {
   clear: both;
   width: 100%;

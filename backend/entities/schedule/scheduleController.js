@@ -30,7 +30,7 @@ const getSchedule = async (req, res) => {
 /* TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO */
 const getAvailableSchedules = async (req, res) => {
     try{
-        const availableSchedules = await schedulesService.getAvailableSchedules(req.params.userId)
+        const availableSchedules = await scheduleService.getAvailableSchedules(req.params.userId)
         res.status(200).json({
             status: 200,
             availableSchedules

@@ -39,9 +39,9 @@ const ScheduleCard = ({ schedule, type }) => {
 
     
     return (
-        <div className="card my-3">
-            <div className="card-body">
-                <h2 className='text-xl font-bold'>{schedule.room.name} <button onClick={()=>showUsers(schedule._id)}>{schedule.reservedBy}/{schedule.room.capacity}</button></h2>
+        <div className="border rounded-lg p-4 my-4 shadow-lg">
+            
+                <h2 className='text-xl font-bold'>{schedule.room.name} <button className='btn btn-sucess' onClick={()=>showUsers(schedule._id)}>{schedule.reservedBy}/{schedule.room.capacity}</button></h2>
                 
                 <p className="card-text">Start: { dayjs(schedule.start).utc().format('DD-MM-YYYY - HH:mm') }</p>
                 <p className="card-text">End: { dayjs(schedule.end).utc().format('DD-MM-YYYY - HH:mm') }</p>
@@ -63,7 +63,7 @@ const ScheduleCard = ({ schedule, type }) => {
                     </>
                 }
                 <ModalUsers reservations={reservations} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
-            </div>
+            
         </div>
     )
 }
