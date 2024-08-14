@@ -27,8 +27,8 @@ const App = () => {
             <Header />
             <main className='mx-auto px-10'>
                 <Routes>
-                    <Route path='/login' element={<LoginPage />} />
                     <Route index element={<LoginPage />} />
+                    <Route path='/login' element={<LoginPage />} />
                     <Route path='/register' element={<RegisterPage />} />
 
                     <Route element={<ProtectedRoute />}>

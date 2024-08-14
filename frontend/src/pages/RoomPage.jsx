@@ -15,10 +15,13 @@ const RoomPage = () => {
 
   return (
     <div className="p-4">
-      <h1 className='my-3 text-3xl font-bold'>Listado de aulas</h1>
+      <h1 className='my-3 text-3xl font-bold italic'>LISTADO DE AULAS</h1>
+      <div className="mt-4">
+        <Link to={'/add-room'}><button className='create w-full sm:w-auto font-semibold'>CREAR AULA</button></Link>
+      </div>
       {
         rooms && rooms.length === 0 && (
-          <h2 className='text-2xl'>No hay aulas creadas.</h2>
+          <h2 className='text-2xl italic'>No hay aulas creadas.</h2>
         )
       }
       <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
@@ -26,9 +29,7 @@ const RoomPage = () => {
           <RoomCard room={room} key={room._id} />
         ))}
       </div>
-      <div className="mt-4">
-        <Link to={'/add-room'}><button className='create w-full sm:w-auto'>Crear aula</button></Link>
-      </div>
+
     </div>
   )
 }

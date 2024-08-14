@@ -33,7 +33,7 @@ const Header = () => {
   }
 
     return (
-      <header>
+      <header className={`${isAuthenticated ? 'border-b-8 border-b-solid border-b-[#2581c4]' : ''} `}>
         <div className="grid grid-cols-12 items-center p-6">
             <div className="col-span-2 mr-6">
                 <img src="/logo-encabezado.svg" className="" alt="Logo ETSISI" />
@@ -77,7 +77,9 @@ const Header = () => {
             open && <ModalEditProfile user={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
             }
             </div>
-        <Nav />
+            {
+              !isAuthenticated ? <Nav /> : <></>
+            }
       </header>
       
     )

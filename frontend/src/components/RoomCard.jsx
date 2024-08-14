@@ -20,13 +20,15 @@ const RoomCard = ({ room }) => {
 
     return (
 
-        <div className="border rounded-lg p-4 my-4 shadow-lg">
+        <div className="border rounded-lg p-4 my-4">
             <div className="flex justify-between">
                 <div>
-                    <h2 className='text-xl font-bold'>{room.name}</h2>
-                    <p className="font-bold">Capacidad: {room.capacity}</p>
+                    <h2 className='text-2xl font-bold'>{room.name}</h2>
+                    <p className="text-xl font-bold">Capacidad: {room.capacity}</p>
                 </div>
-                <button className="btn btn-success my-2 justify-between" onClick={() => navigate(`/schedules/${room._id}`)}>Ver horarios</button>
+                <button className="btn btn-success my-2 justify-between" onClick={() => navigate(`/schedules/${room._id}`)}>
+                    Ver horarios
+                </button>
             </div> 
             {
                 user.role === 'professor' && (
@@ -34,7 +36,10 @@ const RoomCard = ({ room }) => {
                         <Link to={`/edit-room/${room._id}`} >
                             <button className="btn btn-primary mx-1 float-end">Editar</button>
                         </Link>
-                        <button className="btn btn-danger mx-1 float-end" onClick={() => handleDeleteRoom(room._id)}>Eliminar</button>
+                        <button className="btn btn-danger mx-1 float-end" 
+                        onClick={() => handleDeleteRoom(room._id)}>
+                            Eliminar
+                        </button>
                     </div>
                 )
             }   
