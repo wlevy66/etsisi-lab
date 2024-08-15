@@ -26,19 +26,19 @@ const RoomCard = ({ room }) => {
                     <h2 className='text-2xl font-bold'>{room.name}</h2>
                     <p className="text-xl font-bold">Capacidad: {room.capacity}</p>
                 </div>
-                <button className="btn btn-success my-2 justify-between" onClick={() => navigate(`/schedules/${room._id}`)}>
-                    Ver horarios
+                <button className="btn btn-success my-2 justify-between font-semibold" onClick={() => navigate(`/schedules/${room._id}`)}>
+                    VER HORARIOS
                 </button>
             </div> 
             {
                 user.role === 'professor' && (
                     <div className="mt-3">
                         <Link to={`/edit-room/${room._id}`} >
-                            <button className="btn btn-primary mx-1 float-end">Editar</button>
+                            <button className="btn btn-primary mx-1 float-end font-semibold">EDITAR</button>
                         </Link>
-                        <button className="btn btn-danger mx-1 float-end" 
+                        <button className="btn btn-danger mx-1 float-end font-semibold" 
                         onClick={() => handleDeleteRoom(room._id)}>
-                            Eliminar
+                            ELIMINAR
                         </button>
                     </div>
                 )

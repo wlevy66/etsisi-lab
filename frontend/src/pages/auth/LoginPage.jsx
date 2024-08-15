@@ -40,7 +40,7 @@ const LoginPage = () => {
                     
                 </div>
                 <div className='mb-4'>{error && <span className='text-red-500 text-xs italic'>{error}</span>}</div>
-                <div className="flex items-center justify-between">
+                <div className="flex justify-between">
                     <button className="login" type="submit">
                         INICIAR SESIÓN
                     </button>
