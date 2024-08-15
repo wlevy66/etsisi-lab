@@ -20,8 +20,8 @@ const ReservationCard = ({ reservation }) => {
                 {
                     !params.reservationId &&
                     <div className="justify-items-center">
-                            <Link to={`/edit-reservation/${reservation._id}`} className="btn btn-primary mx-2">Editar</Link>
-                            <button className="btn btn-danger" onClick={() => handleDeleteReservation(reservation._id)}>Eliminar</button>
+                            <Link to={`/edit-reservation/${reservation._id}`} className="bg-blue-500 rounded mx-2">Editar</Link>
+                            <button className="bg-red-600 rounded" onClick={() => handleDeleteReservation(reservation._id)}>Eliminar</button>
                     </div>
                 }
                

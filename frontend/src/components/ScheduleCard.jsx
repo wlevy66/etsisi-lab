@@ -39,26 +39,45 @@ const ScheduleCard = ({ schedule, type }) => {
 
     
     return (
-        <div className="border rounded-lg p-4 my-4 shadow-lg">
-            
-                <h2 className='text-xl font-bold'>{schedule.room.name} <button className='btn btn-sucess' onClick={()=>showUsers(schedule._id)}>{schedule.reservedBy}/{schedule.room.capacity}</button></h2>
-                
-                <p className="card-text">Start: { dayjs(schedule.start).utc().format('DD-MM-YYYY - HH:mm') }</p>
-                <p className="card-text">End: { dayjs(schedule.end).utc().format('DD-MM-YYYY - HH:mm') }</p>
+        <div className="border rounded-lg p-4 my-4">
+            <div className="justify-self-start">
+                <div className='flex gap-4 mb-3'>
+                    <h2 className='text-2xl font-bold'>{schedule.room.name}</h2>
+                    <button className='bg-red-600 rounded' 
+                        onClick={()=>showUsers(schedule._id)}>
+                        {schedule.reservedBy}/{schedule.room.capacity}
+                    </button>
+                </div>
+                <p className="text-xl font-bold">Día: { dayjs(schedule.start).utc().format('DD-MM-YYYY') }</p>
+                <p className="text-xl font-bold">Inicio: { dayjs(schedule.start).utc().format('HH:mm') }</p>
+                <p className="text-xl font-bold">Fin: { dayjs(schedule.end).utc().format('HH:mm') }</p>
+            </div>
                 {
                     type === 'add' ?
                     <>
-                        <button className="btn btn-success mx-1 float-end" onClick={() => handleAddReservation(user.id, schedule._id)}>Reservar</button>
+                        <button className="bg-green-700 rounded mx-1 float-end" 
+                        onClick={() => handleAddReservation(user.id, schedule._id)}>
+                            RESERVAR
+                        </button>
                     </>
                     :
                     <>
                     {
                         !params.reservationId ?
-                        <>
-                        <button className="btn btn-primary mx-1 float-end" onClick={() => navigate(`/edit-schedule/${schedule.room._id}/${schedule._id}`)}>Editar</button>
-                        <button className="btn btn-danger mx-1 float-end" onClick={() => handleDelete(schedule._id)}>Eliminar</button>
-                        </>
-                        : <button className="btn btn-success mx-1 float-end" onClick={() => handleUpdateReservation(params.reservationId, schedule._id)}>Actualizar reserva</button>
+                        <div className="mt-3">
+                            <button className="bg-blue-500 rounded mx-1 float-end font-semibold" 
+                                onClick={() => navigate(`/edit-schedule/${schedule.room._id}/${schedule._id}`)}>
+                                EDITAR
+                            </button>
+                            <button className="bg-red-600 rounded mx-1 float-end font-semibold" 
+                                onClick={() => handleDelete(schedule._id)}>
+                                ELIMINAR
+                            </button>
+                        </div>
+                        : <button className="mt-3 bg-green-700 rounded mx-1 float-end semibold"
+                            onClick={() => handleUpdateReservation(params.reservationId, schedule._id)}>
+                                ACTUALIZAR RESERVA
+                            </button>
                     }
                     </>
                 }

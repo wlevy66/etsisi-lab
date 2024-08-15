@@ -30,7 +30,7 @@ const DashboardPage = () => {
                         <p>{user.email}</p>
                         <p>{user.role}</p>
                         <p>{user.status}</p>
-                        <button className="btn btn-primary mx-1"
+                        <button className="bg-blue-500 rounded mx-1"
                         onClick={()=>handleUpdateUser(user)}>Editar</button>
                         
                     </div>

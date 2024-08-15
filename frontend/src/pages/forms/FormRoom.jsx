@@ -39,7 +39,7 @@ const FormRoom = () => {
 
 
     return(
-            <form className='max-w-xs mx-auto mt-5 border-1 rounded p-8' onSubmit={onSubmit}>
+            <form className='max-w-xs mx-auto mt-5 border rounded p-8' onSubmit={onSubmit}>
                 <h1 className='font-bold text-3xl mb-3 italic text-center'>
                     {
                         params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'
@@ -51,7 +51,7 @@ const FormRoom = () => {
                     Nombre del aula
                     </label>
                     <input type='text'
-                    className="border-1 rounded w-full p-2" id="name" placeholder="Nombre del aula"
+                    className="border rounded w-full p-2" id="name" placeholder="Nombre del aula"
                     {...register('name')} autoFocus />
                 </div>
 
@@ -60,7 +60,7 @@ const FormRoom = () => {
                     Capacidad
                     </label>
                     <input type='number'
-                    className="border-1 rounded w-full p-2" id="capacity" placeholder="Capacidad"
+                    className="border rounded w-full p-2" id="capacity" placeholder="Capacidad"
                     {...register('capacity')} />
                 </div>
 
@@ -73,7 +73,7 @@ const FormRoom = () => {
                     CANCELAR
                 </button>
 
-                <button className="bg-blue-500 hover:bg-blue-700 font-semibold text-white py-2 px-4 rounded" type="submit">
+                <button className="bg-blue-500 rounded hover:bg-blue-700 font-semibold text-white py-2 px-4" type="submit">
                     {
                         params.roomId ? 'ACTUALIZAR' : 'CREAR'
                     }

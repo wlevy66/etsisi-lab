@@ -61,6 +61,13 @@ const Header = () => {
                             Editar perfil
                             </button>
                             <button onClick={() => { 
+                                updateProfile(user)
+                                closeDropdown() 
+                            }}
+                            className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
+                            Cambiar contraseña
+                            </button>
+                            <button onClick={() => { 
                                 signOut()
                                 closeDropdown()
                             }}

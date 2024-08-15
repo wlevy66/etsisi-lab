@@ -61,52 +61,54 @@ const FormSchedule = () => {
             }   
     })
     return(
-        <div className="w-full max-w-xs mx-auto mt-5">
-            <h1 className='font-bold text-3xl mb-1'>
-                { params.scheduleId ? 'Actualizar horario' : 'Crear horario' }
-            </h1>
-            <form onSubmit={onSubmit}>
-                <div>{error && <span className='text-red-600'>{error}</span>}</div>
+            <form className='max-w-xs mx-auto mt-5 border rounded p-8' onSubmit={onSubmit}>
+                <h1 className='font-bold text-3xl mb-3 italic text-center'>
+                    { params.scheduleId ? 'ACTUALIZAR HORARIO' : 'CREAR HORARIO' }
+                </h1>
+                <div className='mb-4'>{error && <span className='text-red-600 italic'>{error}</span>}</div>
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="day">
+                    Fecha
+                    </label>
+                    <input type='date'
+                    className="border rounded w-full p-2" id="day"
+                    {...register('day')} autoFocus />
+                </div>
 
-                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2" htmlFor="day">
-                Fecha
-                </label>
-                <input type='date'
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="day"
-                {...register('day')} autoFocus />
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="start">
+                    Hora de inicio
+                    </label>
+                    <input type='time'
+                    className="border rounded w-full p-2" id="start"
+                    {...register('start')} />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="end">
+                    Hora de fin
+                    </label>
+                    <input type='time'
+                    className="border rounded w-full p-2" id="end" 
+                    {...register('end')} />
+                </div>
 
-                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2" htmlFor="start">
-                Hora de inicio
-                </label>
-                <input type='time'
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="start"
-                {...register('start')} />
-
-                <label className="block text-gray-700 text-sm font-bold mb-2 mt-2" htmlFor="end">
-                Hora de fin
-                </label>
-                <input type='time'
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" id="end" 
-                {...register('end')} />
-
-                <div className="flex items-center justify-between my-2">
+                <div className="flex items-center justify-center my-2 gap-2">
                     <button onClick={(e) => {
                         e.preventDefault()
                         navigate(`/schedules/${params.roomId}`) 
                     }}
-                    className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded'>
-                        Cancelar
+                    className='bg-slate-500 hover:bg-slate-700 font-semibold py-2 px-4 rounded'>
+                        CANCELAR
                     </button>
 
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                    <button className="bg-blue-500 rounded hover:bg-blue-700 font-semibold text-white py-2 px-4" type="submit">
                         {
-                            params.scheduleId ? 'Actualizar' : 'Crear'
+                            params.scheduleId ? 'ACTUALIZAR' : 'CREAR'
                         }
                     </button>
                 
                 </div>
             </form>
-        </div>
     )
 }
 

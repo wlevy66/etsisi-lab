@@ -21,7 +21,7 @@ const RegisterPage = () => {
     })
 
     return (
-        <form className="sm:w-full md:w-1/2 mx-auto border-1 rounded p-8 mt-6" onSubmit={onSubmit}>
+        <form className="sm:w-full md:w-1/2 mx-auto border rounded p-8 mt-6" onSubmit={onSubmit}>
             <h1 className='font-bold italic text-3xl mb-3 text-left'>SERVICIO DE REGISTRO</h1>
             <hr className='mb-4'/>
                 <div className="mb-4">
@@ -30,7 +30,7 @@ const RegisterPage = () => {
                     </label>
                     <input
                         {...register('email', { required: true })}
-                        className="border-1 rounded w-full p-2" id="email" type="email" placeholder="Correo electrónico" />
+                        className="border rounded w-full p-2" id="email" type="email" placeholder="Correo electrónico" />
                 </div>
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="password">
@@ -38,7 +38,7 @@ const RegisterPage = () => {
                     </label>
                     <input
                         {...register('password', { required: true })}
-                        className="border-1 rounded w-full p-2" id="password" type="password" placeholder="Contraseña" />
+                        className="border rounded w-full p-2" id="password" type="password" placeholder="Contraseña" />
                     
                 </div>
                 <div className='mb-4'>{error && <span className='text-red-500 text-xs italic'>{error}</span>}</div>
