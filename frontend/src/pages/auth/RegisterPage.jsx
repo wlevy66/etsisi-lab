@@ -21,8 +21,8 @@ const RegisterPage = () => {
     })
 
     return (
-        <form className="sm:w-full md:w-1/2 mx-auto border rounded p-8 mt-6" onSubmit={onSubmit}>
-            <h1 className='font-bold italic text-3xl mb-3 text-left'>SERVICIO DE REGISTRO</h1>
+        <form className="sm:w-full md:w-1/3 mx-auto border rounded p-4 mt-6" onSubmit={onSubmit}>
+            <h1 className='font-bold italic text-3xl my-3 text-left'>SERVICIO DE REGISTRO</h1>
             <hr className='mb-4'/>
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="email">
@@ -41,7 +41,7 @@ const RegisterPage = () => {
                         className="border rounded w-full p-2" id="password" type="password" placeholder="Contraseña" />
                     
                 </div>
-                <div className='mb-4'>{error && <span className='text-red-500 text-xs italic'>{error}</span>}</div>
+                <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
                 <div className='mb-4'>{success && <span className='text-green-500 text-xs italic'>Usuario creado correctamente, puedes iniciar sesión.</span>}</div>
                 <div className="flex items-center justify-between">
                     <button className="register" type="submit">

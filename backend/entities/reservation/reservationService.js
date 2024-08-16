@@ -17,6 +17,7 @@ const getReservations = async (userId) => {
                 select: 'name capacity'
             }
         })
+        return reservations
     } catch(error){
         throw Error(error.message)
     }
@@ -38,6 +39,7 @@ const getReservation = async (reservationId) => {
                                     select: 'name capacity'
                                 }
                             })
+        return reservation
     } catch(error){
         throw Error(error.message)
     }

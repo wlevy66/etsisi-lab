@@ -1,4 +1,4 @@
-import axios from './axios'
+import axios from '@/api/axios'
 
 const getAvailableSchedulesRequest = (userId) => axios.get(`/schedule/schedules/available/${userId}`)
 const getSchedulesByRoomRequest = (roomId) => axios.get(`/schedule/schedules/${roomId}`)

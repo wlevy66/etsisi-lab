@@ -6,53 +6,41 @@ div#root {
   min-height: 100vh;
 }
 
-body {
-  background: white;
-  color: black;
-  min-height: 100vh;
-}
-
-.content-container {
-  height: calc(100vh - theme("spacing.20"));
-}
-
 header {
-  color: #2581c4 !important;
+  color: #2581c4;
 }
 
 nav {
   background-color: #2581c4;
   color: white;
-  
+}
+
+span.error {
+  color: #dc2626;
+  font-style: italic;
+}
+
+span.success {
+  color: #15803d;
+  font-style: italic;
 }
 
 /* Button styles */
 button {
   color: white;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;	
-  padding-right: 1rem;
-  border-radius: 0.25rem
+  padding: 8px 16px;
+  border-radius: 4px
 }
 
-button.login, button.register {
+button.login, button.register, button.submit, button.create {
   background-color: #3b82f6;
   font-weight: 600;
 }
-button.login:hover, button.register:hover {
+button.login:hover, button.register:hover, button.submit:hover, button.create:hover {
   background-color: #1d4ed8;
 }
 
-button.create {
-  background-color: #0369a1;
-}
-button.create:hover {
-  background-color: #025a8c;
-}
-
-
-
+/* Footer style */
 footer {
   clear: both;
   width: 100%;

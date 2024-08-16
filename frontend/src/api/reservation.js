@@ -1,4 +1,4 @@
-import axios from './axios'
+import axios from '@/api/axios'
 
 const getReservationsRequest = (id) => axios.get(`/reservation/reservations/${id}`)
 const addReservationRequest = (user, schedule) => axios.post('/reservation/reservations', {user, schedule})

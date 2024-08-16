@@ -90,11 +90,33 @@ const updateUser = async (id, body) => {
     }
 }
 
+const updatePassword = async (id, currentPassword, newPassword, confirmPassword) => {
+    try{
+        if(currentPassword === newPassword) throw new Error('New password must be different from current password. Please try again.')
+
+        if(newPassword !== confirmPassword) throw new Error('Passwords do not match. Please try again.')
+
+        let userFound = await User.findById(id)
+        if(!userFound) throw new Error('User not found. Please try again.')
+
+        let matched = await bcrypt.compare(currentPassword, userFound.password)
+        if(!matched) throw new Error('Current password is incorrect. Please try again.')
+
+        let new_hash_password = await bcrypt.hash(newPassword,10)
+        userFound.password = new_hash_password
+        await userFound.save()
+    }
+    catch(error){
+        throw new Error(error.message)
+    }
+}
+
 module.exports = {
     login,
     register,
     verify,
     getUsers,
     getUser,
-    updateUser
+    updateUser,
+    updatePassword
 }

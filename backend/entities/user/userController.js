@@ -127,6 +127,22 @@ const updateUser = async (req, res) => {
     }
 }
 
+const updatePassword = async (req, res) => {
+    try{
+        const {id, currentPassword, newPassword, confirmPassword} = req.body
+        await userService.updatePassword(id, currentPassword, newPassword, confirmPassword)
+        res.status(200).json({
+            status: 200,
+            message: 'Password updated successfully'
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     login,
     register,
@@ -134,5 +150,6 @@ module.exports = {
     verify,
     getUsers,
     getUser,
-    updateUser
+    updateUser,
+    updatePassword
 }

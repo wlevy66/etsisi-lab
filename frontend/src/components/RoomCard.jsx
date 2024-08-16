@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthContext"
 import { useRoom } from "@/context/RoomContext"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-
+import { PROFESSOR_ROLE } from "@/constants/roles"
 
 const RoomCard = ({ room }) => {
     const { user } = useAuth()
@@ -31,7 +31,7 @@ const RoomCard = ({ room }) => {
                 </button>
             </div> 
             {
-                user.role === 'professor' && (
+                user.role === PROFESSOR_ROLE && (
                     <div className="mt-3">
                         <Link to={`/edit-room/${room._id}`} >
                             <button className="bg-blue-500 rounded mx-1 float-end font-semibold">EDITAR</button>

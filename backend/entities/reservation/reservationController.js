@@ -4,7 +4,7 @@ const getReservations = async (req, res) => {
     try{
         const reservations = await reservationService.getReservations(req.params.userId)
         
-        return res.status(200).json({
+        res.status(200).json({
             status: 200,
             reservations
         })
@@ -19,7 +19,7 @@ const getReservation = async (req, res) => {
     try{
         const reservation = await reservationService.getReservation(req.params.reservationId)
 
-        return res.status(200).json({
+        res.status(200).json({
             status: 200,
             reservation
         })
@@ -68,7 +68,7 @@ const updateReservation = async (req, res) => {
 const deleteReservation = async (req, res) => {
     try {
         const reservation = await reservationService.deleteReservation(req.params.reservationId)
-        return res.status(200).json({
+        res.status(200).json({
             status:200,
             message: "Reservation deleted successfully!",
             reservation

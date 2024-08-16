@@ -39,13 +39,13 @@ const FormRoom = () => {
 
 
     return(
-            <form className='max-w-xs mx-auto mt-5 border rounded p-8' onSubmit={onSubmit}>
-                <h1 className='font-bold text-3xl mb-3 italic text-center'>
+            <form className='sm:w-full md:w-1/3 mx-auto border rounded p-4 mt-6' onSubmit={onSubmit}>
+                <h1 className='font-bold italic text-3xl my-3 text-left'>
                     {
                         params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'
                     }
                 </h1>
-                <div className='mb-4'>{error && <span className='text-red-600 italic'>{error}</span>}</div>
+                <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="name">
                     Nombre del aula

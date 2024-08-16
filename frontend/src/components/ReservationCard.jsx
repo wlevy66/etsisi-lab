@@ -14,20 +14,27 @@ const ReservationCard = ({ reservation }) => {
     }
 
     return (
-        <div className='border border-gray-200 p-3 rounded-lg'>
-            <div className='flex justify-between my-1'>
-                <h2 className='text-xl font-bold'>{reservation.schedule.room.name}</h2>
-                {
+        <div className='border rounded-lg p-4 my-4'>
+            <div className='justify-self-start'>
+                <h2 className='text-2xl font-bold'>{reservation.schedule.room.name}</h2>
+                <p className="text-xl font-bold">Día: { dayjs(reservation.schedule.start).utc().format('DD-MM-YYYY') }</p>
+                <p className="text-xl font-bold">Inicio: {dayjs(reservation.schedule.start).utc().format('HH:mm')}</p>
+                <p className="text-xl font-bold">Fin: {dayjs(reservation.schedule.end).utc().format('HH:mm')}</p>
+            </div>
+            {
                     !params.reservationId &&
-                    <div className="justify-items-center">
-                            <Link to={`/edit-reservation/${reservation._id}`} className="bg-blue-500 rounded mx-2">Editar</Link>
-                            <button className="bg-red-600 rounded" onClick={() => handleDeleteReservation(reservation._id)}>Eliminar</button>
+                    <div className="mt-3">
+                        <Link to={`/edit-reservation/${reservation._id}`}>
+                            <button className="bg-blue-500 rounded mx-1 float-end font-semibold">
+                                EDITAR
+                            </button>
+                        </Link>
+                        <button className="bg-red-600 rounded mx-1 float-end font-semibold"
+                            onClick={() => handleDeleteReservation(reservation._id)}>
+                            ELIMINAR
+                        </button>
                     </div>
                 }
-               
-            </div>
-            <p>Inicio: {dayjs(reservation.schedule.start).utc().format('DD-MM-YYYY - HH:mm')}</p>
-            <p>Fin: {dayjs(reservation.schedule.end).utc().format('DD-MM-YYYY - HH:mm')}</p>
         </div>
     )
 }

@@ -12,5 +12,6 @@ router.get('/verify', UserController.verify)
 router.get('/users', UserController.getUsers)
 router.get('/users/:id', UserController.getUser)
 router.put('/users/:id', UserController.updateUser)
+router.patch('/users/update-password', UserController.updatePassword)
 
 module.exports = router

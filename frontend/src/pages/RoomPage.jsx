@@ -17,7 +17,11 @@ const RoomPage = () => {
     <div className="p-4">
       <h1 className='my-3 text-3xl font-bold italic'>LISTADO DE AULAS</h1>
       <div className="my-4">
-        <Link to={'/add-room'}><button className='create w-full sm:w-auto font-semibold rounded'>CREAR AULA</button></Link>
+        <Link to={'/add-room'}>
+          <button className='create w-full sm:w-auto font-semibold rounded'>
+          CREAR AULA
+          </button>
+        </Link>
       </div>
       {
         rooms && rooms.length === 0 && (

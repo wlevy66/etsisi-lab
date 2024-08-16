@@ -1,13 +1,12 @@
-
 import { Outlet, Navigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
-import ProfessorRoute from "./ProfessorRoute"
+import { PROFESSOR_ROLE, STUDENT_ROLE } from "@/constants/roles"
 
 const AdminRoute = () => {
     const { user } = useAuth()
     
-    if(user.role === 'professor') return <Navigate to='/rooms' replace/>
-    if(user.role === 'student') return <Navigate to='/reservations' replace/>
+    if(user.role === PROFESSOR_ROLE) return <Navigate to='/rooms' replace/>
+    if(user.role === STUDENT_ROLE) return <Navigate to='/reservations' replace/>
 
     return(
         <Outlet />

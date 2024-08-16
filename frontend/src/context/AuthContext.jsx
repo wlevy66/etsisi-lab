@@ -1,4 +1,4 @@
-import { registerRequest, loginRequest, verifyTokenRequest, logoutRequest, getUsersRequest, updateUserRequest, getUserRequest } from "@/api/user"
+import userApi from "@/api/user"
 import { createContext, useState, useContext, useEffect, } from "react"
 import Cookies from 'js-cookie'
 
@@ -19,11 +19,12 @@ export const AuthProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
+    const [successMessage, setSuccessMessage] = useState(null)
     const [users, setUsers] = useState([])
 
     const signUp = async (user) => {
         try{
-            await registerRequest(user)
+            await userApi.registerRequest(user)
             setSuccess(true)
         }
         catch(error){
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }
     const signIn = async (user) => {
         try{
-            const response = await loginRequest(user)
+            const response = await userApi.loginRequest(user)
             setUser(response.data)
             setIsAuthenticated(true)
         }
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
     const signOut = async () => {
         try{
-            await logoutRequest()
+            await userApi.logoutRequest()
             setUser(null)
             setIsAuthenticated(false)
         }
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUsers = async () => {
         try{
-            const response = await getUsersRequest()
+            const response = await userApi.getUsersRequest()
             setUsers(response.data.users)
         }
         catch(error){
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }) => {
 
     const getUser = async (id) => {
         try{
-            const response = await getUserRequest(id)
+            const response = await userApi.getUserRequest(id)
             return response.data
         }
         catch(error){
@@ -76,8 +77,19 @@ export const AuthProvider = ({ children }) => {
     const updateUser = async (id, user) => {
         try{
             console.log(id, user)
-            //await updateUserRequest(id, user)
+            //await userApi.updateUserRequest(id, user)
             //setSuccess(true)
+        }
+        catch(error){
+            setError(error.response.data.error)
+        }
+    }
+
+    const updatePassword = async (user) => {
+        try{
+            const response = await userApi.updatePasswordRequest(user)
+            setSuccessMessage(response.data.message)
+            setSuccess(true)
         }
         catch(error){
             setError(error.response.data.error)
@@ -89,7 +101,7 @@ export const AuthProvider = ({ children }) => {
             const cookies = Cookies.get()
 
             if(cookies.token){
-                await verifyTokenRequest(cookies.token).then(response => {
+                await userApi.verifyTokenRequest(cookies.token).then(response => {
                     setUser(response.data)
                     setIsAuthenticated(true)
                     setIsLoading(false)
@@ -125,7 +137,10 @@ export const AuthProvider = ({ children }) => {
             getUsers,
             getUser,
             users,
-            updateUser
+            updateUser,
+            updatePassword,
+            successMessage,
+            setSuccessMessage
         }}>
             {children}
         </AuthContext.Provider>

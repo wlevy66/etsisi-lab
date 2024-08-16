@@ -46,19 +46,19 @@ const RoomScheduleCard = () => {
                 {
                     params.reservationId ?
                         <>
-                            <h1 className='my-3 text-3xl font-bold text-center'>Edita tu reserva</h1>
-                            <h3 className='my-3 text-xl font-bold'>Reserva actual</h3>
-                            <div className='grid grid-cols-4 gap-2'>
+                            <h1 className='my-3 text-3xl font-bold italic'>RESERVA ACTUAL</h1>
+                            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                                 {currentReservation && (
                                     <ReservationCard reservation={currentReservation} key={currentReservation._id} />
                                 )}
                             </div>
-                            <h1 className='my-3 text-3xl font-bold'>Horarios disponibles</h1>
+                            <hr />
+                            <h1 className='my-3 text-3xl font-bold italic'>HORARIOS DISPONIBLES</h1>
                             {
                                 schedules && schedules.length === 0 &&
-                                <h2 className='text-2xl'>Actualmente no hay horarios disponibles.</h2>
+                                <h2 className='text-2xl italic'>Actualmente no hay horarios disponibles.</h2>
                             }
-                            <div className='grid grid-cols-4 gap-2'>
+                            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                                 {schedules &&
                                     schedules.map(schedule => {
                                         return (<ScheduleCard schedule={schedule} key={schedule._id} />)
@@ -67,13 +67,12 @@ const RoomScheduleCard = () => {
                         </>
                         :
                         <>
-                            <h1 className='my-3 text-3xl font-bold text-center'>Selecciona tu reserva</h1>
-                            <h3 className='my-3 text-xl font-bold'>Horarios disponibles</h3>
+                            <h1 className='my-3 text-3xl font-bold italic'>HORARIOS DISPONIBLES</h1>
                             {
                                 schedules && schedules.length === 0 &&
-                                <h2 className='text-2xl'>Actualmente no hay horarios disponibles.</h2>
+                                <h2 className='text-2xl italic'>Actualmente no hay horarios disponibles.</h2>
                             }
-                            <div className='grid grid-cols-4 gap-2'>
+                            <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                                 {schedules &&
                                     schedules.map(schedule => {
                                         return (<ScheduleCard schedule={schedule} type={'add'} key={schedule._id} />)
@@ -81,13 +80,15 @@ const RoomScheduleCard = () => {
                             </div>
                         </>
                 }
-                <button onClick={(e) => {
-                    e.preventDefault()
-                    navigate(`/reservations`)
-                }}
-                    className='bg-slate-500 hover:bg-slate-700  py-2 px-4 rounded my-3'>
-                    Cancelar
-                </button>
+                <div className="my-3">
+                    <button onClick={(e) => {
+                        e.preventDefault()
+                        navigate(`/reservations`)
+                    }}
+                        className='bg-slate-500 hover:bg-slate-700 font-semibold py-2 px-4 rounded'>
+                        CANCELAR
+                    </button>
+                </div>
             </>
         )
     )

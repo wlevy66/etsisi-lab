@@ -13,23 +13,26 @@ const ReservationPage = () => {
       await getReservations(user.id)
     }
     fetchReservations()
+    console.log(reservations)
+    console.log(user.id)
   }, [])
 
   return (
-    <>
-      <h1 className='my-3 text-3xl font-bold'>Lista de reservas</h1>
+    <div className="p-4">
+      <h1 className='my-3 text-3xl font-bold italic'>LISTADO DE RESERVAS</h1>
+      <div className="my-4">
+      <Link to={`/add-reservation`}><button className='create w-full sm:w-auto font-semibold rounded'>CREAR RESERVA</button></Link>
+      </div>
       {
-        reservations && reservations.length === 0 && (
-          <h2 className='text-2xl'>No tienes reservas.</h2>
-        )
+        reservations && reservations.length === 0 && 
+          <h2 className='text-2xl italic'>No tienes reservas.</h2>
       }
-      <div className='grid grid-cols-4 gap-2'>
+      <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
       {reservations && reservations.map(reservation => (
         <ReservationCard reservation={reservation} key={reservation._id} />
       ))}
       </div>
-      <Link to={`/add-reservation`}><button className='mt-3 bg-sky-700 border-black p-2 rounded-md'>Nueva reserva</button></Link>
-    </>
+    </div>
 
   )
 }

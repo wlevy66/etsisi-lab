@@ -1,4 +1,4 @@
-import axios from './axios'
+import axios from '@/api/axios'
 
 const getRoomsRequest = () => axios.get('/room/rooms')
 const createRoomRequest = (room) => axios.post('/room/rooms', room)

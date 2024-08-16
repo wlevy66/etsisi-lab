@@ -1,6 +1,6 @@
 import { useAuth } from "@/context/AuthContext"
 import { useEffect, useState } from "react"
-import ModalProfile from "@/components/ModalProfile"
+import ModalAdminDashboard from "@/components/ModalAdminDashboard"
 import { set } from "react-hook-form"
 
 const DashboardPage = () => {
@@ -21,27 +21,38 @@ const DashboardPage = () => {
         setIsModalOpen(true) 
     }
     return (
-        <>
-        <h1 className='text-2xl'>Usuarios</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-2'>
-            {
-                users && users.map(user => (
-                    <div key={user._id} className=''>
-                        <p>{user.email}</p>
-                        <p>{user.role}</p>
-                        <p>{user.status}</p>
-                        <button className="bg-blue-500 rounded mx-1"
-                        onClick={()=>handleUpdateUser(user)}>Editar</button>
-                        
-                    </div>
-                ))
-            }
-        </div>
+        <div className="p-4">
+            <h1 className='my-3 text-3xl font-bold italic'>USUARIOS DEL SISTEMA</h1>
+            <table className='w-1/2 mx-auto'>
+                <thead>
+                    <tr className="text-xl border-b">
+                        <th className="py-2 border-r">EMAIL</th>
+                        <th className="py-2 border-r">ROL</th>
+                        <th className="py-2 border-r">ESTADO</th>
+                        <th className="py-2">ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        users && users.map(user => (
+                            <tr key={user._id} className="text-center border-b ">
+                                <td className="py-3 border-r">{user.email}</td>
+                                <td className="py-3 uppercase border-r">{user.role}</td>
+                                <td className="py-3 uppercase border-r">{user.status}</td>
+                                <td className="py-3">
+                                    <button className="submit"
+                                    onClick={()=>handleUpdateUser(user)}>EDITAR</button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
         {
             open &&
-            <ModalProfile user={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ModalAdminDashboard user={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
         }
-        </>
+        </div>
     )
 }
 

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useSchedule } from '@/context/ScheduleContext'
 import { useAuth } from "@/context/AuthContext"
 import { useReservation } from '@/context/ReservationContext'
-import ModalUsers from '@/components/ModalUsers'
+import ModalUsersInSchedule from '@/components/ModalUsersInSchedule'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
@@ -55,7 +55,7 @@ const ScheduleCard = ({ schedule, type }) => {
                 {
                     type === 'add' ?
                     <>
-                        <button className="bg-green-700 rounded mx-1 float-end" 
+                        <button className="bg-green-700 rounded mx-1 float-end font-semibold" 
                         onClick={() => handleAddReservation(user.id, schedule._id)}>
                             RESERVAR
                         </button>
@@ -63,7 +63,7 @@ const ScheduleCard = ({ schedule, type }) => {
                     :
                     <>
                     {
-                        !params.reservationId ?
+                        params.reservationId ?
                         <div className="mt-3">
                             <button className="bg-blue-500 rounded mx-1 float-end font-semibold" 
                                 onClick={() => navigate(`/edit-schedule/${schedule.room._id}/${schedule._id}`)}>
@@ -76,12 +76,12 @@ const ScheduleCard = ({ schedule, type }) => {
                         </div>
                         : <button className="mt-3 bg-green-700 rounded mx-1 float-end semibold"
                             onClick={() => handleUpdateReservation(params.reservationId, schedule._id)}>
-                                ACTUALIZAR RESERVA
+                                RESERVAR
                             </button>
                     }
                     </>
                 }
-                <ModalUsers reservations={reservations} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <ModalUsersInSchedule reservations={reservations} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
             
         </div>
     )

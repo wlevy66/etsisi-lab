@@ -19,8 +19,8 @@ const LoginPage = () => {
     }, [isAuthenticated])
 
     return (
-        <form className="sm:w-full md:w-1/2 mx-auto border rounded p-8 mt-6" onSubmit={onSubmit}>
-            <h1 className='font-bold italic text-3xl mb-3 text-left'>SERVICIO DE AUTENTICACIÓN</h1>
+        <form className="sm:w-full md:w-1/3 mx-auto border rounded p-4 mt-6" onSubmit={onSubmit}>
+            <h1 className='font-bold italic text-3xl my-3 text-left'>SERVICIO DE AUTENTICACIÓN</h1>
             <hr className='mb-4'/>
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="email">
