@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+
 div#root {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -42,8 +53,6 @@ button.login:hover, button.register:hover, button.submit:hover, button.create:ho
 
 /* Footer style */
 footer {
-  clear: both;
   width: 100%;
-  position: fixed;
-  bottom: 0;
+  margin-top: 20px;
 }

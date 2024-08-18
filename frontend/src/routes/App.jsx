@@ -23,7 +23,7 @@ const App = () => {
 
         <BrowserRouter>
             <Header />
-            <main className='px-10'>
+            <main className='px-10 flex-1'>
                 <Routes>
                     <Route path='/' element={<LoginPage />} />
                     <Route path='/login' element={<LoginPage />} />

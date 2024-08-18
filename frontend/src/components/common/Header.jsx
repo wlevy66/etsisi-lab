@@ -44,8 +44,8 @@ const Header = () => {
           isAuthenticated && 
             <div className="col-span-2">
               <button onClick={toggleDropdown}
-                className="w-10 float-right bg-blue-500 text-white rounded-full">
-                {user.id[0].toUpperCase()}
+                className="create float-right w-full sm:w-auto font-semibold rounded-full">
+                {user.name ? user.name[0].toUpperCase()+user.lastname[0].toUpperCase() : user.id[0]}
               </button>
               {
                 isDropdownVisible && 
@@ -76,10 +76,10 @@ const Header = () => {
             </div>
         }
         {
-          openModalEditProfile && <ModalEditProfile user={user.id} open={isModalOpen} onClose={() => setOpenModalEditProfile(false)} />
+          openModalEditProfile && <ModalEditProfile id={user.id} open={isModalOpen} onClose={() => setOpenModalEditProfile(false)} />
         }
         {
-          openModalUpdatePassword && <ModalUpdatePassword user={user.id} open={isModalOpen} onClose={() => setOpenModalUpdatePassword(false)} />
+          openModalUpdatePassword && <ModalUpdatePassword id={user.id} open={isModalOpen} onClose={() => setOpenModalUpdatePassword(false)} />
         }
       </div>
       {

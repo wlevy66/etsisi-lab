@@ -14,16 +14,44 @@ const RegisterPage = () => {
         setError(null)
     }, [])
 
-    const onSubmit = handleSubmit(async (values) => {
+    const onSubmit = handleSubmit(async (data) => {
         setSuccess(false)
         setError(null)
-        signUp(values)
+        signUp(data)
+        console.log(data)
     })
 
     return (
         <form className="sm:w-full md:w-1/3 mx-auto border rounded p-4 mt-6" onSubmit={onSubmit}>
             <h1 className='font-bold italic text-3xl my-3 text-left'>SERVICIO DE REGISTRO</h1>
             <hr className='mb-4'/>
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="name">
+                        Nombre
+                    </label>
+                    <input
+                        {...register('name', { required: true })}
+                        className="border rounded w-full p-2" id="name" type="text" placeholder="Nombre" />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="lastname">
+                        Apellidos
+                    </label>
+                    <input
+                        {...register('lastname', { required: true })}
+                        className="border rounded w-full p-2" id="lastname" type="text" placeholder="Apellidos" />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="phone">
+                        Teléfono
+                    </label>
+                    <input
+                        {...register('phone', { required: true })}
+                        className="border rounded w-full p-2" id="phone" type="text" placeholder="Teléfono" />
+                </div>
+
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="email">
                         Correo electrónico
@@ -39,6 +67,15 @@ const RegisterPage = () => {
                     <input
                         {...register('password', { required: true })}
                         className="border rounded w-full p-2" id="password" type="password" placeholder="Contraseña" />
+                    
+                </div>
+                <div className="mb-4">
+                    <label className="block text-md font-bold mb-2" htmlFor="confirmPassword">
+                        Confirmar contraseña
+                    </label>
+                    <input
+                        {...register('confirmPassword', { required: true })}
+                        className="border rounded w-full p-2" id="confirmPassword" type="password" placeholder="Confirmar contraseña" />
                     
                 </div>
                 <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>

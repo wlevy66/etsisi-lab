@@ -5,19 +5,20 @@ const userService = require('./userService')
 
 const login = async (req, res) => {
     try{
-
-        const {email, password} = req.body
-        const [userFound, token] = await userService.login(email, password)
+        const [userFound, token] = await userService.login(req.body)
         res.cookie('token', token)
 
-        return res.status(200).json({
+        res.status(200).json({
             status:200,
             id: userFound._id,
+            name: userFound.name,
+            lastname: userFound.lastname,
+            phone: userFound.phone,
             email: userFound.email,
             role: userFound.role
         })
     }catch (error){
-        return res.status(500).json({
+        res.status(500).json({
             status:500,
             error: error.message
         })
@@ -25,18 +26,13 @@ const login = async (req, res) => {
 }
 
 const register = async (req, res) => {
-    
     try{
-        const {email, password} = req.body
-        const [userSaved, token] = await userService.register(email, password)
+        const [userSaved, token] = await userService.register(req.body)
 
         res.cookie('token', token)
         res.status(201).json({
             status: 201,
             id: userSaved._id,
-            email: userSaved.email,
-            role: userSaved.role,
-            status: userSaved.status,
             message: 'User created successfully'
         })
 
@@ -78,8 +74,12 @@ const verify = async (req, res) => {
     }
     
     res.status(200).json({
-        status: 200,
-        id: decoded.id,
+        status:200,
+        id: userFound._id,
+        name: userFound.name,
+        lastname: userFound.lastname,
+        phone: userFound.phone,
+        email: userFound.email,
         role: userFound.role
     })
 }
@@ -112,12 +112,12 @@ const getUser = async (req, res) => {
     }
 }
 
-const updateUser = async (req, res) => {
+const updateProfile = async (req, res) => {
     try{
-        const updatedUser = await userService.updateUser(req.params.id, req.body)
+        await userService.updateProfile(req.params.id, req.body)
         res.status(200).json({
             status: 200,
-            updatedUser
+            message: 'Profile updated successfully',
         })
     }
     catch(error){
@@ -129,11 +129,27 @@ const updateUser = async (req, res) => {
 
 const updatePassword = async (req, res) => {
     try{
-        const {id, currentPassword, newPassword, confirmPassword} = req.body
-        await userService.updatePassword(id, currentPassword, newPassword, confirmPassword)
+        await userService.updatePassword(req.params.id, req.body)
         res.status(200).json({
             status: 200,
             message: 'Password updated successfully'
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
+const updateByAdmin = async (req, res) => {
+    try{
+        console.log(req.body)
+        console.log(req.params.id)
+        await userService.updateByAdmin(req.params.id, req.body)
+        res.status(200).json({
+            status: 200,
+            message: 'User updated successfully'
         })
     }
     catch(error){
@@ -150,6 +166,7 @@ module.exports = {
     verify,
     getUsers,
     getUser,
-    updateUser,
-    updatePassword
+    updateProfile,
+    updatePassword,
+    updateByAdmin
 }

@@ -1,19 +1,21 @@
-const ROLE = {
-    PROFESSOR: 'professor',
-    STUDENT: 'student',
-    ADMIN: 'admin'
-}
-
-const STATUS = {
-    PENDING: 'pending',
-    ACTIVE: 'active',
-    INACTIVE: 'inactive'
-}
-
 const {Schema, model} = require('mongoose')
+const status = require('../../constans/status')
+const roles = require('../../constans/roles')
 
 const UserSchema = new Schema(
     {
+        name: {
+            type: String,
+            required: true
+        },
+        lastname: {
+            type: String,
+            required: true
+        },
+        phone: {
+            type: String,
+            required: true
+        },
         email: {
             type: String,
             required: true,
@@ -25,13 +27,13 @@ const UserSchema = new Schema(
         },
         role: {
             type: String,
-            enum: [ROLE.PROFESSOR, ROLE.STUDENT, ROLE.ADMIN],
+            enum: [roles.ADMIN_ROLE, roles.PROFESSOR_ROLE, roles.STUDENT_ROLE],
             required: true
         },
         status: {
             type: String,
-            enum: [STATUS.PENDING, STATUS.ACTIVE, STATUS.INACTIVE],
-            default: STATUS.PENDING
+            enum: [status.PENDING, status.ACTIVE, status.INACTIVE],
+            default: status.PENDING
         }
     },
     {

@@ -1,23 +1,26 @@
 import { useAuth } from "@/context/AuthContext"
 import { useEffect, useState } from "react"
 import ModalAdminDashboard from "@/components/ModalAdminDashboard"
-import { set } from "react-hook-form"
+import { transformRole, transformStatus } from "@/utils/util"
 
 const DashboardPage = () => {
 
-    const {getUsers, users, updateUser, getUser} = useAuth()
+    const {getUsers, users, getUser, isAuthenticated, user} = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [id, setId] = useState({})
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
-        getUsers()
-    }, [])
-
-    const handleUpdateUser = async(user) => {
+        console.log('useEffect')
+        console.log(isAuthenticated)
         console.log(user)
+        getUsers()
+    }, [isModalOpen])
+
+    const handleUpdateUser = async(id) => {
+        console.log(id)
+        setId(id)
         setOpen(true)
-        setId(user)
         setIsModalOpen(true) 
     }
     return (
@@ -37,11 +40,11 @@ const DashboardPage = () => {
                         users && users.map(user => (
                             <tr key={user._id} className="text-center border-b ">
                                 <td className="py-3 border-r">{user.email}</td>
-                                <td className="py-3 uppercase border-r">{user.role}</td>
-                                <td className="py-3 uppercase border-r">{user.status}</td>
+                                <td className="py-3 uppercase border-r">{transformRole(user.role)}</td>
+                                <td className="py-3 uppercase border-r">{transformStatus(user.status)}</td>
                                 <td className="py-3">
                                     <button className="submit"
-                                    onClick={()=>handleUpdateUser(user)}>EDITAR</button>
+                                    onClick={()=>handleUpdateUser(user._id)}>EDITAR</button>
                                 </td>
                             </tr>
                         ))
@@ -50,7 +53,7 @@ const DashboardPage = () => {
             </table>
         {
             open &&
-            <ModalAdminDashboard user={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ModalAdminDashboard id={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
         }
         </div>
     )

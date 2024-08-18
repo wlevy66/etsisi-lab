@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }) => {
     const signIn = async (user) => {
         try{
             const response = await userApi.loginRequest(user)
+            console.log(response)
             setUser(response.data)
             setIsAuthenticated(true)
         }
@@ -74,20 +75,33 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const updateUser = async (id, user) => {
+    const updateProfile = async (id, user) => {
         try{
-            console.log(id, user)
-            //await userApi.updateUserRequest(id, user)
-            //setSuccess(true)
+            const response = await userApi.updateProfileRequest(id, user)
+            setSuccessMessage(response.data.message)
+            setSuccess(true)
         }
         catch(error){
             setError(error.response.data.error)
         }
     }
 
-    const updatePassword = async (user) => {
+    const updatePassword = async (id, user) => {
         try{
-            const response = await userApi.updatePasswordRequest(user)
+            const response = await userApi.updatePasswordRequest(id, user)
+            setSuccessMessage(response.data.message)
+            setSuccess(true)
+        }
+        catch(error){
+            console.log(error)
+            setError(error.response.data.error)
+        }
+    }
+
+    const updateByAdmin = async (id, user) => {
+        try{
+            console.log(user)
+            const response = await userApi.updateByAdminRequest(id, user)
             setSuccessMessage(response.data.message)
             setSuccess(true)
         }
@@ -105,6 +119,7 @@ export const AuthProvider = ({ children }) => {
                     setUser(response.data)
                     setIsAuthenticated(true)
                     setIsLoading(false)
+                    console.log('Sesión activa')
                 })
                 .catch(() => {
                     setIsAuthenticated(false)
@@ -137,8 +152,9 @@ export const AuthProvider = ({ children }) => {
             getUsers,
             getUser,
             users,
-            updateUser,
+            updateProfile,
             updatePassword,
+            updateByAdmin,
             successMessage,
             setSuccessMessage
         }}>

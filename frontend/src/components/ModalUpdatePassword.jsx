@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useAuth } from '@/context/AuthContext'
 import { useEffect } from 'react'
 
-const ModalUpdatePassword = ({ user, open, onClose }) => {
+const ModalUpdatePassword = ({ id, open, onClose }) => {
 
     const { register, handleSubmit } = useForm()
     const { updatePassword, error, success, successMessage, setError, setSuccessMessage } = useAuth()
@@ -15,8 +15,7 @@ const ModalUpdatePassword = ({ user, open, onClose }) => {
     }, [])
 
     const onSubmit = handleSubmit(async (data) => {
-        data.id = user
-        await updatePassword(data)
+        await updatePassword(id, data)
     })
 
     return (
