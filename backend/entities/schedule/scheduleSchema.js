@@ -30,7 +30,6 @@ const schemaScheduleCreate = Joi.object({
             const endHour = new Date(value)
             endHour.setMinutes(endHour.getMinutes() + endHour.getTimezoneOffset())
             if (endHour.getHours() > 17) {
-                console.log(value.getHours())
                 return helper.message('End time should be before 18:00')
             }
             return value
@@ -68,7 +67,6 @@ const schemaScheduleUpdate = Joi.object({
             const endHour = new Date(value)
             endHour.setMinutes(endHour.getMinutes() + endHour.getTimezoneOffset())
             if (endHour.getHours() > 17) {
-                console.log(value.getHours())
                 return helper.message('End time should be before 18:00')
             }
             return value

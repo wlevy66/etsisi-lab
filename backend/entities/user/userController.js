@@ -144,8 +144,6 @@ const updatePassword = async (req, res) => {
 
 const updateByAdmin = async (req, res) => {
     try{
-        console.log(req.body)
-        console.log(req.params.id)
         await userService.updateByAdmin(req.params.id, req.body)
         res.status(200).json({
             status: 200,

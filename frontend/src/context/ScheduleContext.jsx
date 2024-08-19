@@ -21,8 +21,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getAvailableSchedulesRequest(id)
             setSchedules(response.data.availableSchedules)
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -31,8 +31,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getSchedulesByRoomRequest(roomId)
             setSchedules(response.data.schedules)
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -41,8 +41,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getScheduleRequest(roomId, scheduleId)
             return response.data.schedule
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -51,9 +51,8 @@ export const ScheduleProvider = ({ children }) => {
             await createScheduleRequest(schedule)
             setSuccess(true)
         }
-        catch(e){
-            console.log(e)
-            setError(e.response.data.error)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -62,8 +61,8 @@ export const ScheduleProvider = ({ children }) => {
             await updateScheduleRequest(id, newData)
             setSuccess(true)
         }
-        catch(e){
-            setError(e.response.data.error)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -72,8 +71,8 @@ export const ScheduleProvider = ({ children }) => {
             await deleteScheduleRequest(id)
             setSchedules(schedules.filter(schedule => schedule._id !== id))
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -82,8 +81,8 @@ export const ScheduleProvider = ({ children }) => {
             const response = await getUsersByScheduleRequest(scheduleId)
             return response.data.users
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 

@@ -23,21 +23,19 @@ const ScheduleCard = ({ schedule, type }) => {
     }
 
     const handleUpdateReservation = async(id, schedule) => {
-        await updateReservation(id, schedule).then(() => navigate('/reservations') )
+        await updateReservation(id, schedule).then(() => navigate('/reservations'))
     }
 
     const handleAddReservation = async(user, schedule) => {
-        await addReservation(user, schedule).then(() => navigate('/reservations')).catch(error => console.log(error))
+        await addReservation(user, schedule).then(() => navigate('/reservations'))
     }
 
     const showUsers = async(scheduleId) => {
         const response = await getUsersBySchedule(scheduleId)
-        console.log(response)
         setReservations(response)
         setIsModalOpen(true)  
     }
 
-    
     return (
         <div className="border rounded-lg p-4 my-4">
             <div className="justify-self-start">

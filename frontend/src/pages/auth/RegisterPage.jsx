@@ -18,7 +18,6 @@ const RegisterPage = () => {
         setSuccess(false)
         setError(null)
         signUp(data)
-        console.log(data)
     })
 
     return (

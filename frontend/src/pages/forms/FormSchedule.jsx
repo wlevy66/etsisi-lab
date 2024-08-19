@@ -23,7 +23,6 @@ const FormSchedule = () => {
     }
 
     useEffect(() => {
-        console.log(minDateValue())
         document.getElementById('day').setAttribute('min', minDateValue())
     }, [])
 

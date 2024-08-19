@@ -20,8 +20,8 @@ export const RoomProvider = ({ children }) => {
             const response = await getRoomsRequest()
             setRooms(response.data.rooms)
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
     
@@ -30,8 +30,8 @@ export const RoomProvider = ({ children }) => {
             const response = await getRoomRequest(id)
             return response.data.room
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -40,9 +40,8 @@ export const RoomProvider = ({ children }) => {
             await createRoomRequest(room)
             setSuccess(true)
         }
-        catch(e){
-            setError(e.response.data.error)
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -51,8 +50,8 @@ export const RoomProvider = ({ children }) => {
             await updateRoomRequest(id, newData)
             setSuccess(true)
         }
-        catch(e){
-            setError(e.response.data.error)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -61,8 +60,8 @@ export const RoomProvider = ({ children }) => {
             await deleteRoomRequest(id)
             setRooms(rooms.filter(room => room._id !== id))
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 

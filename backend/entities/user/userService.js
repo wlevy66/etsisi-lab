@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const status = require('../../constans/status')
 const roles = require('../../constans/roles')
-console.log(process.env.JWT_SECRET)
 
 const login = async (user) => {
     try{

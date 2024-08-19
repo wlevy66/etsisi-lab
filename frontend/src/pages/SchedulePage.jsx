@@ -17,7 +17,6 @@ const SchedulePage = () => {
     getSchedules()
     setError(null)
     setSuccess(false)
-    console.log(schedules)
   }, [])
 
   return (

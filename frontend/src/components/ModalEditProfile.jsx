@@ -12,7 +12,6 @@ const ModalEditProfile = ({ id, open, onClose }) => {
     useEffect(() => {
         const setProfileData = async() => {
             const userFound = await getUser(id)
-            console.log(userFound)
             setValue('name', userFound.user.name)
             setValue('lastname', userFound.user.lastname)
             setValue('phone', userFound.user.phone)

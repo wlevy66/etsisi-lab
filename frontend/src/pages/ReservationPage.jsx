@@ -9,13 +9,10 @@ const ReservationPage = () => {
   const { user } = useAuth()
 
   useEffect(() => {
-    console.log(user)
     const fetchReservations = async () => {
       await getReservations(user.id)
     }
     fetchReservations()
-    console.log(reservations)
-    
   }, [])
 
   return (

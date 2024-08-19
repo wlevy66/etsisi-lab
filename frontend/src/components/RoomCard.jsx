@@ -9,10 +9,6 @@ const RoomCard = ({ room }) => {
     const { user } = useAuth()
     const { deleteRoom } = useRoom()
     const navigate = useNavigate()
-
-    useEffect(() => {
-        console.log(user)
-    }, [user])
     
     const handleDeleteRoom = (id) => {
         deleteRoom(id)

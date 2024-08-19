@@ -42,7 +42,6 @@ const createSchedule = async (schedule) => {
         const isValid = await validateSchedule(schedule)
         if (!isValid) throw new Error('Schedule already exists')
         const newSchedule = new Schedule(schedule)
-        console.log(newSchedule)
         const savedSchedule = await newSchedule.save()
         return savedSchedule
     } catch(error){
@@ -52,8 +51,6 @@ const createSchedule = async (schedule) => {
 
 const validateSchedule = async (schedule) => {
     const { room, start:newStart, end:newEnd } = schedule
-    console.log(newStart)
-    console.log(newEnd)
 
     const existingSchedule = await Schedule.findOne({
         room,

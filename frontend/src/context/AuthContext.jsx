@@ -34,12 +34,10 @@ export const AuthProvider = ({ children }) => {
     const signIn = async (user) => {
         try{
             const response = await userApi.loginRequest(user)
-            console.log(response)
             setUser(response.data)
             setIsAuthenticated(true)
         }
         catch(error){
-            console.log(error)
             setError(error.response.data.error)
         }
     }
@@ -51,7 +49,7 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(false)
         }
         catch(error){
-            console.log(error)
+            setError(error.response.data.error)
         }
     }
 
@@ -61,7 +59,7 @@ export const AuthProvider = ({ children }) => {
             setUsers(response.data.users)
         }
         catch(error){
-            console.log(error)
+            setError(error.response.data.error)
         }
     }
 
@@ -71,7 +69,7 @@ export const AuthProvider = ({ children }) => {
             return response.data
         }
         catch(error){
-            console.log(error)
+            setError(error.response.data.error)
         }
     }
 
@@ -93,14 +91,12 @@ export const AuthProvider = ({ children }) => {
             setSuccess(true)
         }
         catch(error){
-            console.log(error)
             setError(error.response.data.error)
         }
     }
 
     const updateByAdmin = async (id, user) => {
         try{
-            console.log(user)
             const response = await userApi.updateByAdminRequest(id, user)
             setSuccessMessage(response.data.message)
             setSuccess(true)
@@ -112,10 +108,10 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const validateLogin = async() =>{
-            const cookies = Cookies.get()
+            const token = Cookies.get('token')
 
-            if(cookies.token){
-                await userApi.verifyTokenRequest(cookies.token).then(response => {
+            if(token){
+                await userApi.verifyTokenRequest(token).then(response => {
                     setUser(response.data)
                     setIsAuthenticated(true)
                     setIsLoading(false)

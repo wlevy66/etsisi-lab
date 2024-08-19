@@ -14,7 +14,6 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
     useEffect(() => {
         const getUserData = async() => {
             const response = await getUser(id)
-            console.log(response)
             setValue('email', response.user.email)
             setValue('role', response.user.role)
             setValue('status', response.user.status)
@@ -23,7 +22,6 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
     }, [id])
 
     const onSubmit = handleSubmit( async(data) => {
-        console.log(data)
         await updateByAdmin(id, data)
     })
 

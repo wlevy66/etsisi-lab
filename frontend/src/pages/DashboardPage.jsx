@@ -11,14 +11,10 @@ const DashboardPage = () => {
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
-        console.log('useEffect')
-        console.log(isAuthenticated)
-        console.log(user)
         getUsers()
     }, [isModalOpen])
 
     const handleUpdateUser = async(id) => {
-        console.log(id)
         setId(id)
         setOpen(true)
         setIsModalOpen(true) 

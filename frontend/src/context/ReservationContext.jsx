@@ -20,8 +20,8 @@ export const ReservationProvider = ({ children }) => {
             const response = await getReservationsRequest(id)
             setReservations(response.data.reservations)
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -30,8 +30,8 @@ export const ReservationProvider = ({ children }) => {
             const response = await getReservationRequest(id, reservationId)
             return response.data.reservation
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -40,9 +40,8 @@ export const ReservationProvider = ({ children }) => {
             await addReservationRequest(user,schedule)
             setSuccess(true)
         }
-        catch(e){
-            console.log(e)
-            setError(e.response.data.error)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -51,9 +50,8 @@ export const ReservationProvider = ({ children }) => {
             await updateReservationRequest(id, {schedule: newData})
             setSuccess(true)
         }
-        catch(e){
-            console.log(e)
-            setError(e.response.data.error)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
@@ -62,8 +60,8 @@ export const ReservationProvider = ({ children }) => {
             await deleteReservationRequest(id)
             setReservations(reservations.filter(reservation => reservation._id !== id))
         }
-        catch(e){
-            console.log(e)
+        catch(error){
+            setError(error.response.data.error)
         }
     }
 
