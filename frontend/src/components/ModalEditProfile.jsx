@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 const ModalEditProfile = ({ id, open, onClose }) => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { getUser, updateProfile, successMessage, error } = useAuth()
+    const { getUser, updateProfile, success, error } = useAuth()
 
     useEffect(() => {
         const setProfileData = async() => {
@@ -29,8 +29,8 @@ const ModalEditProfile = ({ id, open, onClose }) => {
         <Modal open={open} onClose={onClose} center styles={{ modal: { padding: '40px' } }}>
             <form className='w-80' onSubmit={onSubmit}>
                 <h1 className='font-bold italic text-2xl mb-3 text-left'>EDITAR PERFIL</h1>
-                { <div className="mb-4">{error && <span className='error'>{error}</span>}</div> }
-                { <div className="mb-4">{successMessage && <span className='success'>{successMessage}</span>}</div> }
+                <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
+                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
 
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="name">

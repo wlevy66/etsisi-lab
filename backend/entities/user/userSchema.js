@@ -5,105 +5,110 @@ const roles = require('../../constans/roles')
 const userSchemaLogin = Joi.object({
     email: Joi.string().email().required()
         .messages({
-            'string.empty': `Email cannot be an empty field`,
-            'string.email': `Email must be a valid email`,
-            'any.required': `Email is a required field`
+            'string.empty': `El email no puede estar vacío`,
+            'string.email': `El email debe ser un email válido`,
+            'any.required': `El email es un campo requerido`
         }),
     password: Joi.string().required()
         .messages({
-            'string.empty': `Password cannot be an empty field`,
-            'any.required': `Password is a required field`
+            'string.empty': `La contraseña no puede estar vacía`,
+            'any.required': `La contraseña es un campo requerido`
         })
 })
 
 const userSchemaRegister = Joi.object({
     name: Joi.string().required()
         .messages({
-            'string.empty': `Name cannot be an empty field`,
-            'any.required': `Name is a required field`
+            'string.empty': `El nombre no puede estar vacío`,
+            'any.required': `El nombre es un campo requerido`
         }),
     lastname: Joi.string().required()
         .messages({
-            'string.empty': `Lastname cannot be a empty field`,
-            'any.required': `Lastname is a required field`
+            'string.empty': `Los apellidos no pueden estar vacíos`,
+            'any.required': `Los apellidos son un campo requerido`
         }),
-    phone: Joi.string().length(9).pattern(new RegExp('^[0-9]{9}$')).required()
+    phone: Joi.string().pattern(new RegExp('^[0-9]{9}$')).required()
         .messages({
-            'string.empty': `Phone cannot be a empty field`,
-            'string.length': `Phone must have 9 digits`,
-            'string.pattern.base': `Phone must have 9 digits`,
-            'any.required': `Phone is a required field`
+            'string.empty': `El teléfono no puede estar vacío`,
+            'string.pattern.base': `El teléfono debe tener 9 dígitos`,
+            'any.required': `El teléfono es un campo requerido`
         }),
     email: Joi.string().email().pattern(new RegExp('.*@(alumnos\.upm\.es|upm\.es|email\.es)$')).required()
         .messages({
-            'string.empty': `Email cannot be an empty field`,
-            'string.email': `Email must be a valid email`,
-            'string.pattern.base': `Email must be a valid email from UPM domain`,
-            'any.required': `Email is a required field`
+            'string.empty': `El email no puede estar vacío`,
+            'string.email': `El email debe ser un email válido`,
+            'string.pattern.base': `El email debe ser un email válido del dominio UPM`,
+            'any.required': `El email es un campo requerido`
         }),
     password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{8,}$')).required()
         .messages({
-            'string.empty': `Password cannot be an empty field`,
-            'string.pattern.base': `Password must be alphanumeric and have at least 8 characters`,
-            'any.required': `Password is a required field`
+            'string.empty': `La contraseña no puede estar vacía`,
+            'string.pattern.base': `La contraseña debe ser alfanumérica y tener al menos 8 caracteres`,
+            'any.required': `La contraseña es un campo requerido`
         }),
-    confirmPassword: Joi.ref('password')
+    confirmPassword: Joi.any().equal(Joi.ref('password')).required()
+        .messages({
+            'any.only': `Las contraseñas no coinciden`
+        })
+        
 })
 
 const userSchemaUpdateProfile = Joi.object({
     name: Joi.string().required()
         .messages({
-            'string.empty': `Name cannot be an empty field`,
-            'any.required': `Name is a required field`
+            'string.empty': `El nombre no puede estar vacío`,
+            'any.required': `El nombre es un campo requerido`
         }),
     lastname: Joi.string().required()
         .messages({
-            'string.empty': `Lastname cannot be a empty field`,
-            'any.required': `Lastname is a required field`
+            'string.empty': `Los apellidos no pueden estar vacíos`,
+            'any.required': `Los apellidos son un campo requerido`
         }),
-    phone: Joi.string().length(9).pattern(new RegExp('^[0-9]{9}$')).required()
+    phone: Joi.string().pattern(new RegExp('^[0-9]{9}$')).required()
         .messages({
-            'string.empty': `Phone cannot be a empty field`,
-            'string.length': `Phone must have 9 digits`,
-            'string.pattern.base': `Phone must have 9 digits`,
-            'any.required': `Phone is a required field`
+            'string.empty': `El teléfono no puede estar vacío`,
+            'string.pattern.base': `El teléfono debe tener 9 dígitos`,
+            'any.required': `El teléfono es un campo requerido`
         })
 })
 
 const userSchemaUpdatePassword = Joi.object({
     currentPassword: Joi.string().required()
         .messages({
-            'string.empty': `Current password cannot be an empty field`,
-            'any.required': `Current password is a required field`
+            'string.empty': `La contraseña actual no puede estar vacía`,
+            'any.required': `La contraseña actual es un campo requerido`
         }),
     newPassword: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{8,}$')).required()
         .messages({
-            'string.empty': `New password cannot be an empty field`,
-            'string.pattern.base': `New password must be alphanumeric and have at least 8 characters`,
-            'any.required': `New password is a required field`
+            'string.empty': `La nueva contraseña no puede estar vacía`,
+            'string.pattern.base': `La nueva contraseña debe ser alfanumérica y tener al menos 8 caracteres`,
+            'any.required': `La nueva contraseña es un campo requerido`
         }),
-    confirmPassword: Joi.ref('newPassword')
+    confirmPassword: Joi.any().equal(Joi.ref('newPassword')).required()
+        .messages({
+            'any.only': `Las contraseñas no coinciden`
+        })
 })
 
 const userSchemaUpdateByAdmin = Joi.object({
     email: Joi.string().email().pattern(new RegExp('.*@(alumnos\.upm\.es|upm\.es|email\.es)$')).required()
         .messages({
-            'string.empty': `Email cannot be an empty field`,
-            'string.email': `Email must be a valid email`,
-            'string.pattern.base': `Email must be a valid email from UPM domain`,
-            'any.required': `Email is a required field`
+            'string.empty': `El email no puede estar vacío`,
+            'string.email': `El email debe ser un email válido`,
+            'string.pattern.base': `El email debe ser un email válido del dominio UPM`,
+            'any.required': `El email es un campo requerido`
         }),
     role: Joi.string().valid(roles.ADMIN_ROLE, roles.PROFESSOR_ROLE, roles.STUDENT_ROLE).required()
         .messages({
-            'string.empty': `Role cannot be an empty field`,
-            'string.valid': `Role must be 'admin', 'professor' or 'student'`,
-            'any.required': `Role is a required field`
+            'string.empty': `El rol no puede estar vacío`,
+            'string.valid': `El rol debe ser 'admin', 'professor' o 'student'`,
+            'any.required': `El rol es un campo requerido`
         }),
     status: Joi.string().valid(status.ACTIVE, status.INACTIVE, status.INACTIVE).required()
         .messages({
-            'string.empty': `Status cannot be an empty field`,
-            'string.valid': `Status must be 'pending', 'active' or 'inactive'`,
-            'any.required': `Status is a required field`
+            'string.empty': `El estado no puede estar vacío`,
+            'string.valid': `El estado debe ser 'active', 'inactive' o 'pending'`,
+            'any.required': `El estado es un campo requerido`
         })
 })
 
@@ -114,6 +119,3 @@ module.exports = {
     userSchemaUpdatePassword,
     userSchemaUpdateByAdmin
 }
-
-
-

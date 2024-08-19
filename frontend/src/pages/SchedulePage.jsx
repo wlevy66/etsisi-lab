@@ -16,7 +16,7 @@ const SchedulePage = () => {
     }
     getSchedules()
     setError(null)
-    setSuccess(false)
+    setSuccess(null)
   }, [])
 
   return (
@@ -25,7 +25,7 @@ const SchedulePage = () => {
         LISTADO DE HORARIOS { schedules.length !== 0  && <span>DEL AULA: {schedules[0].room.name}</span> }
       </h1>
       <div className="my-4">
-        <Link to={`/add-schedule/${params.roomId}`}>
+        <Link to={`/create-schedule/${params.roomId}`}>
           <button className='create w-full sm:w-auto font-semibold rounded'>CREAR HORARIO</button>
         </Link>
       </div>

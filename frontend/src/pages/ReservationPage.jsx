@@ -19,7 +19,7 @@ const ReservationPage = () => {
     <div className="p-4">
       <h1 className='my-3 text-3xl font-bold italic'>LISTADO DE RESERVAS</h1>
       <div className="my-4">
-      <Link to={`/add-reservation`}><button className='create w-full sm:w-auto font-semibold rounded'>REALIZAR RESERVA</button></Link>
+      <Link to={`/create-reservation`}><button className='create w-full sm:w-auto font-semibold rounded'>REALIZAR RESERVA</button></Link>
       </div>
       {
         reservations && reservations.length === 0 && 

@@ -13,5 +13,4 @@ router.post('/schedules', validateMiddleware(schemaScheduleCreate), ScheduleCont
 router.put('/schedules/:id', validateMiddleware(schemaScheduleUpdate),ScheduleController.updateSchedule)
 router.delete('/schedules/:id', ScheduleController.deleteSchedule)
 
-
 module.exports = router

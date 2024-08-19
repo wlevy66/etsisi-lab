@@ -1,6 +1,5 @@
+import scheduleApi from '@/api/schedule'
 import { createContext, useContext, useState } from 'react'
-import { getSchedulesByRoomRequest, createScheduleRequest, updateScheduleRequest, deleteScheduleRequest, getScheduleRequest, getAvailableSchedulesRequest, getUsersByScheduleRequest } from '@/api/schedule'
-
 
 export const ScheduleContext = createContext()
 
@@ -14,11 +13,11 @@ export const ScheduleProvider = ({ children }) => {
 
     const [schedules, setSchedules] = useState([])
     const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(null)
 
     const getAvailableSchedules = async (id) => {
         try{
-            const response = await getAvailableSchedulesRequest(id)
+            const response = await scheduleApi.getAvailableSchedulesRequest(id)
             setSchedules(response.data.availableSchedules)
         }
         catch(error){
@@ -28,7 +27,7 @@ export const ScheduleProvider = ({ children }) => {
 
     const getSchedulesByRoom = async (roomId) => {
         try{
-            const response = await getSchedulesByRoomRequest(roomId)
+            const response = await scheduleApi.getSchedulesByRoomRequest(roomId)
             setSchedules(response.data.schedules)
         }
         catch(error){
@@ -38,7 +37,7 @@ export const ScheduleProvider = ({ children }) => {
 
     const getSchedule = async (roomId, scheduleId) => {
         try{
-            const response = await getScheduleRequest(roomId, scheduleId)
+            const response = await scheduleApi.getScheduleRequest(roomId, scheduleId)
             return response.data.schedule
         }
         catch(error){
@@ -46,20 +45,20 @@ export const ScheduleProvider = ({ children }) => {
         }
     }
 
-    const addSchedule = async (schedule) => {
+    const createSchedule = async (schedule) => {
         try{
-            await createScheduleRequest(schedule)
-            setSuccess(true)
+            const response = await scheduleApi.createScheduleRequest(schedule)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
         }
     }
 
-    const updateSchedule = async (id, newData) => {
+    const updateSchedule = async (id, updatedSchedule) => {
         try{
-            await updateScheduleRequest(id, newData)
-            setSuccess(true)
+            const response = await scheduleApi.updateScheduleRequest(id, updatedSchedule)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -68,7 +67,7 @@ export const ScheduleProvider = ({ children }) => {
 
     const deleteSchedule = async (id) => {
         try{
-            await deleteScheduleRequest(id)
+            await scheduleApi.deleteScheduleRequest(id)
             setSchedules(schedules.filter(schedule => schedule._id !== id))
         }
         catch(error){
@@ -78,7 +77,7 @@ export const ScheduleProvider = ({ children }) => {
 
     const getUsersBySchedule = async (scheduleId) => {
         try{
-            const response = await getUsersByScheduleRequest(scheduleId)
+            const response = await scheduleApi.getUsersByScheduleRequest(scheduleId)
             return response.data.users
         }
         catch(error){
@@ -88,18 +87,18 @@ export const ScheduleProvider = ({ children }) => {
 
     return (
         <ScheduleContext.Provider value={{
-            schedules,
-            error,
-            success,
             getSchedulesByRoom,
-            addSchedule,
+            getSchedule,
+            getAvailableSchedules,
+            createSchedule,
             updateSchedule,
             deleteSchedule,
-            getSchedule,
+            getUsersBySchedule,
+            schedules,
+            error,
             setError,
-            setSuccess,
-            getAvailableSchedules,
-            getUsersBySchedule
+            success,
+            setSuccess
         }}>
             {children}
         </ScheduleContext.Provider>

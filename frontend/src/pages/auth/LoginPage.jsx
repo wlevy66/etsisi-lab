@@ -6,11 +6,11 @@ import { useEffect } from 'react'
 const LoginPage = () => {
 
     const { register, handleSubmit } = useForm()
-    const {signIn, error, isAuthenticated, setError} = useAuth()
+    const {login, error, isAuthenticated, setError} = useAuth()
     const navigate = useNavigate()
 
     const onSubmit = handleSubmit( async(values)=>{
-        signIn(values)
+        login(values)
     })
 
     useEffect(() => {

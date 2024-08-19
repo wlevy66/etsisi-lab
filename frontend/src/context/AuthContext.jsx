@@ -2,7 +2,6 @@ import userApi from "@/api/user"
 import { createContext, useState, useContext, useEffect, } from "react"
 import Cookies from 'js-cookie'
 
-
 const AuthContext = createContext()
 
 export const useAuth = () => {
@@ -18,20 +17,10 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(false)
-    const [successMessage, setSuccessMessage] = useState(null)
+    const [success, setSuccess] = useState(null)
     const [users, setUsers] = useState([])
 
-    const signUp = async (user) => {
-        try{
-            await userApi.registerRequest(user)
-            setSuccess(true)
-        }
-        catch(error){
-            setError(error.response.data.error)
-        }
-    }
-    const signIn = async (user) => {
+    const login = async (user) => {
         try{
             const response = await userApi.loginRequest(user)
             setUser(response.data)
@@ -42,7 +31,17 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const signOut = async () => {
+    const registerAccount = async (user) => {
+        try{
+            const response = await userApi.registerRequest(user)
+            setSuccess(response.data.message)
+        }
+        catch(error){
+            setError(error.response.data.error)
+        }
+    }
+
+    const logout = async () => {
         try{
             await userApi.logoutRequest()
             setUser(null)
@@ -76,8 +75,7 @@ export const AuthProvider = ({ children }) => {
     const updateProfile = async (id, user) => {
         try{
             const response = await userApi.updateProfileRequest(id, user)
-            setSuccessMessage(response.data.message)
-            setSuccess(true)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -87,8 +85,7 @@ export const AuthProvider = ({ children }) => {
     const updatePassword = async (id, user) => {
         try{
             const response = await userApi.updatePasswordRequest(id, user)
-            setSuccessMessage(response.data.message)
-            setSuccess(true)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -98,8 +95,7 @@ export const AuthProvider = ({ children }) => {
     const updateByAdmin = async (id, user) => {
         try{
             const response = await userApi.updateByAdminRequest(id, user)
-            setSuccessMessage(response.data.message)
-            setSuccess(true)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -135,24 +131,22 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            user,
-            isAuthenticated,
-            signUp,
-            signIn,
-            error,
-            setError,
-            isLoading,
-            signOut,
-            success,
-            setSuccess,
+            login,
+            registerAccount,
+            logout,
             getUsers,
             getUser,
-            users,
             updateProfile,
             updatePassword,
             updateByAdmin,
-            successMessage,
-            setSuccessMessage
+            user,
+            isAuthenticated,
+            isLoading,
+            error,
+            setError,
+            success,
+            setSuccess,
+            users
         }}>
             {children}
         </AuthContext.Provider>

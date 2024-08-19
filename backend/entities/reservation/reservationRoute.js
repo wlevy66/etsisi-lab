@@ -4,12 +4,11 @@ const ReservationController = require('./reservationController')
 const validateMiddleware = require('../../validators/validatorSchema')
 const ReservationSchema = require('./reservationSchema')
 
-//define routes
+//define routes for reservations by user
 router.get('/reservations/:userId', ReservationController.getReservations)
 router.get('/reservations/:userId/:reservationId', ReservationController.getReservation)
-router.post('/reservations', validateMiddleware(ReservationSchema.reservationSchemaCreate), ReservationController.createReservation)
-router.put('/reservations/:reservationId', validateMiddleware(ReservationSchema.reservationSchemaUpdate), ReservationController.updateReservation)
-router.delete('/reservations/:reservationId', ReservationController.deleteReservation)
-
+router.post('/reservations/:userId', validateMiddleware(ReservationSchema.reservationSchemaCreate), ReservationController.createReservation)
+router.put('/reservations/:userId/:reservationId', validateMiddleware(ReservationSchema.reservationSchemaUpdate), ReservationController.updateReservation)
+router.delete('/reservations/:userId/:reservationId', ReservationController.deleteReservation)
 
 module.exports = router

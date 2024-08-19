@@ -9,7 +9,7 @@ const connectionDB = async () => {
 
         await mongoose.connect(`mongodb://${dbHost}:${dbPort}/${dbName}`)
     } catch (error){
-        throw new Error ('Cannot connect to the database')
+        throw new Error ('No se pudo realizar la conexión a la base de datos')
     }
 }
 

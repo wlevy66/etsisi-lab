@@ -7,11 +7,11 @@ import { useEffect } from 'react'
 const ModalUpdatePassword = ({ id, open, onClose }) => {
 
     const { register, handleSubmit } = useForm()
-    const { updatePassword, error, success, successMessage, setError, setSuccessMessage } = useAuth()
+    const { updatePassword, error, success, setError, setSuccess } = useAuth()
 
     useEffect(() => {
         setError(null)
-        setSuccessMessage(null)
+        setSuccess(null)
     }, [])
 
     const onSubmit = handleSubmit(async (data) => {
@@ -23,7 +23,7 @@ const ModalUpdatePassword = ({ id, open, onClose }) => {
             <form onSubmit={onSubmit}>
                 <h1 className='font-bold italic text-2xl mb-3 text-left'>CAMBIAR CONTRASEÑA</h1>
                 <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
-                <div className="mb-4">{successMessage && <span className='success'>{successMessage}</span>}</div>
+                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor='current-password'>
                         Contraseña actual

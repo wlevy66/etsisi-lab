@@ -1,5 +1,5 @@
+import reservationApi from '@/api/reservation'
 import { createContext, useContext, useState } from 'react'
-import { getReservationRequest, addReservationRequest, deleteReservationRequest, getReservationsRequest, updateReservationRequest } from '@/api/reservation'
 
 const ReservationContext = createContext()
 
@@ -13,11 +13,11 @@ export const ReservationProvider = ({ children }) => {
 
     const [reservations, setReservations] = useState([])
     const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(null)
 
     const getReservations = async (id) => {
         try{
-            const response = await getReservationsRequest(id)
+            const response = await reservationApi.getReservationsRequest(id)
             setReservations(response.data.reservations)
         }
         catch(error){
@@ -27,7 +27,7 @@ export const ReservationProvider = ({ children }) => {
 
     const getReservation = async (id, reservationId) => {
         try{
-            const response = await getReservationRequest(id, reservationId)
+            const response = await reservationApi.getReservationRequest(id, reservationId)
             return response.data.reservation
         }
         catch(error){
@@ -35,20 +35,20 @@ export const ReservationProvider = ({ children }) => {
         }
     }
 
-    const addReservation = async (user,schedule) => {
+    const createReservation = async (user,schedule) => {
         try{
-            await addReservationRequest(user,schedule)
-            setSuccess(true)
+            const response = await reservationApi.createReservationRequest(user,schedule)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
         }
     }
 
-    const updateReservation = async (id, newData) => {
+    const updateReservation = async (id, updatedReservation) => {
         try{
-            await updateReservationRequest(id, {schedule: newData})
-            setSuccess(true)
+            const response = await reservationApi.updateReservationRequest(id, {schedule: updatedReservation})
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -57,7 +57,7 @@ export const ReservationProvider = ({ children }) => {
 
     const deleteReservation = async (id) => {
         try{
-            await deleteReservationRequest(id)
+            await reservationApi.deleteReservationRequest(id)
             setReservations(reservations.filter(reservation => reservation._id !== id))
         }
         catch(error){
@@ -69,13 +69,14 @@ export const ReservationProvider = ({ children }) => {
         <ReservationContext.Provider value={{
             getReservations,
             getReservation,
-            addReservation,
+            createReservation,
             updateReservation,
             deleteReservation,
             reservations,
             error,
+            setError,
             success,
-            
+            setSuccess
         }}>
             {children}
         </ReservationContext.Provider>

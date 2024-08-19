@@ -10,12 +10,12 @@ const login = async (user) => {
         const {email, password} = user
         
         const userFound = await User.findOne({email})
-        if(!userFound) throw new Error('Invalid credentials. Please verify username and password and try again.')
+        if(!userFound) throw new Error('Credenciales inválidas. Por favor, verifique el email y la contraseña e intente de nuevo.')
         
         const matched = await bcrypt.compare(password, userFound.password)
-        if(!matched) throw new Error('Invalid credentials. Please verify username and password and try again.')
+        if(!matched) throw new Error('Credenciales inválidas. Por favor, verifique el email y la contraseña e intente de nuevo.')
         
-        if(userFound.status !== status.ACTIVE) throw new Error('User not verified. Please contact the administrator to verify your account.')
+        if(userFound.status !== status.ACTIVE) throw new Error('Usuario no activo. Por favor, contacte con el administrador.')
         
         const token = jwt.sign(
             {id: userFound._id},
@@ -30,13 +30,10 @@ const login = async (user) => {
 
 const register = async (user) => {
     try{
-        const {name, lastname, phone, email, password, confirmPassword} = user
-
-        if(password !== confirmPassword) throw new Error('Passwords do not match. Please try again.')
-        if(password.length < 6) throw new Error('Password must be at least 6 characters long. Please try again.')
+        const {name, lastname, phone, email, password} = user
         
         const existingUser = await User.findOne({email: email})
-        if(existingUser) throw new Error('User already exists. Please try again with a different email.')
+        if(existingUser) throw new Error('El email ya está registrado. Por favor, inicie sesión o utilice otro email.')
 
         let role
         if(email.includes('@alumnos.upm.es')){
@@ -96,7 +93,7 @@ const updateProfile = async (id, user) => {
         const {name, lastname, phone} = user
 
         let userFound = await User.findById(id)
-        if(!userFound) throw new Error('User not found. Please try again.')
+        if(!userFound) throw new Error('Usuario no encontrado. Por favor, intente de nuevo.')
         
         userFound.name = name
         userFound.lastname = lastname
@@ -112,15 +109,13 @@ const updatePassword = async (id, user) => {
     try{
         const {currentPassword, newPassword, confirmPassword} = user
 
-        if(currentPassword === newPassword) throw new Error('New password must be different from current password. Please try again.')
-
-        if(newPassword !== confirmPassword) throw new Error('Passwords do not match. Please try again.')
+        if(currentPassword === newPassword) throw new Error('La nueva contraseña no puede ser igual a la actual. Por favor, intente de nuevo.')
 
         let userFound = await User.findById(id)
-        if(!userFound) throw new Error('User not found. Please try again.')
+        if(!userFound) throw new Error('Usuario no encontrado. Por favor, intente de nuevo.')
 
         let matched = await bcrypt.compare(currentPassword, userFound.password)
-        if(!matched) throw new Error('Current password is incorrect. Please try again.')
+        if(!matched) throw new Error('La contraseña actual no es correcta. Por favor, intente de nuevo.')
 
         let new_hash_password = await bcrypt.hash(newPassword,10)
         userFound.password = new_hash_password
@@ -136,7 +131,7 @@ const updateByAdmin = async (id, user) => {
         const {email, role, status} = user
         
         let userFound = await User.findById(id)
-        if(!userFound) throw new Error('User not found. Please try again.')
+        if(!userFound) throw new Error('Usuario no encontrado. Por favor, intente de nuevo.')
         
         userFound.email = email
         userFound.role = role

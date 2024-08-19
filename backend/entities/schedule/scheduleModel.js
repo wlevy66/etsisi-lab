@@ -1,5 +1,3 @@
-
-const { required } = require('joi')
 const {Schema, model} = require('mongoose')
 
 const ScheduleModel = new Schema(
@@ -29,6 +27,5 @@ const ScheduleModel = new Schema(
         timestamps: true,
     }
 )
-
 
 module.exports = model('Schedule', ScheduleModel, 'schedules')

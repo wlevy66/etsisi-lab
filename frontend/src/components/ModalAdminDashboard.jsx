@@ -9,7 +9,7 @@ import { STATUS as status } from '@/constants/statusValues'
 const ModalAdminDashboard = ({ id, open, onClose }) => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { getUser, updateByAdmin, error, setError, successMessage, setSuccessMessage, isAuthenticated } = useAuth()
+    const { getUser, updateByAdmin, error, setError, success, setSuccess, isAuthenticated } = useAuth()
 
     useEffect(() => {
         const getUserData = async() => {
@@ -30,7 +30,7 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
             <form className='w-80' onSubmit={onSubmit}>
                 <h1 className='font-bold italic text-2xl mb-3 text-left'>EDITAR PERFIL</h1>
                 <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
-                <div className="mb-4">{successMessage && <span className='success'>{successMessage}</span>}</div>
+                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="email">
                     Email

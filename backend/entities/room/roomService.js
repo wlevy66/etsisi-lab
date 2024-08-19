@@ -3,7 +3,7 @@ const Room = require('./roomModel')
 const getRooms = async () => {
     try{
         return await Room.find().select('_id name capacity')
-    }catch(error){
+    } catch(error){
         throw new Error(error.message)
     }
 }
@@ -11,7 +11,7 @@ const getRooms = async () => {
 const getRoom = async (id) => {
     try{
         return await Room.findById(id).select('_id name capacity')
-    }catch(error){
+    } catch(error){
         throw new Error(error.message)
     }
 }
@@ -21,7 +21,7 @@ const createRoom = async (name, capacity) => {
         const nameTrimmed = name.trim();
         const roomAlreadyExists = await Room.findOne({ "name": nameTrimmed });
         if (roomAlreadyExists) {
-            throw new Error('Room already exists');
+            throw new Error('La aula ya existe');
         }
 
         const newRoom = new Room({
@@ -47,7 +47,7 @@ const deleteRoom = async (id) => {
     try{
         const room = await Room.findById(id)
         if(!room){
-            throw new Error('Room not found')
+            throw new Error('Aula no encontrada')
         }
         await deleteRoomInSchedule(id)
         await deleteRoomInReservation(id)

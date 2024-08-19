@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 const FormRoom = () => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { addRoom, error, getRoom, updateRoom, success } = useRoom()
+    const { createRoom, error, getRoom, updateRoom, success } = useRoom()
     const navigate = useNavigate()
     const params = useParams()
 
@@ -32,7 +32,7 @@ const FormRoom = () => {
             await updateRoom(params.roomId, data)
         }
         else{
-            await addRoom(data)
+            await createRoom(data)
         }
     })
 

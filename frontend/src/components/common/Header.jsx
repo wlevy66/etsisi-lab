@@ -6,7 +6,7 @@ import Nav from "./Nav"
 
 const Header = () => {
 
-  const { isAuthenticated, signOut, user } = useAuth()
+  const { isAuthenticated, logout, user } = useAuth()
   const [isDropdownVisible, setDropdownVisible] = useState(false)
   const [openModalEditProfile, setOpenModalEditProfile] = useState(false)
   const [openModalUpdatePassword, setOpenModalUpdatePassword] = useState(false)
@@ -33,7 +33,7 @@ const Header = () => {
     <header className={`${isAuthenticated && 'border-b-8 border-b-solid border-b-[#2581c4]'} `}>
       <div className="grid grid-cols-12 items-center p-6">
         <div className="col-span-2 mr-6">
-          <img src="/logo-encabezado.svg" className="" alt="Logo ETSISI" />
+          <img src="/logo.jpg" className="w-40" alt="Logo ETSISI" />
         </div>
 
         <div className={`${isAuthenticated ? 'col-span-8' : 'col-span-10'} flex-grow flex items-center justify-center`}>
@@ -65,7 +65,7 @@ const Header = () => {
                       Cambiar contraseña
                     </button>
                     <button onClick={() => {
-                      signOut()
+                      logout()
                       closeDropdown()
                       }}
                       className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">

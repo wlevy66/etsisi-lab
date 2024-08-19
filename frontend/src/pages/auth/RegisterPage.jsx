@@ -7,17 +7,17 @@ const RegisterPage = () => {
 
     const { register, handleSubmit } = useForm()
 
-    const { signUp, error, setError, success, setSuccess } = useAuth()
+    const { registerAccount, error, setError, success, setSuccess } = useAuth()
 
     useEffect(() => {
-        setSuccess(false)
+        setSuccess(null)
         setError(null)
     }, [])
 
     const onSubmit = handleSubmit(async (data) => {
-        setSuccess(false)
+        setSuccess(null)
         setError(null)
-        signUp(data)
+        registerAccount(data)
     })
 
     return (
@@ -78,7 +78,7 @@ const RegisterPage = () => {
                     
                 </div>
                 <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
-                <div className='mb-4'>{success && <span className='text-green-500 text-xs italic'>Usuario creado correctamente, puedes iniciar sesión.</span>}</div>
+                <div className='mb-4'>{success && <span className='text-green-500 text-xs italic'>{success}</span>}</div>
                 <div className="flex items-center justify-between">
                     <button className="register" type="submit">
                         REGISTRAR

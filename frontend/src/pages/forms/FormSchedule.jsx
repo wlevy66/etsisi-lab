@@ -9,7 +9,7 @@ dayjs.extend(utc)
 const FormSchedule = () => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { addSchedule, error, getSchedule, updateSchedule, success } = useSchedule()
+    const { createSchedule, error, getSchedule, updateSchedule, success } = useSchedule()
     const navigate = useNavigate()
     const params = useParams()
     const minDateValue = () => {
@@ -51,7 +51,7 @@ const FormSchedule = () => {
                 })
             }
             else{
-                await addSchedule({
+                await createSchedule({
                     room: params.roomId,
                     day: dayjs.utc(data.day).format(),
                     start: dayjs.utc(`${data.day} ${data.start}`, 'YYYY-MM-DD HH:mm').format(),

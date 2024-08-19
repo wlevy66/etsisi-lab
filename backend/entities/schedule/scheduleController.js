@@ -7,7 +7,7 @@ const getSchedulesByRoom = async (req, res) => {
             status: 200,
             schedules
         })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -17,17 +17,22 @@ const getSchedulesByRoom = async (req, res) => {
 const getSchedule = async (req, res) => {
     try{
         const schedule = await scheduleService.getSchedule(req.params.scheduleId)
+        if(!schedule) return res.status(404).json({
+            status: 404,
+            message: 'Horario no encontrado'
+        })
+
         res.status(200).json({
             status: 200,
             schedule,
         })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
     }
 }
-/* TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO */
+
 const getAvailableSchedules = async (req, res) => {
     try{
         const availableSchedules = await scheduleService.getAvailableSchedules(req.params.userId)
@@ -35,8 +40,7 @@ const getAvailableSchedules = async (req, res) => {
             status: 200,
             availableSchedules
         })
-    }
-    catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -44,16 +48,15 @@ const getAvailableSchedules = async (req, res) => {
 }
 
 const createSchedule = async (req, res) => {
-
     try{
         const savedSchedule = await scheduleService.createSchedule(req.body)
         
         res.status(201).json({
             status: 201,
-            message: 'Schedule created successfully!',
+            message: 'Horario creado correctamente!',
             savedSchedule
         })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -65,11 +68,11 @@ const updateSchedule = async (req, res) => {
         const schedule = await scheduleService.updateSchedule(req.params.id, req.body)
         res.status(200).json({
             status: 200,
-            message: 'Schedule updated successfully!',
+            message: 'Horario actualizado correctamente!',
             schedule
         })
 
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -78,19 +81,17 @@ const updateSchedule = async (req, res) => {
 
 const deleteSchedule = async (req, res) => {
     try{
-        const schedule = await scheduleService.deleteSchedule(req.params.id)
+        await scheduleService.deleteSchedule(req.params.id)
         res.status(204).json({
             status: 204,
-            message: 'Schedule deleted successfully!'
+            message: 'Horario eliminado correctamente!',
         })
-    }
-    catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
     }
 }
-
 
 const getUsersBySchedule = async (req, res) => {
     try{
@@ -99,14 +100,12 @@ const getUsersBySchedule = async (req, res) => {
             status: 200,
             users
         })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
     }
 }
-
-
 
 module.exports = {
     getSchedulesByRoom,

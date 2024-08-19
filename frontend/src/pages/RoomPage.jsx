@@ -10,14 +10,14 @@ const RoomPage = () => {
   useEffect(() => {
     getRooms()
     setError(null)
-    setSuccess(false)
+    setSuccess(null)
   }, [])
 
   return (
     <div className="p-4">
       <h1 className='my-3 text-3xl font-bold italic'>LISTADO DE AULAS</h1>
       <div className="my-4">
-        <Link to={'/add-room'}>
+        <Link to={'/create-room'}>
           <button className='create w-full sm:w-auto font-semibold rounded'>
           CREAR AULA
           </button>

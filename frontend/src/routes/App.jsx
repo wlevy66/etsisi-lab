@@ -35,14 +35,14 @@ const App = () => {
                         </Route>
                         <Route element={<ProfessorRoute />}>
                             <Route path='/rooms' element={<RoomPage />} />
-                            <Route path='/add-room' element={<FormRoom />} />
+                            <Route path='/create-room' element={<FormRoom />} />
                             <Route path='/edit-room/:roomId' element={<FormRoom />} />
                             <Route path='/schedules/:roomId' element={<SchedulePage />} />
-                            <Route path='/add-schedule/:roomId' element={<FormSchedule />} />
+                            <Route path='/create-schedule/:roomId' element={<FormSchedule />} />
                             <Route path='/edit-schedule/:roomId/:scheduleId' element={<FormSchedule />} />
                         </Route>
                         <Route path='/reservations' element={<ReservationPage />} />
-                        <Route path='/add-reservation' element={<RoomScheduleCard />} />
+                        <Route path='/create-reservation' element={<RoomScheduleCard />} />
                         <Route path='/edit-reservation/:reservationId' element={<RoomScheduleCard />} />
                     </Route>
                     <Route path='*' element={<Error />} />

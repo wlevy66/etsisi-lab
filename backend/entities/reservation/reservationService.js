@@ -47,14 +47,17 @@ const getReservation = async (reservationId) => {
 
 const createReservation = async (user, schedule) => {
     try{
-        const userHasReservation = await Reservation.find({schedule, user})
-        if (userHasReservation.length > 0) throw Error("You have already a reservation for this schedule.")
+        // Check if user has already a reservation for this schedule
+        const userHasReservation = await Reservation.findOne({schedule, user})
+        if (userHasReservation.length > 0) throw Error("Ya tienes una reserva para este horario")
         
-            const availableCapacity = await updateCapacity(schedule, 'add')
+        // Check if there is capacity available
+        const availableCapacity = await updateCapacity(schedule, 'create')
         if(!availableCapacity){
-            throw Error("Not capacity available")
+            throw Error("No hay capacidad disponible para este horario")
         }
         
+        // Create reservation
         const newReservation = new Reservation({
             user,
             schedule
@@ -71,14 +74,16 @@ const createReservation = async (user, schedule) => {
 const updateReservation = async (reservationId, schedule) => {
     try{
         const currentReservation = await Reservation.findById(reservationId)
-        if(!currentReservation) throw Error("Reservation not found")
+        if(!currentReservation) throw Error("Reserva no encontrada")
+
         await updateCapacity(currentReservation.schedule, 'delete')
+
         const reservationUpdated = await Reservation.findOneAndUpdate(
             { _id: reservationId },
             { schedule },
             { new: true }
         )
-        await updateCapacity(reservationUpdated.schedule, 'add')
+        await updateCapacity(reservationUpdated.schedule, 'create')
         return reservationUpdated
     } catch(error){
         throw Error(error.message)
@@ -88,7 +93,7 @@ const updateReservation = async (reservationId, schedule) => {
 const deleteReservation = async (reservationId) => {
     try{
         const reservation = await Reservation.findById(reservationId)
-        if(!reservation) throw Error("Reservation not found")
+        if(!reservation) throw Error("Reserva no encontrada")
     
         await updateCapacity(reservation.schedule, 'delete')
         return await Reservation.findByIdAndDelete(reservationId)
@@ -101,18 +106,31 @@ const deleteReservation = async (reservationId) => {
 const updateCapacity = async (id, type) => {
     try{
         let schedule = await Schedule.findById(id)
+        if(!schedule) throw Error("Horario no encontrado")
+        
         const schedulePopulate = await schedule.populate('room')
-        let reservedBy = 0
+        let reservedBy = schedule.reservedBy
 
-        if(schedule.reservedBy <= schedulePopulate.room.capacity){
-            if(type === 'add')  reservedBy = schedule.reservedBy + 1
-            else  reservedBy = schedule.reservedBy - 1
-            await Schedule.findByIdAndUpdate(id, {reservedBy}, {new: true})
-            return true
+        if(type === 'create'){
+            if(reservedBy < schedulePopulate.room.capacity){
+                reservedBy += 1
+            }
+            else{
+                throw Error("No hay capacidad disponible para este horario")
+            }
+        } else if(type === 'delete'){
+            if(reservedBy > 0){
+                reservedBy -= 1
+            }
+            else{
+                throw Error("No hay capacidad disponible para este horario")
+            }
         }
         else{
             return false
         }
+
+        await Schedule.findOneAndUpdate(id, {reservedBy}, {new: true})
     }
     catch(e){
         return e.message

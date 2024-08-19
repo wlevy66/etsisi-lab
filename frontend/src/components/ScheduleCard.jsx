@@ -11,7 +11,7 @@ dayjs.extend(utc)
 const ScheduleCard = ({ schedule, type }) => {
     const navigate = useNavigate()
     const {deleteSchedule, getUsersBySchedule} = useSchedule()
-    const {updateReservation, addReservation} = useReservation()
+    const {updateReservation, createReservation} = useReservation()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reservations, setReservations] = useState([]);
   
@@ -26,8 +26,8 @@ const ScheduleCard = ({ schedule, type }) => {
         await updateReservation(id, schedule).then(() => navigate('/reservations'))
     }
 
-    const handleAddReservation = async(user, schedule) => {
-        await addReservation(user, schedule).then(() => navigate('/reservations'))
+    const handleCreateReservation = async(user, schedule) => {
+        await createReservation(user, schedule).then(() => navigate('/reservations'))
     }
 
     const showUsers = async(scheduleId) => {
@@ -51,10 +51,10 @@ const ScheduleCard = ({ schedule, type }) => {
                 <p className="text-xl font-bold">Fin: { dayjs(schedule.end).utc().format('HH:mm') }</p>
             </div>
                 {
-                    type === 'add' ?
+                    type === 'create' ?
                     <>
                         <button className="bg-green-700 rounded mx-1 float-end font-semibold" 
-                        onClick={() => handleAddReservation(user.id, schedule._id)}>
+                        onClick={() => handleCreateReservation(user.id, schedule._id)}>
                             RESERVAR
                         </button>
                     </>

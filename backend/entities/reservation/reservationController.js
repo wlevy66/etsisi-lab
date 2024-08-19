@@ -18,6 +18,10 @@ const getReservations = async (req, res) => {
 const getReservation = async (req, res) => {
     try{
         const reservation = await reservationService.getReservation(req.params.reservationId)
+        if(!reservation) return res.status(404).json({
+            status: 404,
+            message: 'Reserva no encontrada'
+        })
 
         res.status(200).json({
             status: 200,
@@ -37,7 +41,7 @@ const createReservation = async (req, res) => {
 
         res.status(201).json({
             status: 201,
-            message: "Reservation created successfully!",
+            message: "Reserva creada correctamente!",
             savedReservation
         })
     } catch(error){
@@ -52,13 +56,13 @@ const updateReservation = async (req, res) => {
         const {schedule} = req.body
         const reservationUpdated = await reservationService.updateReservation(req.params.reservationId, schedule)
         
-        res.status(201).json({
-            status: 201,
-            message: "Reservation updated successfully!",
+        res.status(200).json({
+            status: 200,
+            message: "Reserva actualizada correctamente!",
             reservationUpdated
         })
 
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -66,14 +70,13 @@ const updateReservation = async (req, res) => {
 }
 
 const deleteReservation = async (req, res) => {
-    try {
-        const reservation = await reservationService.deleteReservation(req.params.reservationId)
+    try{
+        await reservationService.deleteReservation(req.params.reservationId)
         res.status(200).json({
             status:200,
-            message: "Reservation deleted successfully!",
-            reservation
+            message: "Reserva eliminada correctamente!",
         })
-    }catch (error) {
+    } catch (error) {
         return res.status(500).json({
             error: error.message
         })

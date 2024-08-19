@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { getRoomsRequest, deleteRoomRequest, createRoomRequest, updateRoomRequest, getRoomRequest } from "@/api/room"
+import roomApi from "@/api/room"
+import { createContext, useContext, useState } from "react"
 
 const RoomContext = createContext()
 
@@ -13,11 +13,11 @@ export const RoomProvider = ({ children }) => {
 
     const [rooms, setRooms] = useState([])
     const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(null)
 
     const getRooms = async () => {
         try{
-            const response = await getRoomsRequest()
+            const response = await roomApi.getRoomsRequest()
             setRooms(response.data.rooms)
         }
         catch(error){
@@ -27,7 +27,7 @@ export const RoomProvider = ({ children }) => {
     
     const getRoom = async (id) => {
         try{
-            const response = await getRoomRequest(id)
+            const response = await roomApi.getRoomRequest(id)
             return response.data.room
         }
         catch(error){
@@ -35,20 +35,20 @@ export const RoomProvider = ({ children }) => {
         }
     }
 
-    const addRoom = async (room) => {
+    const createRoom = async (room) => {
         try{
-            await createRoomRequest(room)
-            setSuccess(true)
+            const response = await roomApi.createRoomRequest(room)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
         }
     }
 
-    const updateRoom = async (id, newData) => {
+    const updateRoom = async (id, updatedRoom) => {
         try{
-            await updateRoomRequest(id, newData)
-            setSuccess(true)
+            const response = await roomApi.updateRoomRequest(id, updatedRoom)
+            setSuccess(response.data.message)
         }
         catch(error){
             setError(error.response.data.error)
@@ -57,7 +57,7 @@ export const RoomProvider = ({ children }) => {
 
     const deleteRoom = async (id) => {
         try{
-            await deleteRoomRequest(id)
+            await roomApi.deleteRoomRequest(id)
             setRooms(rooms.filter(room => room._id !== id))
         }
         catch(error){
@@ -67,12 +67,12 @@ export const RoomProvider = ({ children }) => {
 
     return (
         <RoomContext.Provider value={{
-            rooms,
             getRooms,
-            addRoom,
+            getRoom,
+            createRoom,
             updateRoom,
             deleteRoom,
-            getRoom,
+            rooms,
             error,
             setError,
             success,

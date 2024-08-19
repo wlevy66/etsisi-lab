@@ -19,7 +19,7 @@ const getRoom = async (req, res) => {
         const room = await roomService.getRoom(req.params.id)
         if(!room) return res.status(404).json({
             status: 404,
-            message: 'Room not found'
+            message: 'Aula no encontrada'
         })
 
         res.status(200).json({
@@ -39,16 +39,10 @@ const createRoom = async (req, res) => {
         const savedRoom = await roomService.createRoom(name, capacity);
         res.status(201).json({
             status: 201,
-            message: 'Room created successfully!',
+            message: 'Aula creada correctamente!',
             savedRoom
         })
     } catch (error) {
-        if (error.message === 'Room already exists') {
-            return res.status(400).json({
-                status: 400,
-                error: error.message
-            })
-        }
         res.status(500).json({
             error: error.message
         })
@@ -57,21 +51,13 @@ const createRoom = async (req, res) => {
 
 const updateRoom = async (req, res) => {
     try{
-        await roomService.updateRoom(req.params.id, req.body)
-        .then(roomUpdated => {
-            res.status(201).json({
-                status: 201,
-                message: 'Room updated successfully!',
-                roomUpdated
-            })
+        const roomUpdated = await roomService.updateRoom(req.params.id, req.body)
+        res.status(201).json({
+            status: 201,
+            message: 'Aula actualizada correctamente!',
+            roomUpdated
         })
-        .catch(() => {
-            return res.status(404).json({
-                status: 404,
-                error: 'Room already exists'
-            })
-        })
-    }catch(error){
+    } catch(error){
         res.status(500).json({
             error: error.message
         })
@@ -83,7 +69,7 @@ const deleteRoom = async (req, res) => {
         await roomService.deleteRoom(req.params.id)
         res.status(204).json({
             status:204,
-            message: 'Room deleted successfully!'
+            message: 'Aula eliminada correctamente!'
         })
     } catch (error) {
         return res.status(500).json({

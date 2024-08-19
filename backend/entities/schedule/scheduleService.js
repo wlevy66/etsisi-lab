@@ -3,9 +3,7 @@ const Reservation = require('../reservation/reservationModel')
 
 const getSchedulesByRoom = async (roomId) => {
     try{
-        return await Schedule.find({ room: roomId})
-        .populate('room')
-        .sort({start: 1})
+        return await Schedule.find({ room: roomId}).populate('room').sort({start: 1})
     } catch(error){
         throw new Error(error)
     }
@@ -13,9 +11,8 @@ const getSchedulesByRoom = async (roomId) => {
 
 const getSchedule = async (scheduleId) => {
     try{
-        const schedule = await Schedule.findById(scheduleId)
-                                .populate('room')
-        if (!schedule) throw new Error('Schedule not found')
+        const schedule = await Schedule.findById(scheduleId).populate('room')
+        if (!schedule) throw new Error('Horario no encontrado')
         return schedule
     } catch(error){
         throw new Error(error)
@@ -40,7 +37,7 @@ const getAvailableSchedules = async (userId) => {
 const createSchedule = async (schedule) => {
     try{
         const isValid = await validateSchedule(schedule)
-        if (!isValid) throw new Error('Schedule already exists')
+        if (!isValid) throw new Error('El horario ya existe o se cruza con otro horario')
         const newSchedule = new Schedule(schedule)
         const savedSchedule = await newSchedule.save()
         return savedSchedule
@@ -80,10 +77,10 @@ const validateSchedule = async (schedule) => {
 const updateSchedule = async (id, schedule) => {
     try{
         const isValid = await validateSchedule(schedule)
-        if (!isValid) throw new Error('Schedule already exists')
+        if (!isValid) throw new Error('El horario ya existe o se cruza con otro horario')
             
         const scheduleUpdated = await Schedule.findByIdAndUpdate(id, schedule, {new: true})
-        if (!scheduleUpdated) throw new Error('Schedule not found')
+        if (!scheduleUpdated) throw new Error('Horario no encontrado')
         return scheduleUpdated
     } catch(error){
         throw new Error(error.message)
@@ -93,7 +90,7 @@ const updateSchedule = async (id, schedule) => {
 const deleteSchedule = async (id) => {
     try{
         const schedule = await Schedule.findById(id)
-        if (!schedule) throw new Error('Schedule not found')
+        if (!schedule) throw new Error('Horario no encontrado')
 
         await deleteScheduleInReservation(id)
         return await Schedule.findByIdAndDelete(id)

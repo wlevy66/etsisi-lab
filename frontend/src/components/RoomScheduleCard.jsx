@@ -24,7 +24,6 @@ const RoomScheduleCard = () => {
                     }),
                     getAvailableSchedules(user.id)
                 ])
-
                 setIsLoaded(false)
             }
             fetchData()
@@ -75,7 +74,7 @@ const RoomScheduleCard = () => {
                             <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                                 {schedules &&
                                     schedules.map(schedule => {
-                                        return (<ScheduleCard schedule={schedule} type={'add'} key={schedule._id} />)
+                                        return (<ScheduleCard schedule={schedule} type={'create'} key={schedule._id} />)
                                     })}
                             </div>
                         </>
