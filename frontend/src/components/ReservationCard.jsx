@@ -1,5 +1,6 @@
 import { useReservation } from "@/context/ReservationContext"
 import { Link, useParams } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
@@ -7,10 +8,11 @@ dayjs.extend(utc)
 const ReservationCard = ({ reservation }) => {
 
     const { deleteReservation } = useReservation()
+    const { user } = useAuth()
     const params = useParams()
 
-    const handleDeleteReservation = (id) => {
-        deleteReservation(id)
+    const handleDeleteReservation = async(userId, reservationId) => {
+        await deleteReservation(userId, reservationId)
     }
 
     return (
@@ -30,7 +32,7 @@ const ReservationCard = ({ reservation }) => {
                             </button>
                         </Link>
                         <button className="bg-red-600 rounded mx-1 float-end font-semibold"
-                            onClick={() => handleDeleteReservation(reservation._id)}>
+                            onClick={() => handleDeleteReservation(user.id, reservation._id)}>
                             ELIMINAR
                         </button>
                     </div>

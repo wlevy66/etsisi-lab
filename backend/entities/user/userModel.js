@@ -6,29 +6,28 @@ const UserSchema = new Schema(
     {
         name: {
             type: String,
-            required: true
+            required: this.isNew
         },
         lastname: {
             type: String,
-            required: true
+            required: this.isNew
         },
         phone: {
             type: String,
-            required: true
+            required: this.isNew
         },
         email: {
             type: String,
-            required: true,
+            required: this.isNew,
             unique: true
         },
         password: {
             type: String,
-            required: true
+            required: this.isNew
         },
         role: {
             type: String,
             enum: [roles.ADMIN_ROLE, roles.PROFESSOR_ROLE, roles.STUDENT_ROLE],
-            required: true
         },
         status: {
             type: String,

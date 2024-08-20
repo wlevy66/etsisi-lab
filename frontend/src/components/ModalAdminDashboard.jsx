@@ -1,6 +1,6 @@
 import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { useAuth } from '@/context/AuthContext'
 import { useEffect } from 'react'
 import { ROLES as roles } from '@/constants/rolesValues'
@@ -9,9 +9,11 @@ import { STATUS as status } from '@/constants/statusValues'
 const ModalAdminDashboard = ({ id, open, onClose }) => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { getUser, updateByAdmin, error, setError, success, setSuccess, isAuthenticated } = useAuth()
+    const { getUser, updateByAdmin, error, setError, success, setSuccess } = useAuth()
 
     useEffect(() => {
+        setError(null)
+        setSuccess(null)
         const getUserData = async() => {
             const response = await getUser(id)
             setValue('email', response.user.email)
@@ -19,7 +21,7 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
             setValue('status', response.user.status)
         }
         getUserData()
-    }, [id])
+    }, [id, open])
 
     const onSubmit = handleSubmit( async(data) => {
         await updateByAdmin(id, data)

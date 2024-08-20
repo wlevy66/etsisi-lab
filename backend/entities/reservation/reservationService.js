@@ -48,8 +48,8 @@ const getReservation = async (reservationId) => {
 const createReservation = async (user, schedule) => {
     try{
         // Check if user has already a reservation for this schedule
-        const userHasReservation = await Reservation.findOne({schedule, user})
-        if (userHasReservation.length > 0) throw Error("Ya tienes una reserva para este horario")
+        const userHasReservation = await Reservation.findOne({user, schedule})
+        if (userHasReservation) throw Error("Ya tienes una reserva para este horario")
         
         // Check if there is capacity available
         const availableCapacity = await updateCapacity(schedule, 'create')
@@ -109,18 +109,18 @@ const updateCapacity = async (id, type) => {
         if(!schedule) throw Error("Horario no encontrado")
         
         const schedulePopulate = await schedule.populate('room')
-        let reservedBy = schedule.reservedBy
+        let reservedBy = 0
 
         if(type === 'create'){
-            if(reservedBy < schedulePopulate.room.capacity){
-                reservedBy += 1
+            if(reservedBy <= schedulePopulate.room.capacity){
+                reservedBy = schedule.reservedBy + 1
             }
             else{
                 throw Error("No hay capacidad disponible para este horario")
             }
         } else if(type === 'delete'){
             if(reservedBy > 0){
-                reservedBy -= 1
+                reservedBy = schedule.reservedBy - 1
             }
             else{
                 throw Error("No hay capacidad disponible para este horario")
@@ -130,7 +130,8 @@ const updateCapacity = async (id, type) => {
             return false
         }
 
-        await Schedule.findOneAndUpdate(id, {reservedBy}, {new: true})
+        await Schedule.findByIdAndUpdate(id, {reservedBy}, {new: true})
+        return true
     }
     catch(e){
         return e.message

@@ -15,9 +15,9 @@ export const ReservationProvider = ({ children }) => {
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
 
-    const getReservations = async (id) => {
+    const getReservations = async (userId) => {
         try{
-            const response = await reservationApi.getReservationsRequest(id)
+            const response = await reservationApi.getReservationsRequest(userId)
             setReservations(response.data.reservations)
         }
         catch(error){
@@ -25,9 +25,9 @@ export const ReservationProvider = ({ children }) => {
         }
     }
 
-    const getReservation = async (id, reservationId) => {
+    const getReservation = async (userId, reservationId) => {
         try{
-            const response = await reservationApi.getReservationRequest(id, reservationId)
+            const response = await reservationApi.getReservationRequest(userId, reservationId)
             return response.data.reservation
         }
         catch(error){
@@ -35,9 +35,9 @@ export const ReservationProvider = ({ children }) => {
         }
     }
 
-    const createReservation = async (user,schedule) => {
+    const createReservation = async (userId, schedule) => {
         try{
-            const response = await reservationApi.createReservationRequest(user,schedule)
+            const response = await reservationApi.createReservationRequest(userId, schedule)
             setSuccess(response.data.message)
         }
         catch(error){
@@ -45,9 +45,9 @@ export const ReservationProvider = ({ children }) => {
         }
     }
 
-    const updateReservation = async (id, updatedReservation) => {
+    const updateReservation = async (userId, reservationId, updatedReservation) => {
         try{
-            const response = await reservationApi.updateReservationRequest(id, {schedule: updatedReservation})
+            const response = await reservationApi.updateReservationRequest(userId, reservationId, {schedule: updatedReservation})
             setSuccess(response.data.message)
         }
         catch(error){
@@ -55,10 +55,10 @@ export const ReservationProvider = ({ children }) => {
         }
     }
 
-    const deleteReservation = async (id) => {
+    const deleteReservation = async (userId, reservationId) => {
         try{
-            await reservationApi.deleteReservationRequest(id)
-            setReservations(reservations.filter(reservation => reservation._id !== id))
+            await reservationApi.deleteReservationRequest(userId, reservationId)
+            setReservations(reservations.filter(reservation => reservation._id !== reservationId))
         }
         catch(error){
             setError(error.response.data.error)

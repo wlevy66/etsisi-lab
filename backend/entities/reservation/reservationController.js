@@ -36,8 +36,8 @@ const getReservation = async (req, res) => {
 
 const createReservation = async (req, res) => {
     try{
-        const {user, schedule} = req.body
-        const savedReservation = await reservationService.createReservation(user, schedule)
+        const {schedule} = req.body
+        const savedReservation = await reservationService.createReservation(req.params.userId, schedule)
 
         res.status(201).json({
             status: 201,

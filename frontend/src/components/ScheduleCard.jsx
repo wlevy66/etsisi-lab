@@ -11,7 +11,7 @@ dayjs.extend(utc)
 const ScheduleCard = ({ schedule, type }) => {
     const navigate = useNavigate()
     const {deleteSchedule, getUsersBySchedule} = useSchedule()
-    const {updateReservation, createReservation} = useReservation()
+    const {updateReservation, createReservation, error} = useReservation()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reservations, setReservations] = useState([]);
   
@@ -22,12 +22,12 @@ const ScheduleCard = ({ schedule, type }) => {
         deleteSchedule(id)
     }
 
-    const handleUpdateReservation = async(id, schedule) => {
-        await updateReservation(id, schedule).then(() => navigate('/reservations'))
+    const handleUpdateReservation = async(userId, reservationId, schedule) => {
+        await updateReservation(userId, reservationId, schedule).then(() => navigate('/reservations'))
     }
 
-    const handleCreateReservation = async(user, schedule) => {
-        await createReservation(user, schedule).then(() => navigate('/reservations'))
+    const handleCreateReservation = async(userId, schedule) => {
+        await createReservation(userId, schedule).then(() => navigate('/reservations'))
     }
 
     const showUsers = async(scheduleId) => {
@@ -73,7 +73,7 @@ const ScheduleCard = ({ schedule, type }) => {
                             </button>
                         </div>
                         : <button className="mt-3 bg-green-700 rounded mx-1 float-end semibold"
-                            onClick={() => handleUpdateReservation(params.reservationId, schedule._id)}>
+                            onClick={() => handleUpdateReservation(user.id, params.reservationId, schedule._id)}>
                                 RESERVAR
                             </button>
                     }
