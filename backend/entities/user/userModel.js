@@ -6,24 +6,24 @@ const UserSchema = new Schema(
     {
         name: {
             type: String,
-            required: this.isNew
+            required: function () { return this.isNew }
         },
         lastname: {
             type: String,
-            required: this.isNew
+            required: function () { return this.isNew }
         },
         phone: {
             type: String,
-            required: this.isNew
+            required: function () { return this.isNew }
         },
         email: {
             type: String,
-            required: this.isNew,
+            required: function () { return this.isNew },
             unique: true
         },
         password: {
             type: String,
-            required: this.isNew
+            required: function () { return this.isNew }
         },
         role: {
             type: String,
