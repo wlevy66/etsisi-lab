@@ -85,7 +85,7 @@ const RegisterPage = () => {
                     </button>
                 </div>
             <p className='mt-3 flex gap-x-5'>
-                ¿Ya tienes cuenta? <Link to={'/register'} className='text-sky-500 font-semibold underline'>Iniciar sesión</Link>
+                ¿Ya tienes cuenta? <Link to={'/login'} className='text-sky-500 font-semibold underline'>Iniciar sesión</Link>
             </p>
         </form>
     )
