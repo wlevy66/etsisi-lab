@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-import Header from '@/components/common/Header'
-import Footer from '@/components/common/Footer'
+import Header from '@/pages/layout/Header'
+import Footer from '@/pages/layout/Footer'
 
 import ProtectedRoute from './ProtectedRoute'
 import AdminRoute from './AdminRoute'

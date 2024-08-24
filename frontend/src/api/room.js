@@ -1,10 +1,10 @@
-import axios from '@/api/axios'
+import axiosInstance from '@/api/axios'
 
-const getRoomsRequest = () => axios.get('/room/rooms')
-const getRoomRequest = (id) => axios.get(`/room/rooms/${id}`)
-const createRoomRequest = (room) => axios.post('/room/rooms', room)
-const updateRoomRequest = (id, updatedRoom) => axios.put(`/room/rooms/${id}`, updatedRoom)
-const deleteRoomRequest = (id) => axios.delete(`/room/rooms/${id}`)
+const getRoomsRequest = () => axiosInstance.get('/room/rooms')
+const getRoomRequest = (id) => axiosInstance.get(`/room/rooms/${id}`)
+const createRoomRequest = (room) => axiosInstance.post('/room/rooms', room)
+const updateRoomRequest = (id, updatedRoom) => axiosInstance.put(`/room/rooms/${id}`, updatedRoom)
+const deleteRoomRequest = (id) => axiosInstance.delete(`/room/rooms/${id}`)
 
 const roomApi = {
     getRoomsRequest,
