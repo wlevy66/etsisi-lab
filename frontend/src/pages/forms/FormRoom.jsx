@@ -1,4 +1,4 @@
-import {set, useForm} from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { useRoom } from '@/context/RoomContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -11,8 +11,8 @@ const FormRoom = () => {
     const params = useParams()
 
     useEffect(() => {
-        const getRoomData = async() => {
-            if(params.roomId){
+        const getRoomData = async () => {
+            if (params.roomId) {
                 const room = await getRoom(params.roomId)
                 setValue('name', room.name)
                 setValue('capacity', room.capacity)
@@ -22,66 +22,61 @@ const FormRoom = () => {
     }, [])
 
     useEffect(() => {
-        if(success){
+        if (success) {
             navigate('/rooms')
         }
     }, [success])
 
-    const onSubmit = handleSubmit( async(data) => {
-        if(params.roomId){
+    const onSubmit = handleSubmit(async (data) => {
+        if (params.roomId) {
             await updateRoom(params.roomId, data)
         }
-        else{
+        else {
             await createRoom(data)
         }
     })
 
 
 
-    return(
-            <form className='sm:w-full md:w-1/3 mx-auto border rounded p-4 mt-6' onSubmit={onSubmit}>
-                <h1 className='font-bold italic text-3xl my-3 text-left'>
-                    {
-                        params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'
-                    }
-                </h1>
-                <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
-                <div className="mb-4">
-                    <label className="block text-md font-bold mb-2" htmlFor="name">
+    return (
+        <form className='sm:w-full md:w-1/3 page' onSubmit={onSubmit}>
+            <h1>
+                {
+                    params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'
+                }
+            </h1>
+            <div className="mb-4">
+                <label htmlFor="name">
                     Nombre del aula
-                    </label>
-                    <input type='text'
-                    className="border rounded w-full p-2" id="name" placeholder="Nombre del aula"
+                </label>
+                <input type='text' id="name" placeholder="Nombre del aula"
                     {...register('name')} autoFocus />
-                </div>
+            </div>
 
-                <div className="mb-4">
-                    <label className="block text-md font-bold mb-2" htmlFor="capacity">
+            <div className="mb-4">
+                <label htmlFor="capacity">
                     Capacidad
-                    </label>
-                    <input type='number'
-                    className="border rounded w-full p-2" id="capacity" placeholder="Capacidad"
+                </label>
+                <input type='number' id="capacity" placeholder="Capacidad"
                     {...register('capacity')} />
-                </div>
-
+            </div>
+            <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
             <div className="flex items-center justify-center my-2 gap-2">
                 <button onClick={(e) => {
                     e.preventDefault()
                     navigate(`/rooms`)
                 }}
-                className='bg-slate-500 hover:bg-slate-700 font-semibold py-2 px-4 rounded'>
+                    className='cancel'>
                     CANCELAR
                 </button>
 
-                <button className="bg-blue-500 rounded hover:bg-blue-700 font-semibold text-white py-2 px-4" type="submit">
+                <button className="submit" type="submit">
                     {
                         params.roomId ? 'ACTUALIZAR' : 'CREAR'
                     }
                 </button>
-                
             </div>
-
-            </form>
+        </form>
     )
 }
 

@@ -30,24 +30,21 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
     return (
         <Modal open={open} onClose={onClose} center styles={{ modal: { padding: '40px' } }}>
             <form className='w-80' onSubmit={onSubmit}>
-                <h1 className='font-bold italic text-2xl mb-3 text-left'>EDITAR PERFIL</h1>
-                <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
-                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
+                <h1>EDITAR PERFIL</h1>
+
                 <div className="mb-4">
-                    <label className="block text-md font-bold mb-2" htmlFor="email">
+                    <label htmlFor="email">
                     Email
                     </label>
-                    <input type='email'
-                    className="border rounded w-full p-2" id="email" placeholder="Email"
+                    <input type='email' id="email" placeholder="Email"
                     {...register('email')} autoFocus />
                 </div>
 
                 <div className="mb-4">  
-                    <label className="block text-md font-bold mb-2" htmlFor="role">
+                    <label htmlFor="role">
                     Rol
                     </label>
-                    <select
-                    className="border rounded w-full p-2" id="role" placeholder="Rol"
+                    <select id="role" placeholder="Rol"
                     {...register('role')}>
                         {
                             roles.map( role => (
@@ -58,11 +55,10 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
                 </div>
                 
                 <div className="mb-4">  
-                    <label className="block text-md font-bold mb-2" htmlFor="status">
+                    <label htmlFor="status">
                     Estado
                     </label>
-                    <select
-                    className="border rounded w-full p-2" id="status" placeholder="Estado"
+                    <select id="status" placeholder="Estado"
                     {...register('status')}>
                         {
                             status.map( status => (
@@ -71,7 +67,8 @@ const ModalAdminDashboard = ({ id, open, onClose }) => {
                         }
                     </select>
                 </div>
-
+                <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
+                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
                 <div className="flex justify-between">
                     <button className="submit" type="submit">
                         ACTUALIZAR

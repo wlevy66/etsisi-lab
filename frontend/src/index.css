@@ -24,6 +24,39 @@ nav {
   color: white;
 }
 
+/* Form styles */
+form.page {
+  border-width: 1px;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form h1 {
+  font-weight: 700;
+  font-style: italic;
+  text-align: left;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+form label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+form input {
+  width: 100%;
+  padding: 0.5rem;
+  border-width: 1px;
+  border-radius: 0.25rem;
+}
+
 span.error {
   color: #dc2626;
   font-style: italic;
@@ -33,6 +66,7 @@ span.success {
   color: #15803d;
   font-style: italic;
 }
+/*-----------------------------------*/
 
 /* Button styles */
 button {
@@ -41,12 +75,20 @@ button {
   border-radius: 4px
 }
 
-button.login, button.register, button.submit, button.create {
+button.submit, button.create, button.dropdown {
   background-color: #3b82f6;
   font-weight: 600;
 }
-button.login:hover, button.register:hover, button.submit:hover, button.create:hover {
+button.submit:hover, button.create:hover, button.dropdown:hover {
   background-color: #1d4ed8;
+}
+
+button.cancel {
+  background-color: #64748b;
+  font-weight: 600;
+}
+button.cancel:hover {
+  background-color: #334155;
 }
 
 /* Footer style */

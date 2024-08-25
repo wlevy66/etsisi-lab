@@ -44,7 +44,7 @@ const Header = () => {
           isAuthenticated && 
             <div className="col-span-2">
               <button onClick={toggleDropdown}
-                className="create float-right w-full sm:w-auto font-semibold rounded-full">
+                className="dropdown float-right w-full sm:w-auto font-semibold rounded-full">
                 {user.name ? user.name[0].toUpperCase()+user.lastname[0].toUpperCase() : user.id[0]}
               </button>
               {

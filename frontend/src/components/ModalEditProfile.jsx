@@ -28,46 +28,40 @@ const ModalEditProfile = ({ id, open, onClose }) => {
     return (
         <Modal open={open} onClose={onClose} center styles={{ modal: { padding: '40px' } }}>
             <form className='w-80' onSubmit={onSubmit}>
-                <h1 className='font-bold italic text-2xl mb-3 text-left'>EDITAR PERFIL</h1>
-                <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
-                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
-
+                <h1>EDITAR PERFIL</h1>
                 <div className="mb-4">
-                    <label className="block text-md font-bold mb-2" htmlFor="name">
+                    <label htmlFor="name">
                         Nombre
                     </label>
-                    <input
-                        {...register('name')}
-                        className="border rounded w-full p-3 h-11 uppercase" id="name" type="text" placeholder="Nombre" />
+                    <input id="name" type="text" placeholder="Nombre"
+                    {...register('name')} />
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="lastname">
                         Apellidos
                     </label>
-                    <input
-                        {...register('lastname')}
-                        className="border rounded w-full p-3 h-11 uppercase" id="lastname" type="text" placeholder="Apellidos" />
+                    <input id="lastname" type="text" placeholder="Apellidos"
+                    {...register('lastname')} />
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="phone">
                         Teléfono
                     </label>
-                    <input
-                        {...register('phone')}
-                        className="border rounded w-full p-3 h-11" id="phone" type="text" placeholder="Teléfono" />
+                    <input id="phone" type="text" placeholder="Teléfono"
+                    {...register('phone')} />
                 </div>
 
                 <div className="mb-4">
                     <label className="block text-md font-bold mb-2" htmlFor="email">
                     Email
                     </label>
-                    <input type='email'
-                        {...register('email')}
-                        className="border rounded w-full p-3 h-11" id="email" placeholder="Email" disabled/>
+                    <input type='email' id="email" placeholder="Email" disabled
+                    {...register('email')} />
                 </div>
-
+                <div className="mb-4">{error && <span className='error'>{error}</span>}</div>
+                <div className="mb-4">{success && <span className='success'>{success}</span>}</div>
                 <div className="flex justify-between">
                     <button className="submit" type="submit">
                         ACTUALIZAR
