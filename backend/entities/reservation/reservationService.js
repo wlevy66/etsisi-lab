@@ -52,21 +52,20 @@ const createReservation = async (user, schedule) => {
         // Check if user has already a reservation for this schedule
         const userHasReservation = await Reservation.findOne({user, schedule})
         if (userHasReservation) throw Error("Ya tienes una reserva para este horario")
-        console.log('1')
+
         // Check if there is capacity available
         const availableCapacity = await updateCapacity(schedule, 'create')
         if(!availableCapacity){
             throw Error("No hay capacidad disponible para este horario")
         }
-        console.log('2')
+
         // Create reservation
         const newReservation = new Reservation({
             user,
             schedule
         })
-        console.log('3')
+
         const savedReservation = await newReservation.save()
-        console.log('4')
         return savedReservation
     } catch(error){
         throw Error(error.message)
@@ -111,7 +110,6 @@ const deleteReservation = async (params) => {
         if(!user) throw Error("Usuario no encontrado.")
 
         if (reservation.user.toString() !== user._id.toString() && user.role === roles.STUDENT_ROLE) {
-            console.log(reservation.user.toString(), user._id.toString())
             throw Error("No puedes eliminar una reserva que no te pertenece.")
         }
         await updateCapacity(reservation.schedule, 'delete')

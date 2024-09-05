@@ -71,7 +71,6 @@ const updateReservation = async (req, res) => {
 
 const deleteReservation = async (req, res) => {
     try{
-        console.log(req.params)
         await reservationService.deleteReservation(req.params)
         res.status(200).json({
             status:200,
