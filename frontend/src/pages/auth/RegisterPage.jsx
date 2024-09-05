@@ -21,7 +21,7 @@ const RegisterPage = () => {
     })
 
     return (
-        <form className="sm:w-full md:w-1/3 page" onSubmit={onSubmit}>
+        <form className="sm:w-full md:w-2/5 page" onSubmit={onSubmit}>
             <h1>SERVICIO DE REGISTRO</h1>
             <hr className='mb-4' />
             <div className="mb-4">
@@ -73,14 +73,14 @@ const RegisterPage = () => {
                     {...register('confirmPassword', { required: true })} />
             </div>
             <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
-            <div className='mb-4'>{success && <span className='text-green-500 text-xs italic'>{success}</span>}</div>
+            <div className='mb-4'>{success && <span className='success'>{success}</span>}</div>
             <div className="flex items-center justify-between">
                 <button className="submit" type="submit">
                     REGISTRAR
                 </button>
             </div>
             <p className='mt-3 flex gap-x-5'>
-                ¿Ya tienes cuenta? <Link to={'/login'} className='text-sky-500 font-semibold underline'>Iniciar sesión</Link>
+                ¿Ya tienes cuenta? <Link to={'/login'} className='link'>Iniciar sesión</Link>
             </p>
         </form>
     )

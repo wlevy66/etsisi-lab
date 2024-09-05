@@ -50,21 +50,29 @@ form label {
   margin-bottom: 0.5rem;
 }
 
-form input {
+form input, form select {
   width: 100%;
   padding: 0.5rem;
   border-width: 1px;
   border-radius: 0.25rem;
 }
 
+.link {
+  color: #0ea5e9;
+  font-weight: 600;
+  text-decoration-line: underline;
+}
+
 span.error {
   color: #dc2626;
   font-style: italic;
+  font-weight: 600;
 }
 
 span.success {
-  color: #15803d;
+  color: #0aac45;
   font-style: italic;
+  font-weight: 600;
 }
 /*-----------------------------------*/
 

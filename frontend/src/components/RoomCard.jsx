@@ -2,16 +2,31 @@ import { Link } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { useRoom } from "@/context/RoomContext"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
-import { PROFESSOR_ROLE } from "@/constants/roles"
+import { useEffect, useState } from "react"
+import { STUDENT_ROLE } from "@/constants/roles"
+import ModalConfirmAction from './ModalConfirmAction'
 
 const RoomCard = ({ room }) => {
+
     const { user } = useAuth()
     const { deleteRoom } = useRoom()
     const navigate = useNavigate()
-    
-    const handleDeleteRoom = (id) => {
-        deleteRoom(id)
+
+    const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false)
+    const [actionMessage, setActionMessage] = useState(null)
+
+    const openModalConfirm = (actionType) => {
+        setIsModalConfirmOpen(true)
+        switch (actionType) {
+            case 'delete':
+                setActionMessage('¿Estás seguro de eliminar el aula?')
+                break
+        }
+    }
+
+    const handleDeleteRoom = async(id) => {
+        await deleteRoom(id)
+        setIsModalConfirmOpen(false)
     }
 
     return (
@@ -27,18 +42,25 @@ const RoomCard = ({ room }) => {
                 </button>
             </div> 
             {
-                user.role === PROFESSOR_ROLE && (
+                user.role !== STUDENT_ROLE && (
                     <div className="mt-3">
                         <Link to={`/edit-room/${room._id}`} >
                             <button className="bg-blue-500 rounded mx-1 float-end font-semibold">EDITAR</button>
                         </Link>
-                        <button className="bg-red-600 rounded mx-1 float-end font-semibold" 
-                        onClick={() => handleDeleteRoom(room._id)}>
-                            ELIMINAR
+                        <button
+                        onClick={() => openModalConfirm('delete')}
+                        className="bg-red-600 rounded mx-1 float-end font-semibold">
+                        ELIMINAR
                         </button>
                     </div>
                 )
-            }   
+            } 
+                        <ModalConfirmAction
+                open={isModalConfirmOpen}
+                onClose={() => setIsModalConfirmOpen(false)}
+                onConfirm={()=> handleDeleteRoom(room._id)}
+                message={actionMessage}
+            />  
         </div>
     )
 }

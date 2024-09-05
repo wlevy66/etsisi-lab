@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import ModalEditProfile from "@/components/ModalEditProfile"
 import ModalUpdatePassword from "@/components/ModalUpdatePassword"
 import Nav from "./Nav"
+import NavAdmin from "./NavAdmin"
+import { ADMIN_ROLE } from "@/constants/roles"
 
 const Header = () => {
 
@@ -30,7 +32,7 @@ const Header = () => {
   }
 
   return (
-    <header className={`${isAuthenticated && 'border-b-8 border-b-solid border-b-[#2581c4]'} `}>
+    <header className={`${isAuthenticated && user.role !== ADMIN_ROLE && 'border-b-8 border-b-solid border-b-[#2581c4]'} `}>
       <div className="grid grid-cols-12 items-center p-6">
         <div className="col-span-2 mr-6">
           <img src="/logo.jpg" className="w-40" alt="Logo ETSISI" />
@@ -84,6 +86,9 @@ const Header = () => {
       </div>
       {
         !isAuthenticated && <Nav />
+      }
+      {
+        isAuthenticated && user.role === ADMIN_ROLE && <NavAdmin />
       }
     </header>
   )

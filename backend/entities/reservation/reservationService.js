@@ -1,5 +1,7 @@
 const Reservation = require('./reservationModel')
 const Schedule = require('../schedule/scheduleModel')
+const User = require('../user/userModel')
+const roles = require('../../constans/roles')
 
 const getReservations = async (userId) => {
     try{
@@ -50,20 +52,21 @@ const createReservation = async (user, schedule) => {
         // Check if user has already a reservation for this schedule
         const userHasReservation = await Reservation.findOne({user, schedule})
         if (userHasReservation) throw Error("Ya tienes una reserva para este horario")
-        
+        console.log('1')
         // Check if there is capacity available
         const availableCapacity = await updateCapacity(schedule, 'create')
         if(!availableCapacity){
             throw Error("No hay capacidad disponible para este horario")
         }
-        
+        console.log('2')
         // Create reservation
         const newReservation = new Reservation({
             user,
             schedule
         })
+        console.log('3')
         const savedReservation = await newReservation.save()
-
+        console.log('4')
         return savedReservation
     } catch(error){
         throw Error(error.message)
@@ -71,10 +74,18 @@ const createReservation = async (user, schedule) => {
 
 }
 
-const updateReservation = async (reservationId, schedule) => {
+const updateReservation = async (params, schedule) => {
     try{
+        const { userId, reservationId } = params
         const currentReservation = await Reservation.findById(reservationId)
         if(!currentReservation) throw Error("Reserva no encontrada")
+        
+        const user = await User.findById(userId)
+        if(!user) throw Error("Usuario no encontrado")
+        
+        if (currentReservation.user.toString() !== user._id.toString() && user.role === roles.STUDENT_ROLE) {
+            throw Error("No puedes editar una reserva que no te pertenece.")
+        }
 
         await updateCapacity(currentReservation.schedule, 'delete')
 
@@ -90,11 +101,19 @@ const updateReservation = async (reservationId, schedule) => {
     }
 }
 
-const deleteReservation = async (reservationId) => {
+const deleteReservation = async (params) => {
     try{
+        const { userId, reservationId } = params
         const reservation = await Reservation.findById(reservationId)
-        if(!reservation) throw Error("Reserva no encontrada")
-    
+        if(!reservation) throw Error("Reserva no encontrada.")
+        
+        const user = await User.findById(userId)
+        if(!user) throw Error("Usuario no encontrado.")
+
+        if (reservation.user.toString() !== user._id.toString() && user.role === roles.STUDENT_ROLE) {
+            console.log(reservation.user.toString(), user._id.toString())
+            throw Error("No puedes eliminar una reserva que no te pertenece.")
+        }
         await updateCapacity(reservation.schedule, 'delete')
         return await Reservation.findByIdAndDelete(reservationId)
     } catch(error){
@@ -109,18 +128,17 @@ const updateCapacity = async (id, type) => {
         if(!schedule) throw Error("Horario no encontrado")
         
         const schedulePopulate = await schedule.populate('room')
-        let reservedBy = 0
 
         if(type === 'create'){
-            if(reservedBy <= schedulePopulate.room.capacity){
-                reservedBy = schedule.reservedBy + 1
+            if(schedule.reservedBy <= schedulePopulate.room.capacity){
+                schedule.reservedBy = schedule.reservedBy + 1
             }
             else{
                 throw Error("No hay capacidad disponible para este horario")
             }
         } else if(type === 'delete'){
-            if(reservedBy > 0){
-                reservedBy = schedule.reservedBy - 1
+            if(schedule.reservedBy > 0){
+                schedule.reservedBy = schedule.reservedBy - 1
             }
             else{
                 throw Error("No hay capacidad disponible para este horario")
@@ -130,7 +148,7 @@ const updateCapacity = async (id, type) => {
             return false
         }
 
-        await Schedule.findByIdAndUpdate(id, {reservedBy}, {new: true})
+        await Schedule.findByIdAndUpdate(id, {reservedBy: schedule.reservedBy}, {new: true})
         return true
     }
     catch(e){

@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { useSchedule } from '@/context/ScheduleContext'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { minDateValue } from "@/utils/util"
+import ModalConfirmAction from '@/components/ModalConfirmAction'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
@@ -10,15 +11,32 @@ dayjs.extend(utc)
 const FormSchedule = () => {
 
     const { register, handleSubmit, setValue } = useForm()
-    const { createSchedule, error, getSchedule, updateSchedule, success } = useSchedule()
+    const { createSchedule, error, getSchedule, updateSchedule, success, setSuccess, setError } = useSchedule()
+
     const navigate = useNavigate()
     const params = useParams()
+    const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false)
+    const [actionMessage, setActionMessage] = useState(null)
+
+    const openModalConfirm = (actionType) => {
+        setIsModalConfirmOpen(true)
+        switch (actionType) {
+            case 'create':
+                setActionMessage('¿Estás seguro de crear el horario?')
+                break
+            case 'update':
+                setActionMessage('¿Estás seguro de actualizar el horario?')
+                break
+        }
+    }
 
     useEffect(() => {
         document.getElementById('day').setAttribute('min', minDateValue())
     }, [])
 
     useEffect(() => {
+        setError(null)
+        setSuccess(null)
         const getScheduleData = async () => {
             const schedule = await getSchedule(params.roomId, params.scheduleId)
             setValue('day', dayjs.utc(schedule.day).format('YYYY-MM-DD'))
@@ -35,6 +53,7 @@ const FormSchedule = () => {
     }, [success])
 
     const onSubmit = handleSubmit(async (data) => {
+        setError(null)
         if (params.scheduleId) {
             await updateSchedule(params.scheduleId, {
                 day: dayjs.utc(data.day).format(),
@@ -52,7 +71,7 @@ const FormSchedule = () => {
         }
     })
     return (
-        <form className='sm:w-full md:w-1/3 page' onSubmit={onSubmit}>
+        <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
             <h1>
                 {params.scheduleId ? 'ACTUALIZAR HORARIO' : 'CREAR HORARIO'}
             </h1>
@@ -89,12 +108,20 @@ const FormSchedule = () => {
                     CANCELAR
                 </button>
 
-                <button className="submit" type="submit">
+                <button className="submit" 
+                onClick={() => openModalConfirm(params.scheduleId ? 'update' : 'create')}
+                >
                     {
                         params.scheduleId ? 'ACTUALIZAR' : 'CREAR'
                     }
                 </button>
             </div>
+            <ModalConfirmAction
+                open={isModalConfirmOpen}
+                onClose={() => setIsModalConfirmOpen(false)}
+                onConfirm={onSubmit}
+                message={actionMessage}
+            />
         </form>
     )
 }

@@ -5,21 +5,21 @@ import { useEffect } from 'react'
 
 const LoginPage = () => {
 
-    const { register, handleSubmit } = useForm()
     const { login, error, isAuthenticated, setError } = useAuth()
+    const { register, handleSubmit } = useForm()
     const navigate = useNavigate()
-
-    const onSubmit = handleSubmit(async (values) => {
-        login(values)
-    })
 
     useEffect(() => {
         setError(null)
         if (isAuthenticated) navigate('/dashboard')
     }, [isAuthenticated])
 
+    const onSubmit = handleSubmit(async (values) => {
+        login(values)
+    })
+
     return (
-        <form className="sm:w-full md:w-1/3 page" onSubmit={onSubmit}>
+        <form className="sm:w-full md:w-2/5 page" onSubmit={onSubmit}>
             <h1>SERVICIO DE AUTENTICACIÓN</h1>
             <hr className='mb-4' />
             <div className="mb-4">
@@ -44,7 +44,7 @@ const LoginPage = () => {
                 </button>
             </div>
             <p className='mt-3 flex gap-x-5'>
-                ¿No estás dado de alta? <Link to={'/register'} className='text-sky-500 font-semibold underline'>Registrarse</Link>
+                ¿No estás dado de alta? <Link to={'/register'} className='link'>Registrarse</Link>
             </p>
         </form>
     )

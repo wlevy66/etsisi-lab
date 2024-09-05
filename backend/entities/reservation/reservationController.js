@@ -54,7 +54,7 @@ const createReservation = async (req, res) => {
 const updateReservation = async (req, res) => {
     try{
         const {schedule} = req.body
-        const reservationUpdated = await reservationService.updateReservation(req.params.reservationId, schedule)
+        const reservationUpdated = await reservationService.updateReservation(req.params, schedule)
         
         res.status(200).json({
             status: 200,
@@ -71,7 +71,8 @@ const updateReservation = async (req, res) => {
 
 const deleteReservation = async (req, res) => {
     try{
-        await reservationService.deleteReservation(req.params.reservationId)
+        console.log(req.params)
+        await reservationService.deleteReservation(req.params)
         res.status(200).json({
             status:200,
             message: "Reserva eliminada correctamente!",

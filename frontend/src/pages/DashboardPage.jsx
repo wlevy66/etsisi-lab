@@ -7,12 +7,12 @@ const DashboardPage = () => {
 
     const {getUsers, users, getUser, isAuthenticated, user} = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [id, setId] = useState({})
+    const [id, setId] = useState(null)
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
         getUsers()
-    }, [isModalOpen])
+    }, [open])
 
     const handleUpdateUser = async(id) => {
         setId(id)
@@ -49,7 +49,7 @@ const DashboardPage = () => {
             </table>
         {
             open &&
-            <ModalAdminDashboard id={id} open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ModalAdminDashboard id={id} open={isModalOpen} onClose={() => {setOpen(false); setIsModalOpen(false)}} />
         }
         </div>
     )

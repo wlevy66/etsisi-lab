@@ -1,4 +1,5 @@
 const Room = require('./roomModel')
+const Schedule = require('../schedule/scheduleModel')
 
 const getRooms = async () => {
     try{
@@ -37,6 +38,12 @@ const createRoom = async (name, capacity) => {
 
 const updateRoom = async (id, room) => {
     try{
+        const schedules = await Schedule.find({ room: id })
+        schedules.forEach( schedule => {
+            if(schedule.reservedBy > room.capacity){
+                throw new Error('La capacidad del aula no puede ser menor a la cantidad de reservas')
+            }
+        })
         return await Room.findByIdAndUpdate(id, room, {new: true})
     } catch(error){
         throw new Error(error.message)

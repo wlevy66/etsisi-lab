@@ -1,6 +1,8 @@
+import { useState } from "react"
 import { useReservation } from "@/context/ReservationContext"
 import { Link, useParams } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
+import ModalConfirmAction from './ModalConfirmAction'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
@@ -11,8 +13,21 @@ const ReservationCard = ({ reservation }) => {
     const { user } = useAuth()
     const params = useParams()
 
+    const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false)
+    const [actionMessage, setActionMessage] = useState(null)
+
+    const openModalConfirm = (actionType) => {
+        setIsModalConfirmOpen(true)
+        switch (actionType) {
+            case 'delete':
+                setActionMessage('¿Estás seguro de eliminar la reserva?')
+                break
+        }
+    }
+
     const handleDeleteReservation = async(userId, reservationId) => {
         await deleteReservation(userId, reservationId)
+        setIsModalConfirmOpen(false)
     }
 
     return (
@@ -31,12 +46,19 @@ const ReservationCard = ({ reservation }) => {
                                 EDITAR
                             </button>
                         </Link>
-                        <button className="bg-red-600 rounded mx-1 float-end font-semibold"
-                            onClick={() => handleDeleteReservation(user.id, reservation._id)}>
+                        <button
+                        onClick={() => openModalConfirm('delete')}
+                        className="bg-red-600 rounded mx-1 float-end font-semibold">
                             ELIMINAR
                         </button>
                     </div>
                 }
+                                        <ModalConfirmAction
+                open={isModalConfirmOpen}
+                onClose={() => setIsModalConfirmOpen(false)}
+                onConfirm={()=> handleDeleteReservation(user.id, reservation._id)}
+                message={actionMessage}
+            />  
         </div>
     )
 }
