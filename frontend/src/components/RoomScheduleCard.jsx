@@ -7,13 +7,15 @@ import ScheduleCard from './ScheduleCard'
 import { useAuth } from '@/context/AuthContext'
 
 const RoomScheduleCard = () => {
+
     const { getAvailableSchedules, schedules } = useSchedule()
     const { getReservation } = useReservation()
+    const { user } = useAuth()
+    const params = useParams()
+    const navigate = useNavigate()
+
     const [currentReservation, setCurrentReservation] = useState(null)
     const [isLoaded, setIsLoaded] = useState(true)
-    const params = useParams()
-    const { user } = useAuth()
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (params.reservationId) {

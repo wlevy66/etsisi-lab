@@ -17,7 +17,7 @@ const ModalUsersInSchedule = ({ reservations, open, onClose }) => {
         <ul className='list-disc px-2'>
             {
               // TODO: Add the logic to delete a user from the reservation
-                reservations.length > 0 ?
+                reservations && reservations.length > 0 ?
                 reservations.map(reservation => (
                     <li className='py-5' key={reservation._id}>
                       <div className='flex gap-5'>

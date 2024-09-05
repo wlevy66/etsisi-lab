@@ -9,6 +9,7 @@ import { ADMIN_ROLE } from "@/constants/roles"
 const Header = () => {
 
   const { isAuthenticated, logout, user } = useAuth()
+
   const [isDropdownVisible, setDropdownVisible] = useState(false)
   const [openModalEditProfile, setOpenModalEditProfile] = useState(false)
   const [openModalUpdatePassword, setOpenModalUpdatePassword] = useState(false)
@@ -43,45 +44,47 @@ const Header = () => {
         </div>
 
         {
-          isAuthenticated && 
-            <div className="col-span-2">
-              <button onClick={toggleDropdown}
-                className="dropdown float-right w-full sm:w-auto font-semibold rounded-full">
-                {user.name ? user.name[0].toUpperCase()+user.lastname[0].toUpperCase() : user.id[0]}
-              </button>
-              {
-                isDropdownVisible && 
-                  <div className="w-48 absolute right-4 top-24 bg-white border rounded shadow-lg">
-                    <button onClick={() => {
-                      updateProfile()
-                      closeDropdown()
-                      }}
-                      className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
-                      Editar perfil
-                    </button>
-                    <button onClick={() => {
-                      updatePassword()
-                      closeDropdown()
-                      }}
-                      className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
-                      Cambiar contraseña
-                    </button>
-                    <button onClick={() => {
-                      logout()
-                      closeDropdown()
-                      }}
-                      className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
-                      Cerrar sesión
-                    </button>
-                  </div>
-              }
-            </div>
+          isAuthenticated &&
+          <div className="col-span-2">
+            <button onClick={toggleDropdown}
+              className="dropdown float-right w-full sm:w-auto font-semibold rounded-full">
+              {user.name ? user.name[0].toUpperCase() + user.lastname[0].toUpperCase() : user.id[0]}
+            </button>
+            {
+              isDropdownVisible &&
+              <div className="w-48 absolute right-4 top-24 bg-white border rounded shadow-lg">
+                <button onClick={() => {
+                  updateProfile()
+                  closeDropdown()
+                }}
+                  className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
+                  Editar perfil
+                </button>
+                <button onClick={() => {
+                  updatePassword()
+                  closeDropdown()
+                }}
+                  className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
+                  Cambiar contraseña
+                </button>
+                <button onClick={() => {
+                  logout()
+                  closeDropdown()
+                }}
+                  className="w-full px-4 py-2 text-left text-black hover:bg-gray-100">
+                  Cerrar sesión
+                </button>
+              </div>
+            }
+          </div>
         }
         {
-          openModalEditProfile && <ModalEditProfile id={user.id} open={isModalOpen} onClose={() => setOpenModalEditProfile(false)} />
+          openModalEditProfile &&
+          <ModalEditProfile id={user.id} open={isModalOpen} onClose={() => setOpenModalEditProfile(false)} />
         }
         {
-          openModalUpdatePassword && <ModalUpdatePassword id={user.id} open={isModalOpen} onClose={() => setOpenModalUpdatePassword(false)} />
+          openModalUpdatePassword &&
+          <ModalUpdatePassword id={user.id} open={isModalOpen} onClose={() => setOpenModalUpdatePassword(false)} />
         }
       </div>
       {

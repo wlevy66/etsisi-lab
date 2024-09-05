@@ -8,16 +8,24 @@ const Footer = () => {
                     <span className="self-center text-2xl whitespace-nowrap ">Universidad Politécnica de Madrid © {year}</span>
                     <ul className="flex flex-wrap items-center mb-6 text-sm font-medium sm:mb-0 dark:text-gray-400">
                         <li>
-                            <a href="https://www.upm.es/AvisoLegal" target="_blank" className="hover:underline me-4 md:me-6">Aviso legal</a>
+                            <a href="https://www.upm.es/AvisoLegal" target="_blank" className="hover:underline me-4 md:me-6">
+                                Aviso legal
+                            </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" className="hover:underline me-4 md:me-6">Política de cookies</a>
+                            <a href="#" target="_blank" className="hover:underline me-4 md:me-6">
+                                Política de cookies
+                            </a>
                         </li>
                         <li>
-                            <a href="https://sede.upm.es/proteccion-datos" target="_blank" className="hover:underline me-4 md:me-6">Política de protección de datos personales</a>
+                            <a href="https://sede.upm.es/proteccion-datos" target="_blank" className="hover:underline me-4 md:me-6">
+                                Política de protección de datos personales
+                            </a>
                         </li>
                         <li>
-                            <a href="https://www.upm.es/contacto" target="_blank" className="hover:underline">Contacto</a>
+                            <a href="https://www.upm.es/contacto" target="_blank" className="hover:underline">
+                                Contacto
+                            </a>
                         </li>
                     </ul>
                 </div>

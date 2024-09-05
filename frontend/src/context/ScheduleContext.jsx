@@ -5,7 +5,7 @@ export const ScheduleContext = createContext()
 
 export const useSchedule = () => {
     const context = useContext(ScheduleContext)
-    if(!context) throw new Error('Missing ScheduleContext')
+    if (!context) throw new Error('Missing ScheduleContext')
     return context
 }
 
@@ -16,71 +16,71 @@ export const ScheduleProvider = ({ children }) => {
     const [success, setSuccess] = useState(null)
 
     const getAvailableSchedules = async (id) => {
-        try{
+        try {
             const response = await scheduleApi.getAvailableSchedulesRequest(id)
             setSchedules(response.data.availableSchedules)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const getSchedulesByRoom = async (roomId) => {
-        try{
+        try {
             const response = await scheduleApi.getSchedulesByRoomRequest(roomId)
             setSchedules(response.data.schedules)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const getSchedule = async (roomId, scheduleId) => {
-        try{
+        try {
             const response = await scheduleApi.getScheduleRequest(roomId, scheduleId)
             return response.data.schedule
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const createSchedule = async (schedule) => {
-        try{
+        try {
             const response = await scheduleApi.createScheduleRequest(schedule)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const updateSchedule = async (id, updatedSchedule) => {
-        try{
+        try {
             const response = await scheduleApi.updateScheduleRequest(id, updatedSchedule)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const deleteSchedule = async (id) => {
-        try{
+        try {
             await scheduleApi.deleteScheduleRequest(id)
             setSchedules(schedules.filter(schedule => schedule._id !== id))
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const getUsersBySchedule = async (scheduleId) => {
-        try{
+        try {
             const response = await scheduleApi.getUsersByScheduleRequest(scheduleId)
             return response.data.users
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }

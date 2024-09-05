@@ -12,9 +12,9 @@ const FormSchedule = () => {
 
     const { register, handleSubmit, setValue } = useForm()
     const { createSchedule, error, getSchedule, updateSchedule, success, setSuccess, setError } = useSchedule()
-
     const navigate = useNavigate()
     const params = useParams()
+
     const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false)
     const [actionMessage, setActionMessage] = useState(null)
 
@@ -70,6 +70,7 @@ const FormSchedule = () => {
             })
         }
     })
+
     return (
         <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
             <h1>
@@ -108,8 +109,8 @@ const FormSchedule = () => {
                     CANCELAR
                 </button>
 
-                <button className="submit" 
-                onClick={() => openModalConfirm(params.scheduleId ? 'update' : 'create')}
+                <button className="submit"
+                    onClick={() => openModalConfirm(params.scheduleId ? 'update' : 'create')}
                 >
                     {
                         params.scheduleId ? 'ACTUALIZAR' : 'CREAR'

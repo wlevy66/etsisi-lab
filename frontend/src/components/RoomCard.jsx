@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { useRoom } from "@/context/RoomContext"
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { STUDENT_ROLE } from "@/constants/roles"
 import ModalConfirmAction from './ModalConfirmAction'
 
@@ -24,13 +24,12 @@ const RoomCard = ({ room }) => {
         }
     }
 
-    const handleDeleteRoom = async(id) => {
+    const handleDeleteRoom = async (id) => {
         await deleteRoom(id)
         setIsModalConfirmOpen(false)
     }
 
     return (
-
         <div className="border rounded-lg p-4 my-4">
             <div className="flex justify-between">
                 <div>
@@ -40,7 +39,7 @@ const RoomCard = ({ room }) => {
                 <button className="bg-green-700 rounded my-2 justify-between font-semibold" onClick={() => navigate(`/schedules/${room._id}`)}>
                     VER HORARIOS
                 </button>
-            </div> 
+            </div>
             {
                 user.role !== STUDENT_ROLE && (
                     <div className="mt-3">
@@ -48,19 +47,19 @@ const RoomCard = ({ room }) => {
                             <button className="bg-blue-500 rounded mx-1 float-end font-semibold">EDITAR</button>
                         </Link>
                         <button
-                        onClick={() => openModalConfirm('delete')}
-                        className="bg-red-600 rounded mx-1 float-end font-semibold">
-                        ELIMINAR
+                            onClick={() => openModalConfirm('delete')}
+                            className="bg-red-600 rounded mx-1 float-end font-semibold">
+                            ELIMINAR
                         </button>
                     </div>
                 )
-            } 
-                        <ModalConfirmAction
+            }
+            <ModalConfirmAction
                 open={isModalConfirmOpen}
                 onClose={() => setIsModalConfirmOpen(false)}
-                onConfirm={()=> handleDeleteRoom(room._id)}
+                onConfirm={() => handleDeleteRoom(room._id)}
                 message={actionMessage}
-            />  
+            />
         </div>
     )
 }

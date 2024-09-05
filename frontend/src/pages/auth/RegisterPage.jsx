@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 const RegisterPage = () => {
 
     const { register, handleSubmit } = useForm()
-
     const { registerAccount, error, setError, success, setSuccess } = useAuth()
 
     useEffect(() => {

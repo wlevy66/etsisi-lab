@@ -1,16 +1,16 @@
-const active = {
+const ACTIVE = {
     key: 'active',
     value: 'Activo'
 }
 
-const inactive = {
+const INACTIVE = {
     key: 'inactive',
     value: 'Inactivo'
 }
 
-const pending = {
+const PENDING = {
     key: 'pending',
     value: 'Pendiente'
 }
 
-export const STATUS = [active, inactive, pending]
+export const STATUS = [ACTIVE, INACTIVE, PENDING]

@@ -10,7 +10,6 @@ import { ScheduleProvider } from '@/context/ScheduleContext'
 import { ReservationProvider } from '@/context/ReservationContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-
   <AuthProvider>
     <RoomProvider>
       <ScheduleProvider>
@@ -20,5 +19,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </ScheduleProvider>
     </RoomProvider>
   </AuthProvider>
-  
 )

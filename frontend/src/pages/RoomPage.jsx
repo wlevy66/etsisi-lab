@@ -19,7 +19,7 @@ const RoomPage = () => {
       <div className="my-4">
         <Link to={'/create-room'}>
           <button className='create w-full sm:w-auto font-semibold rounded'>
-          CREAR AULA
+            CREAR AULA
           </button>
         </Link>
       </div>

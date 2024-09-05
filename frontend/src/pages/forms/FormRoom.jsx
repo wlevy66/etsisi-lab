@@ -8,9 +8,9 @@ const FormRoom = () => {
 
     const { register, handleSubmit, setValue } = useForm()
     const { createRoom, error, getRoom, updateRoom, success, setSuccess, setError } = useRoom()
-
     const navigate = useNavigate()
     const params = useParams()
+
     const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false)
     const [actionMessage, setActionMessage] = useState(null)
 
@@ -55,8 +55,6 @@ const FormRoom = () => {
         }
     })
 
-
-
     return (
         <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
             <h1>
@@ -89,8 +87,8 @@ const FormRoom = () => {
                     CANCELAR
                 </button>
 
-                <button className="submit" 
-                onClick={() => openModalConfirm(params.roomId ? 'update' : 'create')}
+                <button className="submit"
+                    onClick={() => openModalConfirm(params.roomId ? 'update' : 'create')}
                 >
                     {
                         params.roomId ? 'ACTUALIZAR' : 'CREAR'

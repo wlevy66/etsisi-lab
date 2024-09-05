@@ -5,8 +5,9 @@ import { transformRole, transformStatus } from "@/utils/util"
 
 const DashboardPage = () => {
 
-    const {getUsers, users, getUser, isAuthenticated, user} = useAuth()
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { getUsers } = useAuth()
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [id, setId] = useState(null)
     const [open, setOpen] = useState(false)
 
@@ -14,10 +15,10 @@ const DashboardPage = () => {
         getUsers()
     }, [open])
 
-    const handleUpdateUser = async(id) => {
+    const handleUpdateUser = async (id) => {
         setId(id)
         setOpen(true)
-        setIsModalOpen(true) 
+        setIsModalOpen(true)
     }
     return (
         <div className="p-4">
@@ -40,17 +41,17 @@ const DashboardPage = () => {
                                 <td className="py-3 uppercase border-r">{transformStatus(user.status)}</td>
                                 <td className="py-3">
                                     <button className="submit"
-                                    onClick={()=>handleUpdateUser(user._id)}>EDITAR</button>
+                                        onClick={() => handleUpdateUser(user._id)}>EDITAR</button>
                                 </td>
                             </tr>
                         ))
                     }
                 </tbody>
             </table>
-        {
-            open &&
-            <ModalAdminDashboard id={id} open={isModalOpen} onClose={() => {setOpen(false); setIsModalOpen(false)}} />
-        }
+            {
+                open &&
+                <ModalAdminDashboard id={id} open={isModalOpen} onClose={() => { setOpen(false); setIsModalOpen(false) }} />
+            }
         </div>
     )
 }

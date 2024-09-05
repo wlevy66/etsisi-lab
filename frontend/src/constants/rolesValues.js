@@ -1,16 +1,16 @@
-const admin = {
+const ADMIN_ROLE = {
     key: 'admin',
     value: 'Administrador'
 }
 
-const professor = {
+const PROFESSOR_ROLE = {
     key: 'professor',
     value: 'Profesor'
 }
 
-const student = {
+const STUDENT_ROLE = {
     key: 'student',
     value: 'Estudiante'
 }
 
-export const ROLES = [admin, professor, student]
+export const ROLES = [ADMIN_ROLE, PROFESSOR_ROLE, STUDENT_ROLE]

@@ -6,7 +6,7 @@ const AuthContext = createContext()
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
-    if(!context) throw new Error('Missing AuthProvider')
+    if (!context) throw new Error('Missing AuthProvider')
 
     return context
 }
@@ -21,106 +21,106 @@ export const AuthProvider = ({ children }) => {
     const [users, setUsers] = useState([])
 
     const login = async (user) => {
-        try{
+        try {
             const response = await userApi.loginRequest(user)
             setUser(response.data)
             setIsAuthenticated(true)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const registerAccount = async (user) => {
-        try{
+        try {
             const response = await userApi.registerRequest(user)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const logout = async () => {
-        try{
+        try {
             await userApi.logoutRequest()
             setUser(null)
             setIsAuthenticated(false)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const getUsers = async () => {
-        try{
+        try {
             const response = await userApi.getUsersRequest()
             setUsers(response.data.users)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const getUser = async (id) => {
-        try{
+        try {
             const response = await userApi.getUserRequest(id)
             return response.data
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const updateProfile = async (id, user) => {
-        try{
+        try {
             const response = await userApi.updateProfileRequest(id, user)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const updatePassword = async (id, user) => {
-        try{
+        try {
             const response = await userApi.updatePasswordRequest(id, user)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const updateByAdmin = async (id, user) => {
-        try{
+        try {
             const response = await userApi.updateByAdminRequest(id, user)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     useEffect(() => {
-        const validateLogin = async() =>{
+        const validateLogin = async () => {
             const token = Cookies.get('token')
 
-            if(token){
+            if (token) {
                 await userApi.verifyTokenRequest(token).then(response => {
                     setUser(response.data)
                     setIsAuthenticated(true)
                     setIsLoading(false)
                     console.log('Sesión activa')
                 })
-                .catch(() => {
-                    setIsAuthenticated(false)
-                    setUser(null)
-                    setIsLoading(false)
-                    console.log('Sesión expirada')
-                })
+                    .catch(() => {
+                        setIsAuthenticated(false)
+                        setUser(null)
+                        setIsLoading(false)
+                        console.log('Sesión expirada')
+                    })
             }
-            else{
+            else {
                 setIsAuthenticated(false)
                 setUser(null)
                 setIsLoading(false)

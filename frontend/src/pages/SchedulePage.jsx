@@ -3,15 +3,14 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useSchedule } from '@/context/ScheduleContext'
 import ScheduleCard from '@/components/ScheduleCard'
 
-
 const SchedulePage = () => {
 
+  const { getSchedulesByRoom, schedules, setError, setSuccess } = useSchedule()
   const params = useParams()
   const navigate = useNavigate()
-  const { getSchedulesByRoom, schedules, setError, setSuccess } = useSchedule()
 
   useEffect(() => {
-    const getSchedules = async() => {
+    const getSchedules = async () => {
       await getSchedulesByRoom(params.roomId)
     }
     getSchedules()
@@ -22,7 +21,7 @@ const SchedulePage = () => {
   return (
     <div className="p-4">
       <h1 className='my-3 text-3xl font-bold italic'>
-        LISTADO DE HORARIOS { schedules.length !== 0  && <span>DEL AULA: {schedules[0].room.name}</span> }
+        LISTADO DE HORARIOS {schedules.length !== 0 && <span>DEL AULA: {schedules[0].room.name}</span>}
       </h1>
       <div className="my-4">
         <Link to={`/create-schedule/${params.roomId}`}>

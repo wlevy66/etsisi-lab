@@ -5,7 +5,7 @@ const ReservationContext = createContext()
 
 export const useReservation = () => {
     const context = useContext(ReservationContext)
-    if(!context) throw new Error('Missing ReservationContext')
+    if (!context) throw new Error('Missing ReservationContext')
     return context
 }
 
@@ -16,51 +16,51 @@ export const ReservationProvider = ({ children }) => {
     const [success, setSuccess] = useState(null)
 
     const getReservations = async (userId) => {
-        try{
+        try {
             const response = await reservationApi.getReservationsRequest(userId)
             setReservations(response.data.reservations)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const getReservation = async (userId, reservationId) => {
-        try{
+        try {
             const response = await reservationApi.getReservationRequest(userId, reservationId)
             return response.data.reservation
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const createReservation = async (userId, schedule) => {
-        try{
+        try {
             const response = await reservationApi.createReservationRequest(userId, schedule)
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const updateReservation = async (userId, reservationId, updatedReservation) => {
-        try{
-            const response = await reservationApi.updateReservationRequest(userId, reservationId, {schedule: updatedReservation})
+        try {
+            const response = await reservationApi.updateReservationRequest(userId, reservationId, { schedule: updatedReservation })
             setSuccess(response.data.message)
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
 
     const deleteReservation = async (userId, reservationId) => {
-        try{
+        try {
             await reservationApi.deleteReservationRequest(userId, reservationId)
             setReservations(reservations.filter(reservation => reservation._id !== reservationId))
         }
-        catch(error){
+        catch (error) {
             setError(error.response.data.error)
         }
     }
