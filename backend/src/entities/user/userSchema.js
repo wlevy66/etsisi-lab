@@ -1,6 +1,6 @@
 const Joi = require('joi')
-const status = require('../../constans/status')
-const roles = require('../../constans/roles')
+const status = require('../../constants/status')
+const roles = require('../../constants/roles')
 
 const userSchemaLogin = Joi.object({
     email: Joi.string().email().required()

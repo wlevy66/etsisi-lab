@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose')
-const status = require('../../constans/status')
-const roles = require('../../constans/roles')
+const status = require('../../constants/status')
+const roles = require('../../constants/roles')
 
 const UserSchema = new Schema(
     {

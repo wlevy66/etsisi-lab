@@ -1,7 +1,7 @@
 const Reservation = require('./reservationModel')
 const Schedule = require('../schedule/scheduleModel')
 const User = require('../user/userModel')
-const roles = require('../../constans/roles')
+const roles = require('../../constants/roles')
 
 const getReservations = async (userId) => {
     try{

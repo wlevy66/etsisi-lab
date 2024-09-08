@@ -2,8 +2,8 @@ const User = require('./userModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-const status = require('../../constans/status')
-const roles = require('../../constans/roles')
+const status = require('../../constants/status')
+const roles = require('../../constants/roles')
 
 const login = async (user) => {
     try{
