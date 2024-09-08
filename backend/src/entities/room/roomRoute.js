@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const RoomController = require('./roomController')
-const validateMiddleware = require('../../validators/validatorSchema')
+const validateMiddleware = require('../../middlewares/validatorSchema')
 const roomSchema = require('./roomSchema');
 
 //define routes
