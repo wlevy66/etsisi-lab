@@ -1,4 +1,4 @@
-const validateMiddleware = (schema) => {
+const validateRequestSchema = (schema) => {
     return (req, res, next) => {
         const { error } = schema.validate(req.body)
         if (error) {
@@ -10,4 +10,4 @@ const validateMiddleware = (schema) => {
     }
 }
 
-module.exports = validateMiddleware
+module.exports = validateRequestSchema
