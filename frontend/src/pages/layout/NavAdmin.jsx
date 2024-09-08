@@ -14,10 +14,15 @@ const NavAdmin = () => {
             className={({ isActive }) => isActive ? 'text-2xl italic font-bold' : 'text-2xl italic'}>
             Aulas
           </NavLink>
-          <NavLink to="/reservations"
+          {
+            /*
+                      <NavLink to="/reservations"
             className={({ isActive }) => isActive ? 'text-2xl italic font-bold' : 'text-2xl italic'}>
             Reservas
           </NavLink>
+            */
+          }
+
         </div>
       </div>
     </nav>

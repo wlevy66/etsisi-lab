@@ -59,10 +59,12 @@ const ScheduleCard = ({ schedule, type }) => {
 
     const handleUpdateReservation = async (userId, reservationId, schedule) => {
         await updateReservation(userId, reservationId, schedule).then(() => navigate('/reservations'))
+        setIsModalConfirmOpen(false)
     }
 
     const handleCreateReservation = async (userId, schedule) => {
         await createReservation(userId, schedule).then(() => navigate('/reservations'))
+        setIsModalConfirmOpen(false)
     }
 
     return (
@@ -71,8 +73,12 @@ const ScheduleCard = ({ schedule, type }) => {
                 <div className='flex gap-4 mb-3'>
                     <h2 className='text-2xl font-bold'>{schedule.room.name}</h2>
                     <button
-                        className={`${schedule.reservedBy !== schedule.room.capacity ? 'bg-green-600' : 'bg-red-600'} rounded`}
-                        onClick={() => showUsers(schedule._id)}>
+                        className={`${schedule.reservedBy !== schedule.room.capacity ? 'bg-green-600' : 'bg-red-600 disabled:opacity-75'} rounded`}
+                        onClick={() => showUsers(schedule._id)} 
+                        >
+                            {
+                                /*disabled={schedule.reservedBy === schedule.room.capacity}*/
+                            }
                         {schedule.reservedBy}/{schedule.room.capacity}
                     </button>
                 </div>

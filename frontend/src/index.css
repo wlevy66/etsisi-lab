@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global style */
 html, body {
   height: 100%;
   margin: 0;
@@ -9,16 +10,19 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* Flexbox style */
 div#root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* Header style */
 header {
   color: #2581c4;
 }
 
+/* Navigation style */
 nav {
   background-color: #2581c4;
   color: white;
@@ -57,12 +61,14 @@ form input, form select {
   border-radius: 0.25rem;
 }
 
+/* Link style */
 .link {
   color: #0ea5e9;
   font-weight: 600;
   text-decoration-line: underline;
 }
 
+/* Error and success message style */
 span.error {
   color: #dc2626;
   font-style: italic;
@@ -74,7 +80,6 @@ span.success {
   font-style: italic;
   font-weight: 600;
 }
-/*-----------------------------------*/
 
 /* Button styles */
 button {

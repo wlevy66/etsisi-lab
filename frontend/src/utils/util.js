@@ -6,6 +6,8 @@ export const transformRole = (role) => {
             return 'Profesor'
         case 'student':
             return 'Estudiante'
+        default:
+            return 'Desconocido'
     }
 }
 
@@ -17,6 +19,8 @@ export const transformStatus = (status) => {
             return 'Inactivo'
         case 'pending':
             return 'Pendiente'
+        default:
+            return 'Desconocido'
     }
 }
 
@@ -24,6 +28,7 @@ export const minDateValue = () => {
     const today = new Date()
     const minDate = new Date(today)
     minDate.setDate(minDate.getDate() + 1)
+    
     const day = String(minDate.getDate()).padStart(2, '0')
     const month = String(minDate.getMonth() + 1).padStart(2, '0')
     const year = minDate.getFullYear();

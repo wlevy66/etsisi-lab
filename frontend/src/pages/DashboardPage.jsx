@@ -5,7 +5,7 @@ import { transformRole, transformStatus } from "@/utils/util"
 
 const DashboardPage = () => {
 
-    const { getUsers } = useAuth()
+    const { getUsers, users } = useAuth()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [id, setId] = useState(null)

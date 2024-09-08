@@ -10,7 +10,7 @@ dayjs.extend(utc)
 
 const FormSchedule = () => {
 
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit, setValue, reset } = useForm()
     const { createSchedule, error, getSchedule, updateSchedule, success, setSuccess, setError } = useSchedule()
     const navigate = useNavigate()
     const params = useParams()
@@ -48,12 +48,13 @@ const FormSchedule = () => {
 
     useEffect(() => {
         if (success) {
-            navigate(`/schedules/${params.roomId}`)
+            reset()
         }
     }, [success])
 
     const onSubmit = handleSubmit(async (data) => {
         setError(null)
+        setSuccess(null)
         if (params.scheduleId) {
             await updateSchedule(params.scheduleId, {
                 day: dayjs.utc(data.day).format(),
@@ -69,13 +70,12 @@ const FormSchedule = () => {
                 end: dayjs.utc(`${data.day} ${data.end}`, 'YYYY-MM-DD HH:mm').format()
             })
         }
+        setIsModalConfirmOpen(false)
     })
 
     return (
         <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
-            <h1>
-                {params.scheduleId ? 'ACTUALIZAR HORARIO' : 'CREAR HORARIO'}
-            </h1>
+            <h1>{ params.scheduleId ? 'ACTUALIZAR HORARIO' : 'CREAR HORARIO' }</h1>
             <div className="mb-4">
                 <label htmlFor="day">
                     Fecha
@@ -100,13 +100,14 @@ const FormSchedule = () => {
                     {...register('end')} />
             </div>
             <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
+            <div className='mb-4'>{success && <span className='success'>{success}</span>}</div>
             <div className="flex items-center justify-center my-2 gap-2">
                 <button onClick={(e) => {
                     e.preventDefault()
                     navigate(`/schedules/${params.roomId}`)
                 }}
                     className='cancel'>
-                    CANCELAR
+                    VOLVER
                 </button>
 
                 <button className="submit"

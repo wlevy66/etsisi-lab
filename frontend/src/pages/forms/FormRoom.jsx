@@ -6,7 +6,7 @@ import ModalConfirmAction from '@/components/ModalConfirmAction'
 
 const FormRoom = () => {
 
-    const { register, handleSubmit, setValue } = useForm()
+    const { register, handleSubmit, setValue, reset } = useForm()
     const { createRoom, error, getRoom, updateRoom, success, setSuccess, setError } = useRoom()
     const navigate = useNavigate()
     const params = useParams()
@@ -30,69 +30,58 @@ const FormRoom = () => {
         setError(null)
         setSuccess(null)
         const getRoomData = async () => {
-            if (params.roomId) {
-                const room = await getRoom(params.roomId)
-                setValue('name', room.name)
-                setValue('capacity', room.capacity)
-            }
+            const room = await getRoom(params.roomId)
+            setValue('name', room.name)
+            setValue('capacity', room.capacity)
         }
-        getRoomData()
+        if (params.roomId) getRoomData()
     }, [])
 
     useEffect(() => {
         if (success) {
-            navigate('/rooms')
+            reset()
         }
     }, [success])
 
     const onSubmit = handleSubmit(async (data) => {
         setError(null)
+        setSuccess(null)
         if (params.roomId) {
             await updateRoom(params.roomId, data)
         }
         else {
             await createRoom(data)
         }
+        setIsModalConfirmOpen(false)
     })
 
     return (
         <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
-            <h1>
-                {
-                    params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'
-                }
-            </h1>
+            <h1>{ params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'}</h1>
             <div className="mb-4">
-                <label htmlFor="name">
-                    Nombre del aula
-                </label>
+                <label htmlFor="name">Nombre del aula</label>
                 <input type='text' id="name" placeholder="Nombre del aula"
                     {...register('name')} autoFocus />
             </div>
-
             <div className="mb-4">
-                <label htmlFor="capacity">
-                    Capacidad
-                </label>
+                <label htmlFor="capacity">Capacidad</label>
                 <input type='number' id="capacity" placeholder="Capacidad"
                     {...register('capacity')} />
             </div>
             <div className='mb-4'>{error && <span className='error'>{error}</span>}</div>
+            <div className='mb-4'>{success && <span className='success'>{success}</span>}</div>
             <div className="flex items-center justify-center my-2 gap-2">
-                <button onClick={(e) => {
+                <button className='cancel'
+                    onClick={(e) => {
                     e.preventDefault()
                     navigate(`/rooms`)
-                }}
-                    className='cancel'>
-                    CANCELAR
+                    }}>
+                    VOLVER
                 </button>
 
                 <button className="submit"
-                    onClick={() => openModalConfirm(params.roomId ? 'update' : 'create')}
-                >
-                    {
-                        params.roomId ? 'ACTUALIZAR' : 'CREAR'
-                    }
+                    onClick={() => openModalConfirm(params.roomId ? 'update' : 'create')}>
+                    { params.roomId ? 'ACTUALIZAR' : 'CREAR'}
                 </button>
             </div>
             <ModalConfirmAction
