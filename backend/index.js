@@ -1,9 +1,9 @@
 //import dependencies
 require('dotenv').config()
 const express = require('express')
-const connectionDB = require('./config/database')
-const middlewareConfig = require('./config/middleware')
-const routesConfig = require('./config/routes')
+const connectionDB = require('./src/config/database')
+const middlewareConfig = require('./src//config/middleware')
+const routesConfig = require('./src//config/routes')
 
 //create node server
 const app = express()
