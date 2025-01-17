@@ -40,7 +40,7 @@ const Header = () => {
         </div>
 
         <div className={`${isAuthenticated ? 'col-span-8' : 'col-span-10'} flex-grow flex items-center justify-center`}>
-          <h2 className="text-3xl italic">Bienvenid@ a la reserva de laboratorios de la ETSISI</h2>
+          <h2 className="text-3xl italic">Bienvenido a la reserva de laboratorios de la ETSISI</h2>
         </div>
 
         {
