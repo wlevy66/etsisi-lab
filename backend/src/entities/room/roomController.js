@@ -52,8 +52,8 @@ const createRoom = async (req, res) => {
 const updateRoom = async (req, res) => {
     try{
         const roomUpdated = await roomService.updateRoom(req.params.id, req.body)
-        res.status(201).json({
-            status: 201,
+        res.status(200).json({
+            status: 200,
             message: 'Aula actualizada correctamente!',
             roomUpdated
         })

@@ -5,6 +5,7 @@ const roomSchema = Joi.object({
         .messages({
             'string.base': `El nombre debe ser de tipo texto`,
             'string.empty': `El nombre no puede ser un campo vacío`,
+            'string.alphanum': `El nombre no puede contener caracteres especiales`,
             'string.min': `El nombre debe tener una longitud mínima de {#limit}`,
             'string.max': `El nombre debe tener una longitud máxima de {#limit}`,
             'any.required': `Nombre es un campo requerido`
