@@ -40,11 +40,11 @@ Aplicación web para la gestión de reservas de laboratorios en la **ETSISI**.
 
 Antes de comenzar, asegúrate de tener instalados:  
 
-- **Node.js (v18 o superior)** → [Descargar](https://nodejs.org)  
-- **npm (v9 o superior)** (se instala con Node.js)  
-- **Docker (opcional)** → [Descargar](https://www.docker.com)  
-- **Git (opcional)** → [Descargar](https://git-scm.com)  
-- **MongoDB (opcional si usas Docker)** → [Descargar](https://www.mongodb.com)  
+- **Node.js** 
+- **npm** (se instala con Node.js)  
+- **Docker (opcional)** 
+- **Git (opcional)** 
+- **MongoDB (opcional si usas Docker)**
 
 ---
 
