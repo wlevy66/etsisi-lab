@@ -16,7 +16,7 @@ const ModalUsersInSchedule = ({ reservations, open, onClose }) => {
         <h1 className='font-bold italic text-xl text-left my-3'>USUARIOS EN ESTE HORARIO</h1>
         <ul className='list-disc px-2'>
             {
-              // TODO: Add the logic to delete a user from the reservation
+              
                 reservations && reservations.length > 0 ?
                 reservations.map(reservation => (
                     <li className='py-5' key={reservation._id}>
