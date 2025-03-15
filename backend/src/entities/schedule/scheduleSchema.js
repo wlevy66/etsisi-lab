@@ -44,7 +44,7 @@ const schemaScheduleUpdate = Joi.object({
             'any.required': 'La fecha es requerida',
             'date.greater': 'La fecha debe ser mayor a la actual'
         }),
-        start: Joi.date().required()
+    start: Joi.date().required()
         .custom((value, helper) => {
             const startHour = new Date(value)
             startHour.setMinutes(startHour.getMinutes() + startHour.getTimezoneOffset())

@@ -75,7 +75,7 @@ const FormSchedule = () => {
 
     return (
         <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
-            <h1>{ params.scheduleId ? 'ACTUALIZAR HORARIO' : 'CREAR HORARIO' }</h1>
+            <h1>{params.scheduleId ? 'ACTUALIZAR HORARIO' : 'CREAR HORARIO'}</h1>
             <div className="mb-4">
                 <label htmlFor="day">
                     Fecha

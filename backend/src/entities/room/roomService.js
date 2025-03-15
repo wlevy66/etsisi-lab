@@ -2,17 +2,17 @@ const Room = require('./roomModel')
 const Schedule = require('../schedule/scheduleModel')
 
 const getRooms = async () => {
-    try{
+    try {
         return await Room.find().select('_id name capacity')
-    } catch(error){
+    } catch (error) {
         throw new Error(error.message)
     }
 }
 
 const getRoom = async (id) => {
-    try{
+    try {
         return await Room.findById(id).select('_id name capacity')
-    } catch(error){
+    } catch (error) {
         throw new Error(error.message)
     }
 }
@@ -37,43 +37,43 @@ const createRoom = async (name, capacity) => {
 }
 
 const updateRoom = async (id, room) => {
-    try{
+    try {
         const schedules = await Schedule.find({ room: id })
-        schedules.forEach( schedule => {
-            if(schedule.reservedBy > room.capacity){
+        schedules.forEach(schedule => {
+            if (schedule.reservedBy > room.capacity) {
                 throw new Error('La capacidad del aula no puede ser menor a la cantidad de reservas')
             }
         })
-        return await Room.findByIdAndUpdate(id, room, {new: true})
-    } catch(error){
+        return await Room.findByIdAndUpdate(id, room, { new: true })
+    } catch (error) {
         throw new Error(error.message)
-    }   
+    }
 }
 
 const deleteRoom = async (id) => {
-    try{
+    try {
         const room = await Room.findById(id)
-        if(!room){
+        if (!room) {
             throw new Error('Aula no encontrada')
         }
         await deleteRoomInSchedule(id)
         await deleteRoomInReservation(id)
         return await Room.findByIdAndDelete(id)
-    } catch(error){
+    } catch (error) {
         throw new Error(error.message)
     }
 }
 
 const deleteRoomInSchedule = async (id) => {
     try {
-        await Schedule.deleteMany({ room : id})
-    }catch (error) {
+        await Schedule.deleteMany({ room: id })
+    } catch (error) {
         return error.message
     }
 }
 const deleteRoomInReservation = async (id) => {
     try {
-        await Reservation.deleteMany({ room : id})
+        await Reservation.deleteMany({ room: id })
     } catch (error) {
         return error.message
     }

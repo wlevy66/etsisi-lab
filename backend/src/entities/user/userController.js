@@ -2,12 +2,12 @@ const User = require('./userModel')
 const userService = require('./userService')
 
 const login = async (req, res) => {
-    try{
+    try {
         const [userFound, token] = await userService.login(req.body)
         res.cookie('token', token)
 
         res.status(200).json({
-            status:200,
+            status: 200,
             id: userFound._id,
             name: userFound.name,
             lastname: userFound.lastname,
@@ -17,14 +17,14 @@ const login = async (req, res) => {
         })
     } catch (error) {
         res.status(500).json({
-            status:500,
+            status: 500,
             error: error.message
         })
     }
 }
 
 const register = async (req, res) => {
-    try{
+    try {
         const [userSaved, token] = await userService.register(req.body)
 
         res.cookie('token', token)
@@ -34,16 +34,16 @@ const register = async (req, res) => {
             message: 'Usuario registrado correctamente!'
         })
 
-    } catch (error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
     }
-    
+
 }
 
 const logout = async (req, res) => {
-    res.cookie('token', '', {expires: new Date(0)})
+    res.cookie('token', '', { expires: new Date(0) })
     res.status(200).json({
         status: 200,
         message: 'Usuario deslogueado correctamente!'
@@ -52,17 +52,17 @@ const logout = async (req, res) => {
 
 const verify = async (req, res) => {
     const { token } = req.cookies
-    if(!token) return res.status(401).json({
+    if (!token) return res.status(401).json({
         status: 401,
         error: 'Sin autorización para acceder a este recurso.'
     })
 
     const decoded = userService.verify(token)
-    if(!decoded) return res.status(401).json({
+    if (!decoded) return res.status(401).json({
         status: 401,
         error: 'Sin autorización para acceder a este recurso.'
     })
-    
+
     const userFound = await User.findById(decoded.id)
     if (!userFound) {
         return res.status(404).json({
@@ -70,9 +70,9 @@ const verify = async (req, res) => {
             error: 'Usuario no encontrado'
         })
     }
-    
+
     res.status(200).json({
-        status:200,
+        status: 200,
         id: userFound._id,
         name: userFound.name,
         lastname: userFound.lastname,
@@ -83,13 +83,13 @@ const verify = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
-    try{
+    try {
         const users = await userService.getUsers()
         res.status(200).json({
             status: 200,
             users
         })
-    } catch (error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -97,13 +97,13 @@ const getUsers = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-    try{
+    try {
         const user = await userService.getUser(req.params.id)
         res.status(200).json({
             status: 200,
             user
         })
-    } catch (error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -111,13 +111,13 @@ const getUser = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-    try{
+    try {
         await userService.updateProfile(req.params.id, req.body)
         res.status(200).json({
             status: 200,
             message: 'Perfil actualizado correctamente!',
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -125,13 +125,13 @@ const updateProfile = async (req, res) => {
 }
 
 const updatePassword = async (req, res) => {
-    try{
+    try {
         await userService.updatePassword(req.params.id, req.body)
         res.status(200).json({
             status: 200,
             message: 'Contraseña actualizada correctamente!'
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -139,13 +139,13 @@ const updatePassword = async (req, res) => {
 }
 
 const updateByAdmin = async (req, res) => {
-    try{
+    try {
         await userService.updateByAdmin(req.params.id, req.body)
         res.status(200).json({
             status: 200,
             message: 'Usuario actualizado por el administrador correctamente!'
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })

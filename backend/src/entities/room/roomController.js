@@ -1,13 +1,13 @@
 const roomService = require('./roomService')
 
 const getRooms = async (req, res) => {
-    try{
+    try {
         const rooms = await roomService.getRooms()
         res.status(200).json({
             status: 200,
             rooms
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -15,9 +15,9 @@ const getRooms = async (req, res) => {
 }
 
 const getRoom = async (req, res) => {
-    try{
+    try {
         const room = await roomService.getRoom(req.params.id)
-        if(!room) return res.status(404).json({
+        if (!room) return res.status(404).json({
             status: 404,
             message: 'Aula no encontrada'
         })
@@ -26,7 +26,7 @@ const getRoom = async (req, res) => {
             status: 200,
             room
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -50,14 +50,14 @@ const createRoom = async (req, res) => {
 }
 
 const updateRoom = async (req, res) => {
-    try{
+    try {
         const roomUpdated = await roomService.updateRoom(req.params.id, req.body)
         res.status(200).json({
             status: 200,
             message: 'Aula actualizada correctamente!',
             roomUpdated
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -68,7 +68,7 @@ const deleteRoom = async (req, res) => {
     try {
         await roomService.deleteRoom(req.params.id)
         res.status(204).json({
-            status:204,
+            status: 204,
             message: 'Aula eliminada correctamente!'
         })
     } catch (error) {

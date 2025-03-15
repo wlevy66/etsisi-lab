@@ -4,7 +4,6 @@ const RoomController = require('./roomController')
 const validateRequestSchema = require('../../middlewares/validatorSchema')
 const roomSchema = require('./roomSchema');
 
-//define routes
 router.get('/rooms', RoomController.getRooms)
 router.get('/rooms/:id', RoomController.getRoom)
 router.post('/rooms', validateRequestSchema(roomSchema), RoomController.createRoom)

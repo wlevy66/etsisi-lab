@@ -50,7 +50,7 @@ const userSchemaRegister = Joi.object({
         .messages({
             'any.only': `Las contraseñas no coinciden`
         })
-        
+
 })
 
 const userSchemaUpdateProfile = Joi.object({

@@ -57,7 +57,7 @@ const FormRoom = () => {
 
     return (
         <form className='sm:w-full md:w-2/5 page' onSubmit={(e) => e.preventDefault()}>
-            <h1>{ params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'}</h1>
+            <h1>{params.roomId ? 'ACTUALIZAR AULA' : 'CREAR AULA'}</h1>
             <div className="mb-4">
                 <label htmlFor="name">Nombre del aula</label>
                 <input type='text' id="name" placeholder="Nombre del aula"
@@ -73,15 +73,15 @@ const FormRoom = () => {
             <div className="flex items-center justify-center my-2 gap-2">
                 <button className='cancel'
                     onClick={(e) => {
-                    e.preventDefault()
-                    navigate(`/rooms`)
+                        e.preventDefault()
+                        navigate(`/rooms`)
                     }}>
                     VOLVER
                 </button>
 
                 <button className="submit"
                     onClick={() => openModalConfirm(params.roomId ? 'update' : 'create')}>
-                    { params.roomId ? 'ACTUALIZAR' : 'CREAR'}
+                    {params.roomId ? 'ACTUALIZAR' : 'CREAR'}
                 </button>
             </div>
             <ModalConfirmAction

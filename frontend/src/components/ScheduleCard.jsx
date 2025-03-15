@@ -74,11 +74,11 @@ const ScheduleCard = ({ schedule, type }) => {
                     <h2 className='text-2xl font-bold'>{schedule.room.name}</h2>
                     <button
                         className={`${schedule.reservedBy !== schedule.room.capacity ? 'bg-green-600' : 'bg-red-600 disabled:opacity-75'} rounded`}
-                        onClick={() => showUsers(schedule._id)} 
-                        >
-                            {
-                                /*disabled={schedule.reservedBy === schedule.room.capacity}*/
-                            }
+                        onClick={() => showUsers(schedule._id)}
+                    >
+                        {
+                            /*disabled={schedule.reservedBy === schedule.room.capacity}*/
+                        }
                         {schedule.reservedBy}/{schedule.room.capacity}
                     </button>
                 </div>

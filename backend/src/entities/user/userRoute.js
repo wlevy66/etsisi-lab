@@ -4,8 +4,7 @@ const UserController = require('./userController')
 const validateRequestSchema = require('../../middlewares/validatorSchema')
 const UserSchema = require('./userSchema')
 
-//define routes
-router.post('/login', validateRequestSchema(UserSchema.userSchemaLogin),UserController.login)
+router.post('/login', validateRequestSchema(UserSchema.userSchemaLogin), UserController.login)
 router.post('/register', validateRequestSchema(UserSchema.userSchemaRegister), UserController.register)
 router.post('/logout', UserController.logout)
 router.get('/verify', UserController.verify)

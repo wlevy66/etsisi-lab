@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 const status = require('../../constants/status')
 const roles = require('../../constants/roles')
 

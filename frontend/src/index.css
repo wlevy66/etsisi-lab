@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 /* Global style */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -54,7 +55,8 @@ form label {
   margin-bottom: 0.5rem;
 }
 
-form input, form select {
+form input,
+form select {
   width: 100%;
   padding: 0.5rem;
   border-width: 1px;
@@ -88,11 +90,16 @@ button {
   border-radius: 4px
 }
 
-button.submit, button.create, button.dropdown {
+button.submit,
+button.create,
+button.dropdown {
   background-color: #3b82f6;
   font-weight: 600;
 }
-button.submit:hover, button.create:hover, button.dropdown:hover {
+
+button.submit:hover,
+button.create:hover,
+button.dropdown:hover {
   background-color: #1d4ed8;
 }
 
@@ -100,6 +107,7 @@ button.cancel {
   background-color: #64748b;
   font-weight: 600;
 }
+
 button.cancel:hover {
   background-color: #334155;
 }
@@ -107,5 +115,5 @@ button.cancel:hover {
 /* Footer style */
 footer {
   width: 100%;
-  margin-top: 20px;
+  background-color: black;
 }

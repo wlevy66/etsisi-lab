@@ -1,13 +1,13 @@
 const scheduleService = require('./scheduleService')
 
 const getSchedulesByRoom = async (req, res) => {
-    try{
+    try {
         const schedules = await scheduleService.getSchedulesByRoom(req.params.roomId)
         res.status(200).json({
             status: 200,
             schedules
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -15,9 +15,9 @@ const getSchedulesByRoom = async (req, res) => {
 }
 
 const getSchedule = async (req, res) => {
-    try{
+    try {
         const schedule = await scheduleService.getSchedule(req.params.scheduleId)
-        if(!schedule) return res.status(404).json({
+        if (!schedule) return res.status(404).json({
             status: 404,
             message: 'Horario no encontrado'
         })
@@ -26,7 +26,7 @@ const getSchedule = async (req, res) => {
             status: 200,
             schedule,
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -34,13 +34,13 @@ const getSchedule = async (req, res) => {
 }
 
 const getAvailableSchedules = async (req, res) => {
-    try{
+    try {
         const availableSchedules = await scheduleService.getAvailableSchedules(req.params.userId)
         res.status(200).json({
             status: 200,
             availableSchedules
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -48,15 +48,15 @@ const getAvailableSchedules = async (req, res) => {
 }
 
 const createSchedule = async (req, res) => {
-    try{
+    try {
         const savedSchedule = await scheduleService.createSchedule(req.body)
-        
+
         res.status(201).json({
             status: 201,
             message: 'Horario creado correctamente!',
             savedSchedule
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -64,7 +64,7 @@ const createSchedule = async (req, res) => {
 }
 
 const updateSchedule = async (req, res) => {
-    try{
+    try {
         const schedule = await scheduleService.updateSchedule(req.params.id, req.body)
         res.status(200).json({
             status: 200,
@@ -72,7 +72,7 @@ const updateSchedule = async (req, res) => {
             schedule
         })
 
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -80,13 +80,13 @@ const updateSchedule = async (req, res) => {
 }
 
 const deleteSchedule = async (req, res) => {
-    try{
+    try {
         await scheduleService.deleteSchedule(req.params.id)
         res.status(204).json({
             status: 204,
             message: 'Horario eliminado correctamente!',
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
@@ -94,13 +94,13 @@ const deleteSchedule = async (req, res) => {
 }
 
 const getUsersBySchedule = async (req, res) => {
-    try{
+    try {
         const users = await scheduleService.getUsersBySchedule(req.params.scheduleId)
         res.status(200).json({
             status: 200,
             users
         })
-    } catch(error){
+    } catch (error) {
         res.status(500).json({
             error: error.message
         })
