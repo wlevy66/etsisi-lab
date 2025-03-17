@@ -17,7 +17,6 @@ middlewareConfig(app)
 //load routes
 routesConfig(app)
 
-
 const port = process.env.PORT || 3000
 //server ready to listen http request
 app.listen(port, () => {
