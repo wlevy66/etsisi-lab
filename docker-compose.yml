@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - D:\etsisi:/data/db # Volumen para persistir datos
+      - ./etsisi_data:/data/db # Volumen para persistir datos
       - ./init.js:/docker-entrypoint-initdb.d/init.js # Script de inialización (opcional)
       - ./data.js:/docker-entrypoint-initdb.d/data.js # Datos iniciales (opcional)
     logging:
