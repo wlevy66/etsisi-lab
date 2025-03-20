@@ -1,13 +1,15 @@
 # 📚 Sistema de Gestión de Reservas de Laboratorios
 
 ## 📝 Descripción  
-Aplicación web para la gestión de reservas de laboratorios en la **ETSISI**.  
+Aplicación web para la gestión de reservas de laboratorios en la **ETSISI**.
+- **Administradores**: Gestionan usuarios, supervisan las reservas y configuran permisos de acceso.
 - **Profesores**: Configuran horarios y capacidades de las aulas.  
 - **Estudiantes**: Realizan y gestionan sus reservas.  
 
 ---
 
-## 🎯 Funcionalidades principales  
+## 🎯 Funcionalidades principales
+- Los administradores pueden gestionar usuarios, asignar roles, supervisar las reservas realizadas y configurar los permisos de acceso al sistema.  
 - Los profesores pueden crear y gestionar aulas, estableciendo horarios disponibles.  
 - Los estudiantes pueden realizar, modificar y cancelar reservas de aulas.  
 
@@ -52,9 +54,7 @@ Antes de comenzar, asegúrate de tener instalados:
 ```
 ├── backend/             # Código del servidor
 ├── frontend/            # Código del cliente
-├── docker-compose.yml   # Configuración de Docker
-├── data.js              # Datos de ejemplo (opcional)
-├── init.js              # Archivo de inicialización (opcional)
+├── docker/              # Configuración y ejecución de Docker
 ```
 
 ---
@@ -93,6 +93,7 @@ npm install
 
 5️⃣ **Inicia la base de datos (si usas Docker):**  
 ```bash
+cd ../docker
 docker-compose up -d
 ```
 
